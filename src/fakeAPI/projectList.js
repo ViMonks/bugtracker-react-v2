@@ -1,4 +1,4 @@
-export default projectList = [
+const projectList = [
     {
       "title": "Monks Test Project",
       "slug": "monks-test-project",
@@ -54,3 +54,5 @@ export default projectList = [
       "open_tickets": 0
     }
   ]
+
+export default projectList
