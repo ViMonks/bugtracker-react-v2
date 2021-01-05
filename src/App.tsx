@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import ProjectListView from './components/projects/ProjectListView'
+import ProjectListContainer from './components/projects/ProjectListContainer'
 
-function App() {
+function App():React.ReactElement {
   return (
-    <div className="App">
-      <ProjectListView />
+    <div className="App bg-gray-100 h-screen">
+      <ProjectListContainer />
     </div>
   );
 }
