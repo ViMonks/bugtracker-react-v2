@@ -1,18 +1,17 @@
-import React from 'react'
-import projectList from '../../fakeAPI/projectList'
+import React from 'react';
+import projectList from '../../fakeAPI/projectList';
 
 // interfaces
-import { Project } from '../../types'
+import { Project } from '../../types';
 
 // internal imports
-import ProjectListView from './ProjectListView'
+import ProjectListView from './ProjectListView';
 
-const ProjectListContainer = ():React.ReactElement => {   
-
-    const getProjects = ():Project[] => {
+const ProjectListContainer = (): React.ReactElement => {
+    const getProjects = (): Project[] => {
         // TODO: this is where the API call will live
-        return projectList
-    }
+        return projectList;
+    };
 
     const [projects, setProjects] = React.useState(getProjects());
 
@@ -20,7 +19,7 @@ const ProjectListContainer = ():React.ReactElement => {
         <div>
             <ProjectListView projects={projects} />
         </div>
-    )
-}
+    );
+};
 
-export default ProjectListContainer
+export default ProjectListContainer;
