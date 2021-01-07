@@ -17,6 +17,8 @@ interface ProjectFilterProps {
     handleEndDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     manager: string;
     handleManagerChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    viewingArchived: boolean;
+    handleViewingArchivedChange: () => void;
 }
 
 const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
@@ -41,7 +43,9 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
                 manager === '' ? true : project.manager && project.manager.toLowerCase() === manager.toLowerCase();
             const startDateMatches = new Date(project.created) >= new Date(startDate) || startDate === '';
             const endDateMatches = new Date(project.created) <= new Date(endDate) || endDate === '';
-            const allFiltersMatch = titleMatches && managerMatches && startDateMatches && endDateMatches;
+            const viewingArchivedMatches = project.is_archived === viewingArchived;
+            const allFiltersMatch =
+                titleMatches && managerMatches && startDateMatches && endDateMatches && viewingArchivedMatches;
             if (allFiltersMatch) {
                 filteredProjects.push(project);
             }
@@ -52,7 +56,7 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
     // calls filterProjects when state changes based on input values from ProjectFilter, then sets the newly filtered projects to state
     React.useEffect(() => {
         setFilteredProjects(filterProjects(projects));
-    }, [title, startDate, endDate, manager]);
+    }, [title, startDate, endDate, manager, viewingArchived]);
 
     // Callback functions passed down to ProjectFilter to handle input changes
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -75,6 +79,10 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
         setManager(element.value);
     };
 
+    const handleViewingArchivedChange = (): void => {
+        setViewingArchived(!viewingArchived);
+    };
+
     return (
         <div className="container mx-auto py-4 px-2 w-auto">
             <h1 className="text-5xl text-blue-800 text-left">Projects</h1>
@@ -87,6 +95,8 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
                 handleEndDateChange={handleEndDateChange}
                 manager={manager}
                 handleManagerChange={handleManagerChange}
+                viewingArchived={viewingArchived}
+                handleViewingArchivedChange={handleViewingArchivedChange}
             />
             <ProjectTable projects={filteredProjects} />
         </div>
@@ -102,6 +112,8 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
     handleEndDateChange,
     manager,
     handleManagerChange,
+    viewingArchived,
+    handleViewingArchivedChange,
 }: ProjectFilterProps): React.ReactElement => {
     return (
         <div className="container shadow bg-gray-200 mt-3">
@@ -158,6 +170,18 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
                         <option value="manager-2">Manager 2</option>
                         <option value="manager-3">Manager 3</option>
                     </select>
+                </div>
+                <div className="flex-auto text-left md:text-center">
+                    <button
+                        className={
+                            viewingArchived
+                                ? 'text-l text-gray-800 bg-blue-300 hover:bg-blue-400 border border-blue-800 px-2 rounded-sm mt-1'
+                                : 'text-l text-gray-800 bg-blue-300 hover:bg-blue-400 border border-blue-800 px-2 rounded-sm mt-1'
+                        }
+                        onClick={handleViewingArchivedChange}
+                    >
+                        {viewingArchived ? 'View active projects' : 'View archived projects'}
+                    </button>
                 </div>
             </div>
         </div>

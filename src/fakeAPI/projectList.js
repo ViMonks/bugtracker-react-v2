@@ -52,6 +52,20 @@ const projectList = [
       "url": "http://localhost:8000/api/teams/monks-test-team/projects/new-project-2/",
       "tickets_list": "http://localhost:8000/api/teams/monks-test-team/projects/new-project-2/tickets/",
       "open_tickets": 0
+    },
+    {
+      "title": "Archived",
+      "slug": "archived",
+      "description": "asdfasdf",
+      "team": "monks-test-team",
+      "is_archived": true,
+      "manager": null,
+      "memberships": [],
+      "created": "2020-11-20T15:51:10.281612-05:00",
+      "modified": "2020-11-20T15:51:10.281640-05:00",
+      "url": "http://localhost:8000/api/teams/monks-test-team/projects/archived/",
+      "tickets_list": "http://localhost:8000/api/teams/monks-test-team/projects/archived/tickets/",
+      "open_tickets": 0
     }
   ]
 
