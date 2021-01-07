@@ -25,10 +25,10 @@ const projectList = [
       "description": "patch description",
       "team": "monks-test-team",
       "is_archived": false,
-      "manager": "monks",
+      "manager": "someoneElse",
       "memberships": [
         {
-          "user": "monks",
+          "user": "someoneElse",
           "role": 2,
           "role_name": "Manager"
         }

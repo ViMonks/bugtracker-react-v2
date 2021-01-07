@@ -1,4 +1,4 @@
-export default projectDetail = {
+const projectDetail = {
     "title": "Monks Test Project",
     "slug": "monks-test-project",
     "description": "This is a project description!",
@@ -18,3 +18,5 @@ export default projectDetail = {
     "tickets_list": "http://localhost:8000/api/teams/monks-test-team/projects/monks-test-project/tickets/",
     "open_tickets": 1
   }
+
+  export default projectDetail

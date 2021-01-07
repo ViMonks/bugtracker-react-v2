@@ -1,8 +1,7 @@
-// import { Hmac } from 'crypto';
 import React from 'react';
 
 // Interface imports
-import { Project } from '../../types';
+import { Project, ProjectMembership } from '../../types';
 
 interface ProjectListViewProps {
     projects: Project[];
@@ -19,8 +18,10 @@ interface ProjectFilterProps {
     handleManagerChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     viewingArchived: boolean;
     handleViewingArchivedChange: () => void;
+    handleFilterReset: () => void;
+    uniqueManagers: string[];
 }
-
+// TODO: implement new project button
 const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
     projects,
 }: ProjectListViewProps): React.ReactElement => {
@@ -30,9 +31,27 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
     const [manager, setManager] = React.useState('');
-    const [viewingArchived, setViewingArchived] = React.useState(false); // TODO: implement this
-    // TODO: implement a reset button
-    // TODO: implement array of managers to pass down to filter prop
+    const [viewingArchived, setViewingArchived] = React.useState(false);
+
+    // Creates an array of all unique managers of all projects, to be passed to ProjectFilter's manager select element
+    const getUniqueManagers = (projects: Project[]): string[] => {
+        // get an array of all members
+        let allMembers: ProjectMembership[] = [];
+        projects.map((project) => {
+            allMembers = [...allMembers, ...project.memberships];
+        });
+
+        // filter array to only managers
+        const allManagers: ProjectMembership[] = allMembers.filter((membership) => membership.role_name === 'Manager');
+
+        // extract usernames from array of ProjectMembership objects
+        const usernames: string[] = allManagers.map((membership) => membership.user);
+
+        // get unique usernames
+        const uniqueUsernames: string[] = [...new Set(usernames)];
+
+        return uniqueUsernames;
+    };
 
     // Filters project array based on values from ProjectFilter element
     const filterProjects = (projects: Project[]): Project[] => {
@@ -83,6 +102,13 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
         setViewingArchived(!viewingArchived);
     };
 
+    const handleFilterReset = (): void => {
+        setTitle('');
+        setManager('');
+        setStartDate('');
+        setEndDate('');
+    };
+
     return (
         <div className="container mx-auto py-4 px-2 w-auto">
             <h1 className="text-5xl text-blue-800 text-left">Projects</h1>
@@ -97,6 +123,8 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
                 handleManagerChange={handleManagerChange}
                 viewingArchived={viewingArchived}
                 handleViewingArchivedChange={handleViewingArchivedChange}
+                handleFilterReset={handleFilterReset}
+                uniqueManagers={getUniqueManagers(projects)}
             />
             <ProjectTable projects={filteredProjects} />
         </div>
@@ -114,11 +142,13 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
     handleManagerChange,
     viewingArchived,
     handleViewingArchivedChange,
+    handleFilterReset,
+    uniqueManagers,
 }: ProjectFilterProps): React.ReactElement => {
     return (
         <div className="container shadow bg-gray-200 mt-3">
-            <div className="flex md:flex-row flex-col my-2">
-                <div className="flex-auto text-left md:text-center">
+            <div className="my-2 grid grid-cols-1 md:grid-cols-10">
+                <div className="text-left md:text-center md:col-span-2">
                     <label className="text-2xl text-gray-800" htmlFor="title">
                         Title:
                     </label>
@@ -130,7 +160,7 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
                         onChange={handleTitleChange}
                     />
                 </div>
-                <div className="flex-auto text-left md:text-center">
+                <div className="text-left md:text-center md:col-span-2">
                     <label className="text-2xl text-gray-800" htmlFor="start-date">
                         Start date:
                     </label>
@@ -142,7 +172,7 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
                         onChange={handleStartDateChange}
                     />
                 </div>
-                <div className="flex-auto text-left md:text-center">
+                <div className="text-left md:text-center md:col-span-2">
                     <label className="text-2xl text-gray-800" htmlFor="end-date">
                         End date:
                     </label>
@@ -154,7 +184,7 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
                         onChange={handleEndDateChange}
                     />
                 </div>
-                <div className="flex-auto text-left md:text-center">
+                <div className="text-left md:text-center md:col-span-2">
                     <label className="text-2xl text-gray-800" htmlFor="manager">
                         Manager:
                     </label>
@@ -166,12 +196,22 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
                         onChange={handleManagerChange}
                     >
                         <option value=""></option>
-                        <option value="monks">Monks</option>
-                        <option value="manager-2">Manager 2</option>
-                        <option value="manager-3">Manager 3</option>
+                        {uniqueManagers.map((manager, index) => (
+                            <option key={index} value={manager}>
+                                {manager}
+                            </option>
+                        ))}
                     </select>
                 </div>
-                <div className="flex-auto text-left md:text-center">
+                <div className="text-left md:text-center md:col-span-1">
+                    <button
+                        className="text-l text-gray-800 bg-gray-300 hover:bg-gray-400 border border-gray-800 px-2 rounded-sm mt-1"
+                        onClick={handleFilterReset}
+                    >
+                        Reset
+                    </button>
+                </div>
+                <div className="text-left md:text-center md:col-span-1">
                     <button
                         className={
                             viewingArchived
@@ -180,7 +220,7 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
                         }
                         onClick={handleViewingArchivedChange}
                     >
-                        {viewingArchived ? 'View active projects' : 'View archived projects'}
+                        {viewingArchived ? 'View active' : 'View archived'}
                     </button>
                 </div>
             </div>
@@ -191,20 +231,29 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
 const ProjectTable: React.FunctionComponent<ProjectListViewProps> = ({
     projects,
 }: ProjectListViewProps): React.ReactElement => {
-    const createHeader = (header: string): React.ReactElement => {
-        return <th className="border border-gray-300 px-1 py-2 bg-gray-200 text-gray-800">{header}</th>;
+    const createHeader = (header: string, index: string): React.ReactElement => {
+        return (
+            <th key={index.toString()} className="border border-blue-300 px-1 py-2 bg-blue-200 text-blue-900">
+                {header}
+            </th>
+        );
     };
 
     const createCell = (value: string | number | null): React.ReactElement => {
         return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{value}</td>;
     };
 
+    const createDateCell = (value: string) => {
+        const date = new Date(value)
+        return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{date.toLocaleDateString()}</td>;
+    }
+
     const headers: string[] = ['Title', 'Description', 'Manager', 'Open Tickets', 'Created'];
 
     return (
         <table className="shadow-lg mt-1 w-full text-left">
             <thead>
-                <tr>{headers.map((header: string) => createHeader(header))}</tr>
+                <tr>{headers.map((header: string, index: number) => createHeader(header, index.toString()))}</tr>
             </thead>
             <tbody>
                 {projects.map((project) => {
@@ -214,7 +263,7 @@ const ProjectTable: React.FunctionComponent<ProjectListViewProps> = ({
                             {createCell(project.description)}
                             {createCell(project.manager)}
                             {createCell(project.open_tickets)}
-                            {createCell(project.created)}
+                            {createDateCell(project.created)}
                         </tr>
                     );
                 })}
