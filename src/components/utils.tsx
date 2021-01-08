@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment'
+moment().format();
 
 // Utility functions for constructing tables
 export const createLinkCell = (value: string, href: string): React.ReactElement => {
@@ -28,3 +30,9 @@ export const createDateCell = (value: string) => {
     const date = new Date(value);
     return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{date.toLocaleDateString()}</td>;
 };
+
+export const createElapsedTimeCell = (value: string) => {
+    const date = new Date(value);
+    const momentDate = moment(date);
+    return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{momentDate.fromNow()}</td>;
+}

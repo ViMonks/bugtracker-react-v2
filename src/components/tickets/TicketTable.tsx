@@ -5,7 +5,7 @@ import { useRouteMatch } from 'react-router-dom';
 import { Project, ProjectMembership, Ticket, Comment } from '../../types';
 
 // Internal imports
-import { createLinkCell, createHeader, createCell, createDateCell } from '../utils';
+import { createLinkCell, createHeader, createCell, createDateCell, createElapsedTimeCell } from '../utils';
 
 interface TicketTableProps {
     tickets: Ticket[];
@@ -41,7 +41,7 @@ const TicketTable: React.FunctionComponent<TicketTableProps> = ({ tickets }: Tic
                             {ticket.developer ? createCell(ticket.developer) : createCell('')}
                             {createCell(getPriorityText(ticket.priority))}
                             {createDateCell(ticket.created)}
-                            {createDateCell(ticket.modified)}
+                            {createElapsedTimeCell(ticket.modified)}
                         </tr>
                     );
                 })}
