@@ -1,9 +1,9 @@
-export default ticketDetail = {
+const ticketDetail = {
     "title": "Test Ticket",
     "slug": "test-ticket",
     "description": "",
     "priority": 1,
-    "user": 1,
+    "user": "monks",
     "project": 1,
     "resolution": "",
     "developer": "monks",
@@ -26,3 +26,5 @@ export default ticketDetail = {
       }
     ]
   }
+
+export default ticketDetail

@@ -5,7 +5,14 @@ import { useRouteMatch } from 'react-router-dom';
 import { Project, ProjectMembership, Ticket, Comment } from '../../types';
 
 // Internal imports
-import { createLinkCell, createHeader, createCell, createDateCell, createElapsedTimeCell } from '../utils';
+import {
+    createLinkCell,
+    createHeader,
+    createCell,
+    createDateCell,
+    createElapsedTimeCell,
+    getPriorityText,
+} from '../utils';
 
 interface TicketTableProps {
     tickets: Ticket[];
@@ -13,16 +20,6 @@ interface TicketTableProps {
 
 const TicketTable: React.FunctionComponent<TicketTableProps> = ({ tickets }: TicketTableProps): React.ReactElement => {
     const { url } = useRouteMatch();
-
-    const getPriorityText = (priority: number): string => {
-        if (priority === 1) {
-            return 'Low';
-        } else if (priority === 2) {
-            return 'High';
-        } else {
-            return 'Urgent';
-        }
-    };
 
     const headers: string[] = ['Title', 'User', 'Developer', 'Priority', 'Created', 'Updated'];
 

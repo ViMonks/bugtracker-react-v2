@@ -1,10 +1,9 @@
 import React from 'react';
-import projectList from '../../fakeAPI/projectList';
 import ticketList from '../../fakeAPI/ticketList';
 import projectDetail from '../../fakeAPI/projectDetail';
 
 // interfaces
-import { Project, Ticket, Comment } from '../../types';
+import { Project, Ticket } from '../../types';
 
 import ProjectDetailView from './ProjectDetailView';
 

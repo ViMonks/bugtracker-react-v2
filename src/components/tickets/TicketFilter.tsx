@@ -26,13 +26,13 @@ const TicketFilter: React.FunctionComponent<TicketFilterProps> = ({
                 onChange={handleTitleChange}
             />
             <button
-                className="text-l text-gray-800 bg-gray-300 hover:bg-gray-400 border border-gray-800 px-2 rounded-sm mt-1 mx-2"
+                className="text-l text-gray-800 bg-gray-300 hover:bg-gray-400 border border-gray-800 px-2 rounded-sm mt-1 mx-2  focus:outline-none"
                 onClick={handleFilterReset}
             >
                 Reset
             </button>
             <button
-                className="text-l text-gray-800 bg-blue-300 hover:bg-blue-400 border border-blue-800 px-2 rounded-sm mt-1 mx-1"
+                className="text-l text-gray-800 bg-blue-300 hover:bg-blue-400 border border-blue-800 px-2 rounded-sm mt-1 mx-1  focus:outline-none"
                 onClick={handleViewingClosedChange}
             >
                 {viewingClosed ? 'View open' : 'View closed'}

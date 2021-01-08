@@ -89,7 +89,7 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
                 </div>
                 <div className="text-left md:text-center md:col-span-1">
                     <button
-                        className="text-l text-gray-800 bg-gray-300 hover:bg-gray-400 border border-gray-800 px-2 rounded-sm mt-1"
+                        className="text-l text-gray-800 bg-gray-300 hover:bg-gray-400 border border-gray-800 px-2 rounded-sm mt-1 focus:outline-none"
                         onClick={handleFilterReset}
                     >
                         Reset
@@ -99,8 +99,8 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
                     <button
                         className={
                             viewingArchived
-                                ? 'text-l text-gray-800 bg-blue-300 hover:bg-blue-400 border border-blue-800 px-2 rounded-sm mt-1'
-                                : 'text-l text-gray-800 bg-blue-300 hover:bg-blue-400 border border-blue-800 px-2 rounded-sm mt-1'
+                                ? 'text-l text-gray-800 bg-blue-300 hover:bg-blue-400 border border-blue-800 px-2 rounded-sm mt-1 focus:outline-none'
+                                : 'text-l text-gray-800 bg-blue-300 hover:bg-blue-400 border border-blue-800 px-2 rounded-sm mt-1 focus:outline-none'
                         }
                         onClick={handleViewingArchivedChange}
                     >

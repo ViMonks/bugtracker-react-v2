@@ -36,3 +36,21 @@ export const createElapsedTimeCell = (value: string) => {
     const momentDate = moment(date);
     return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{momentDate.fromNow()}</td>;
 }
+
+// converts a Ticket's priority number into the proper text
+export const getPriorityText = (priority: number): string => {
+    if (priority === 1) {
+        return 'Low';
+    } else if (priority === 2) {
+        return 'High';
+    } else {
+        return 'Urgent';
+    }
+};
+
+// converts a date string to a "updated x minutes ago" or whatever string
+export const getLastUpdatedString = (date: string) => {
+    const dateObj = new Date(date);
+    const momentDate = moment(dateObj);
+    return momentDate.fromNow();
+};
