@@ -10,6 +10,16 @@ const projectDetail = {
         "user": "monks",
         "role": 2,
         "role_name": "Manager"
+      },
+      {
+        "user": "Dev1",
+        "role": 1,
+        "role_name": "Developer"
+      },
+      {
+        "user": "Dev2",
+        "role": 1,
+        "role_name": "Developer"
       }
     ],
     "created": "2020-11-18T12:35:25.159558-05:00",

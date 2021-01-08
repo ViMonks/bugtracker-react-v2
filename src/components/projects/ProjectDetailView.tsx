@@ -1,9 +1,10 @@
 import React from 'react';
 
 // Interface imports
-import { Project, ProjectMembership, Ticket, Comment } from '../../types';
+import { Project, Ticket } from '../../types';
 
 import TicketTableContainer from '../tickets/TicketTableContainer';
+import AssignedDevelopersList from './AssignedDevelopersList';
 
 interface ProjectDetailViewProps {
     project: Project;
@@ -45,11 +46,8 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
                 <strong>Manager: </strong>
                 {manager}
             </p>
-            <p className="text-gray-700 pt-1">
-                <strong>Assigned developers: </strong>
-            </p>{' '}
-            {/* TODO: implement developer iteration */}
             <p className="text-gray-700 pt-1">Created: {new Date(created).toLocaleDateString()}</p>
+            <AssignedDevelopersList memberships={memberships} />
         </div>
     );
 };
