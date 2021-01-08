@@ -1,41 +1,28 @@
 import React from 'react';
+import { useRouteMatch } from 'react-router-dom';
 
 // Interface imports
 import { Project, ProjectMembership, Ticket, Comment } from '../../types';
 
+// Internal imports
+import { createLinkCell, createHeader, createCell, createDateCell } from '../utils';
+
 interface TicketTableProps {
-    tickets: Ticket[]
+    tickets: Ticket[];
 }
 
-const TicketTable: React.FunctionComponent<TicketTableProps> = ({
-    tickets,
-}: TicketTableProps): React.ReactElement => {
-    const createHeader = (header: string, index: string): React.ReactElement => {
-        return (
-            <th key={index.toString()} className="border border-blue-300 px-1 py-2 bg-blue-200 text-blue-900">
-                {header}
-            </th>
-        );
-    };
-
-    const createCell = (value: string | number | null): React.ReactElement => {
-        return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{value}</td>;
-    };
-
-    const createDateCell = (value: string) => {
-        const date = new Date(value)
-        return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{date.toLocaleDateString()}</td>;
-    }
+const TicketTable: React.FunctionComponent<TicketTableProps> = ({ tickets }: TicketTableProps): React.ReactElement => {
+    const { url } = useRouteMatch();
 
     const getPriorityText = (priority: number): string => {
         if (priority === 1) {
-            return "Low"
+            return 'Low';
         } else if (priority === 2) {
-            return "High"
+            return 'High';
         } else {
-            return "Urgent"
+            return 'Urgent';
         }
-    }
+    };
 
     const headers: string[] = ['Title', 'User', 'Developer', 'Priority', 'Created', 'Updated'];
 
@@ -48,7 +35,8 @@ const TicketTable: React.FunctionComponent<TicketTableProps> = ({
                 {tickets.map((ticket) => {
                     return (
                         <tr key={ticket.slug}>
-                            {createCell(ticket.title)}
+                            {createLinkCell(ticket.title, `${url}/tickets/${ticket.slug}`)}
+                            {/* {createCell(ticket.title)} */}
                             {createCell(ticket.user)}
                             {ticket.developer ? createCell(ticket.developer) : createCell('')}
                             {createCell(getPriorityText(ticket.priority))}

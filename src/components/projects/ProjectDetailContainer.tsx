@@ -16,6 +16,7 @@ const ProjectDetailContainer = (props: any): React.ReactElement => {
 
     const getProject = (projectSlug: string): Project => {
         // TODO: this is where the projectdetail api call lives; will need the projectSlug parameter; it's available at `props.match.params.projectSlug`
+        console.log({projectSlug})
         return projectDetail
     }
 
