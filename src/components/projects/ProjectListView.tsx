@@ -11,6 +11,10 @@ interface ProjectListViewProps {
     projects: Project[];
 }
 
+interface ProjectTableProps {
+    projects: Project[];
+}
+
 interface ProjectFilterProps {
     title: string;
     handleTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -115,7 +119,7 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
 
     return (
         <div className="container mx-auto py-4 px-2 w-auto">
-            <h1 className="text-5xl text-blue-800 text-left">Projects</h1>
+            <h1 className="text-5xl text-blue-800 text-left">{viewingArchived ? 'Archived Projects' : 'Projects'}</h1>
             <ProjectFilter
                 title={title}
                 handleTitleChange={handleTitleChange}
@@ -232,9 +236,9 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
     );
 };
 
-const ProjectTable: React.FunctionComponent<ProjectListViewProps> = ({
+const ProjectTable: React.FunctionComponent<ProjectTableProps> = ({
     projects,
-}: ProjectListViewProps): React.ReactElement => {
+}: ProjectTableProps): React.ReactElement => {
     const headers: string[] = ['Title', 'Description', 'Manager', 'Open Tickets', 'Created'];
 
     return (
