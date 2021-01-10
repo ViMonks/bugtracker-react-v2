@@ -24,38 +24,52 @@ const AssignedDevelopersList: React.FunctionComponent<AssignedDevelopersListProp
         setSearchValue(element.value);
     };
 
+    const handleDeveloperSearchReset = (): void => {
+        setSearchValue('');
+    };
+
     const filterDevelopers = (developers: string[]): string[] => {
-        const filteredDevelopers = developers.filter(developer => developer.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1)
+        const filteredDevelopers = developers.filter(
+            (developer) => developer.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1,
+        );
         return filteredDevelopers;
     };
 
     React.useEffect(() => {
-        setFilteredDevelopers(filterDevelopers(developers))
-    }, [searchValue])
+        setFilteredDevelopers(filterDevelopers(developers));
+    }, [searchValue]);
 
     // helper function to create list item for each developer
     const createListItem = (text: string) => {
-        return (
-            <div className="my-1 hover:bg-blue-100 rounded">
-                <p className="p-1">{text}</p>
-            </div>
-        );
+        return <div className="panel-block">{text}</div>;
     };
 
     return (
-        <div className="flex flex-col bg-gray-200 px-4 shadow-md rounded-md mr-4 ml-1 my-2">
-            <div className="my-1">
-                <h3 className="text-xl text-gray-800 px-2 py-3 leading-tight">Developers</h3>
-            </div>
-            <div className="">
-                <input
-                    type="text"
-                    placeholder="Search members"
-                    className="my-2 w-full text-sm bg-gray-100 text-grey-darkest rounded h-10 p-3 focus:outline-none"
-                    onChange={handleDeveloperSearchChange}
-                />
+        <div className="panel is-info is-light">
+            <p className="panel-heading">Developers</p>
+            <div className="panel-block">
+                <p className="control has-icons-left">
+                    <input
+                        type="text"
+                        className="input"
+                        placeholder="Search developers"
+                        value={searchValue}
+                        onChange={handleDeveloperSearchChange}
+                    />
+                    <span className="icon is-left">
+                        <i className="fas fa-search"></i>
+                    </span>
+                </p>
             </div>
             {filteredDevelopers.map((item) => createListItem(item))}
+            <div className="panel-block">
+                <button
+                    className="button is-light is-outlined is-link is-fullwidth"
+                    onClick={handleDeveloperSearchReset}
+                >
+                    Reset
+                </button>
+            </div>
         </div>
     );
 };

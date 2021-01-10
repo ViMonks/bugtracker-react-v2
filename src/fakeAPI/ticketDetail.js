@@ -1,7 +1,7 @@
 const ticketDetail = {
     "title": "Test Ticket",
     "slug": "test-ticket",
-    "description": "",
+    "description": "Ticket description here.",
     "priority": 1,
     "user": "monks",
     "project": 1,

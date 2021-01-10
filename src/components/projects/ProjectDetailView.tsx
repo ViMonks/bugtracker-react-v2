@@ -39,18 +39,29 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
     const { title, manager, description, created, memberships, is_archived } = project;
 
     return (
-        <div className="">
-            <h1 className="text-5xl text-blue-800 text-left">{title}</h1>
-            <p className="leading-relaxed pt-4 text-gray-700">{description}</p>
-            <p className="pt-1 text-gray-700">
-                <strong>Manager: </strong>
-                {manager}
-            </p>
-            <p className="text-gray-700 pt-1">Created: {new Date(created).toLocaleDateString()}</p>
-            <AssignedDevelopersList memberships={memberships} />
-            <button className="text-l text-gray-800 bg-gray-300 hover:bg-gray-400 border border-gray-800 px-2 rounded-sm mt-1 mx-2 focus:outline-none">
-                {is_archived ? 'Reopen project' : 'Archive project'}
-            </button>
+        <div className="container">
+            <div className="block">
+                <h1 className="title is-1 has-text-dark-grey">{title}</h1>
+            </div>
+            <div className="block">
+                <p className="subtitle has-text-dark-grey">{description}</p>
+            </div>
+            <div className="block">
+                <p className="pt-1 text-gray-700">
+                    <strong>Manager: </strong>
+                    {manager}
+                </p>
+
+                <p className="text-gray-700 pt-1">Created: {new Date(created).toLocaleDateString()}</p>
+            </div>
+            <div className="block">
+                <AssignedDevelopersList memberships={memberships} />
+            </div>
+            <div className="block">
+                <button className="button is-warning is-dark">
+                    {is_archived ? 'Reopen project' : 'Archive project'}
+                </button>
+            </div>
         </div>
     );
 };

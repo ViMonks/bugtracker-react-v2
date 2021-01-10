@@ -54,7 +54,7 @@ const TicketTableContainer: React.FunctionComponent<TicketTableContainerProps> =
     return (
         <div className="container">
             <div className="block">
-                <h1 className="title is-2 has-text-grey-dark">{viewingClosed ? 'Closed Tickets' : 'Open Tickets'}</h1>
+                <h1 className="title is-2 has-text-grey-dark mt-3">{viewingClosed ? 'Closed Tickets' : 'Open Tickets'}</h1>
             </div>
             <div className="block">
                 <TicketFilter

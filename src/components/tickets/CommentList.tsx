@@ -12,28 +12,31 @@ interface CommentListProps {
 const CommentList: React.FunctionComponent<CommentListProps> = ({ comments }: CommentListProps): React.ReactElement => {
     const createCommentElement = (comment: Comment) => {
         return (
-            <div className="m-4">
-                <p className="text-gray-800 pt-4">{comment.text}</p>
-                <p className="text-gray-600 text-sm">{`Submitted by ${comment.user}, ${getLastUpdatedString(
-                    comment.created,
-                )}`}</p>
+            <div className="panel-block">
+                <div className="content">
+                    <p>
+                        {comment.text}
+                        <br></br>
+                        <small>
+                            {comment.user}, {getLastUpdatedString(comment.created)}
+                        </small>
+                    </p>
+                </div>
             </div>
         );
     };
 
     return (
-        <div className="shadow-md rounded p-4 bg-blue-100 divide-y divide-blue-800">
-            <h1 className="text-blue-800 text-lg">Comments</h1>
+        <div className="panel is-light">
+            <p className="panel-heading">Comments</p>
             {comments.map((comment) => createCommentElement(comment))}
-            <div className="flex flex-row">
-                <input
-                    type="text"
-                    placeholder="Post comment..."
-                    className="my-2 w-full text-sm bg-blue-50 text-grey-darkest rounded h-10 p-3 focus:outline-none"
-                />
-                <button className="bg-blue-200 hover:bg-blue-400 border border-blue-800 rounded-sm m-2 p-2 focus:outline-none">
-                    Post
-                </button>
+            <div className="panel-block">
+                <p className="control">
+                    <input className="input" type="text" placeholder="Post comment" />
+                </p>
+            </div>
+            <div className="panel-block">
+                <button className="button is-light is-outlined is-dark is-fullwidth">Post</button>
             </div>
         </div>
     );
