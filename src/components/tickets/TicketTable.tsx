@@ -24,7 +24,7 @@ const TicketTable: React.FunctionComponent<TicketTableProps> = ({ tickets }: Tic
     const headers: string[] = ['Title', 'User', 'Developer', 'Priority', 'Created', 'Updated'];
 
     return (
-        <table className="shadow-lg mt-1 w-full text-left">
+        <table className="table shadow-lg mt-1 w-full text-left">
             <thead>
                 <tr>{headers.map((header: string, index: number) => createHeader(header, index.toString()))}</tr>
             </thead>

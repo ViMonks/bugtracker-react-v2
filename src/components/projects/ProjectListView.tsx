@@ -101,23 +101,32 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
     };
 
     return (
-        <div className="container mx-auto py-4 px-2 w-auto">
-            <h1 className="text-5xl text-blue-800 text-left">{viewingArchived ? 'Archived Projects' : 'Projects'}</h1>
-            <ProjectFilter
-                title={title}
-                handleTitleChange={handleTitleChange}
-                startDate={startDate}
-                handleStartDateChange={handleStartDateChange}
-                endDate={endDate}
-                handleEndDateChange={handleEndDateChange}
-                manager={manager}
-                handleManagerChange={handleManagerChange}
-                viewingArchived={viewingArchived}
-                handleViewingArchivedChange={handleViewingArchivedChange}
-                handleFilterReset={handleFilterReset}
-                uniqueManagers={getUniqueManagers(projects)}
-            />
-            <ProjectTable projects={filteredProjects} />
+        <div className="container">
+            <div className="block">
+                <h1 className="title is-1 has-text-grey-dark">
+                    {viewingArchived ? 'Archived Projects' : 'Projects'}
+                </h1>
+            </div>
+
+            <div className="block">
+                <ProjectFilter
+                    title={title}
+                    handleTitleChange={handleTitleChange}
+                    startDate={startDate}
+                    handleStartDateChange={handleStartDateChange}
+                    endDate={endDate}
+                    handleEndDateChange={handleEndDateChange}
+                    manager={manager}
+                    handleManagerChange={handleManagerChange}
+                    viewingArchived={viewingArchived}
+                    handleViewingArchivedChange={handleViewingArchivedChange}
+                    handleFilterReset={handleFilterReset}
+                    uniqueManagers={getUniqueManagers(projects)}
+                />
+            </div>
+            <div className="block">
+                <ProjectTable projects={filteredProjects} />
+            </div>
         </div>
     );
 };

@@ -20,12 +20,12 @@ const ProjectDetailView: React.FunctionComponent<ProjectDetailViewProps> = ({
     tickets,
 }: ProjectDetailViewProps): React.ReactElement => {
     return (
-        <div className="container mx-auto py-4 px-2 w-auto">
-            <div className="grid grid-cols-3">
-                <div className="col-span-1 text-left">
+        <div className="container">
+            <div className="columns">
+                <div className="column is-one-third">
                     <ProjectDetailPane project={project} />
                 </div>
-                <div className="col-span-2 text-left">
+                <div className="column">
                     <TicketTableContainer tickets={tickets} />
                 </div>
             </div>

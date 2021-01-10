@@ -16,7 +16,7 @@ const ProjectTable: React.FunctionComponent<ProjectTableProps> = ({
     const headers: string[] = ['Title', 'Description', 'Manager', 'Open Tickets', 'Created'];
 
     return (
-        <table className="shadow-lg mt-1 w-full text-left">
+        <table className="table shadow-lg mt-1 w-full text-left">
             <thead>
                 <tr>{headers.map((header: string, index: number) => createHeader(header, index.toString()))}</tr>
             </thead>

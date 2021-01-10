@@ -4,8 +4,8 @@ import React from 'react';
 import { Ticket } from '../../types';
 
 // internal imports
-import TicketTable from './TicketTable'
-import TicketFilter from './TicketFilter'
+import TicketTable from './TicketTable';
+import TicketFilter from './TicketFilter';
 
 interface TicketTableContainerProps {
     tickets: Ticket[];
@@ -52,18 +52,24 @@ const TicketTableContainer: React.FunctionComponent<TicketTableContainerProps> =
     }, [title, viewingClosed]);
 
     return (
-        <div>
-            <h1 className="text-5xl text-blue-800 text-left">{viewingClosed ? 'Closed Tickets' : 'Open Tickets'}</h1>
-            <TicketFilter
-                title={title}
-                handleTitleChange={handleTitleChange}
-                handleFilterReset={handleFilterReset}
-                viewingClosed={viewingClosed}
-                handleViewingClosedChange={handleViewingClosedChange}
-            />
-            <TicketTable tickets={filteredTickets} />
+        <div className="container">
+            <div className="block">
+                <h1 className="title is-2 has-text-grey-dark">{viewingClosed ? 'Closed Tickets' : 'Open Tickets'}</h1>
+            </div>
+            <div className="block">
+                <TicketFilter
+                    title={title}
+                    handleTitleChange={handleTitleChange}
+                    handleFilterReset={handleFilterReset}
+                    viewingClosed={viewingClosed}
+                    handleViewingClosedChange={handleViewingClosedChange}
+                />
+            </div>
+            <div className="block">
+                <TicketTable tickets={filteredTickets} />
+            </div>
         </div>
     );
 };
 
-export default TicketTableContainer
+export default TicketTableContainer;

@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+// import './App.css';
+import './App.sass'
 import { BrowserRouter, Route } from 'react-router-dom';
 import ProjectListContainer from './components/projects/ProjectListContainer';
 import ProjectDetailContainer from './components/projects/ProjectDetailContainer';
