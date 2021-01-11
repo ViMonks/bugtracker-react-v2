@@ -7,24 +7,27 @@ import { Ticket } from '../../types';
 import CommentList from './CommentList';
 import { getPriorityText, getLastUpdatedString } from '../utils';
 import projectList from '../../fakeAPI/projectList';
-import { Z_BLOCK } from 'zlib';
+import TicketDetailClosingModal from './TicketDetailClosingModal'
 
 interface TicketDetailViewProps {
     ticket: Ticket;
+    closeTicket: (ticketSlug: string) => void;
 }
 
 interface TicketDetailPaneProps {
     ticket: Ticket;
+    closeTicket: (ticketSlug: string) => void;
 }
 
 const TicketDetailView: React.FunctionComponent<TicketDetailViewProps> = ({
     ticket,
+    closeTicket,
 }: TicketDetailViewProps): React.ReactElement => {
     return (
         <div className="container mt-4">
             <div className="columns">
                 <div className="column">
-                    <TicketDetailPane ticket={ticket} />
+                    <TicketDetailPane ticket={ticket} closeTicket={closeTicket} />
                 </div>
                 <div className="column">
                     <CommentList comments={ticket.comments} />
@@ -36,12 +39,9 @@ const TicketDetailView: React.FunctionComponent<TicketDetailViewProps> = ({
 
 const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
     ticket,
+    closeTicket,
 }: TicketDetailPaneProps): React.ReactElement => {
-    const { title, description, user, priority, is_open, created, modified } = ticket;
-
-    const createParagraphElement = (value: string) => {
-        return <p className="pt-1 text-gray-700">{value}</p>;
-    };
+    const { title, description, user, priority, is_open, created, modified, resolution } = ticket;
 
     return (
         <div className="panel is-info">
@@ -52,9 +52,10 @@ const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
             <p className="panel-block">{is_open ? 'Status: open' : 'Status: closed'}</p>
             <p className="panel-block">{`Submitted on ${new Date(created).toLocaleDateString()}`}</p>
             <p className="panel-block">{`Last updated ${getLastUpdatedString(modified)}`}</p>
-            <div className="panel-block">
+            {/* <div className="panel-block">
                 <button className="button is-warning">{is_open ? 'Close ticket' : 'Reopen ticket'}</button>
-            </div>
+            </div> */}
+            <TicketDetailClosingModal isOpen={is_open} resolution={resolution} closeTicket={closeTicket}/>
         </div>
     );
 };

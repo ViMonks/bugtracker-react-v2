@@ -14,10 +14,15 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
         return ticketDetail;
     };
 
+    const closeTicket = (ticketSlug: string): void => {        
+        console.log(`Closing ticket ${ticketSlug}`)
+        // TODO: the API call to close the current ticket will be made here
+    }
+
     const projectSlug = props.match.params.projectSlug;
     const ticketSlug = props.match.params.ticketSlug;
 
-    return <TicketDetailView ticket={getTicket(ticketSlug)} />;
+    return <TicketDetailView ticket={getTicket(ticketSlug)} closeTicket={closeTicket} />;
 };
 
 export default TicketDetailContainer;
