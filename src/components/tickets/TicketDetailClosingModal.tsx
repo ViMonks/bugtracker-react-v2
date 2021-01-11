@@ -16,7 +16,7 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
     isOpen,
     resolution,
     closeTicket,
-}: TicketModalProps) => {
+}: TicketModalProps): React.ReactElement => {
     /*
     This component takes in three props, as seen in the above interface. isOpen represents whether the ticket being viewed is open or closed.
     This determines whether the button says 'Close Ticket' or 'Reopen Ticket'.

@@ -43,3 +43,10 @@ export interface Comment {
     text: string,
     created: string,
 }
+
+export interface NewTicketProps {
+    title: string;
+    description?: string;
+    developer?: string;
+    priority: number;
+}

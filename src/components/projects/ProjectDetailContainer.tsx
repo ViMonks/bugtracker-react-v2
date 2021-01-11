@@ -3,7 +3,7 @@ import ticketList from '../../fakeAPI/ticketList';
 import projectDetail from '../../fakeAPI/projectDetail';
 
 // interfaces
-import { Project, Ticket } from '../../types';
+import { Project, Ticket, NewTicketProps } from '../../types';
 
 import ProjectDetailView from './ProjectDetailView';
 
@@ -19,9 +19,14 @@ const ProjectDetailContainer = (props: any): React.ReactElement => {
         return projectDetail;
     };
 
+    const createTicket = (newTicket: NewTicketProps): void => {
+        // TODO: the API call to create a new ticket will live here
+        console.log(newTicket)
+    }
+
     const projectSlug = props.match.params.projectSlug;
 
-    return <ProjectDetailView tickets={getTickets(projectSlug)} project={getProject(projectSlug)} />;
+    return <ProjectDetailView tickets={getTickets(projectSlug)} project={getProject(projectSlug)} createTicket={createTicket} />;
 };
 
 export default ProjectDetailContainer;

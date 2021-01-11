@@ -52,13 +52,9 @@ const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
             <p className="panel-block">{is_open ? 'Status: open' : 'Status: closed'}</p>
             <p className="panel-block">{`Submitted on ${new Date(created).toLocaleDateString()}`}</p>
             <p className="panel-block">{`Last updated ${getLastUpdatedString(modified)}`}</p>
-            {/* <div className="panel-block">
-                <button className="button is-warning">{is_open ? 'Close ticket' : 'Reopen ticket'}</button>
-            </div> */}
             <TicketDetailClosingModal isOpen={is_open} resolution={resolution} closeTicket={closeTicket}/>
         </div>
     );
 };
-// TODO: implement ticket closing
 
 export default TicketDetailView;

@@ -9,6 +9,9 @@ import TicketDetailView from './TicketDetailView';
 const TicketDetailContainer = (props: any): React.ReactElement => {
     const getTicket = (ticketSlug: string): Ticket => {
         // TODO: this is where the TicketDetail API call will live. Will need the ticketSlug and projectSlug parameter, available at `props.match.params`
+        // update: a better option for accessing the slug is the useParams() hook from React Router
+        // make sure to define the types: interface ParamTypes { projectSlug: string }, then call const { projectSlug } = useParams();
+        // see TicketDetailClosingModal for an implementation
         console.log({ ticketSlug });
         console.log({ projectSlug });
         return ticketDetail;

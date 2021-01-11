@@ -1,14 +1,17 @@
 import React from 'react';
 
 // Interface imports
-import { Project, Ticket } from '../../types';
+import { NewTicketProps, Project, Ticket } from '../../types';
 
+// internal imports
+import CreateTicketModalForm from '../tickets/CreateTicketModalForm';
 import TicketTableContainer from '../tickets/TicketTableContainer';
 import AssignedDevelopersList from './AssignedDevelopersList';
 
 interface ProjectDetailViewProps {
     project: Project;
     tickets: Ticket[];
+    createTicket: (newTicket: NewTicketProps) => void;
 }
 
 interface ProjectDetailPaneProps {
@@ -18,6 +21,7 @@ interface ProjectDetailPaneProps {
 const ProjectDetailView: React.FunctionComponent<ProjectDetailViewProps> = ({
     project,
     tickets,
+    createTicket,
 }: ProjectDetailViewProps): React.ReactElement => {
     return (
         <div className="container">
@@ -26,7 +30,12 @@ const ProjectDetailView: React.FunctionComponent<ProjectDetailViewProps> = ({
                     <ProjectDetailPane project={project} />
                 </div>
                 <div className="column">
-                    <TicketTableContainer tickets={tickets} />
+                    <div className="block">
+                        <TicketTableContainer tickets={tickets} />
+                    </div>
+                    <div className="block">
+                        <CreateTicketModalForm projectMembers={project.memberships} createTicket={createTicket} />
+                    </div>
                 </div>
             </div>
         </div>
