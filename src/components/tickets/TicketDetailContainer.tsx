@@ -1,4 +1,5 @@
 import React from 'react';
+import toast from 'react-hot-toast'
 import ticketDetail from '../../fakeAPI/ticketDetail';
 
 // interfaces
@@ -19,6 +20,7 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
 
     const closeTicket = (ticketSlug: string): void => {        
         console.log(`Closing ticket ${ticketSlug}`)
+        toast.success('Ticket closed!') // implementation with Promises: https://react-hot-toast.com/docs/toast
         // TODO: the API call to close the current ticket will be made here
     }
 

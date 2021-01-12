@@ -1,4 +1,5 @@
 import React from 'react';
+import toast from 'react-hot-toast'
 import ticketList from '../../fakeAPI/ticketList';
 import projectDetail from '../../fakeAPI/projectDetail';
 
@@ -22,6 +23,7 @@ const ProjectDetailContainer = (props: any): React.ReactElement => {
     const createTicket = (newTicket: NewTicketProps): void => {
         // TODO: the API call to create a new ticket will live here
         console.log(newTicket)
+        toast.success('Ticket created successfully!') // TODO: can map a Promise to a toast to have the toast update based on the Promise, like when fetching data. See implementation in docs: https://react-hot-toast.com/docs/toast
     }
 
     const projectSlug = props.match.params.projectSlug;

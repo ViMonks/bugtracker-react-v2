@@ -1,4 +1,5 @@
 import React from 'react';
+import { Toaster } from 'react-hot-toast'
 // import './App.css';
 import './App.sass'
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -23,6 +24,7 @@ function App(): React.ReactElement {
     return (
         <BrowserRouter>
             <PrimaryLayout />
+            <Toaster />
         </BrowserRouter>
     );
 }
