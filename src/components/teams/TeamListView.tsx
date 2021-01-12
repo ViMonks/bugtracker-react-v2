@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 // interface imports
 import { Team } from '../../types';
 
+// internal imports
+import ManageTeam from './ManageTeam'
+
 interface TeamListViewProps {
     teams: Team[];
 }
