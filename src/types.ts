@@ -1,5 +1,21 @@
 // Project-related types
 
+export interface Team {
+    title: string,
+    slug: string,
+    description: string,
+    created: string,
+    memberships: TeamMembership[],
+    projects_list: string,
+    url: string,
+}
+
+export interface TeamMembership {
+    user: string,
+    role: number,
+    role_name: string,
+}
+
 export interface Project {
     title: string,    
     slug: string,
