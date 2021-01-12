@@ -6,7 +6,7 @@ const ticketDetail = {
     "user": "monks",
     "project": 1,
     "resolution": "",
-    "developer": "monks",
+    "developer": "Dev2",
     "is_open": true,
     "created": "2020-11-21T16:34:22.462952-05:00",
     "modified": "2020-11-21T16:34:22.462996-05:00",

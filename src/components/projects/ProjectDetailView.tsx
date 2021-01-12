@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Interface imports
-import { NewTicketProps, Project, Ticket } from '../../types';
+import { NewOrUpdatedTicketProps, Project, Ticket } from '../../types';
 
 // internal imports
 import CreateTicketModalForm from '../tickets/CreateTicketModalForm';
@@ -11,7 +11,7 @@ import AssignedDevelopersList from './AssignedDevelopersList';
 interface ProjectDetailViewProps {
     project: Project;
     tickets: Ticket[];
-    createTicket: (newTicket: NewTicketProps) => void;
+    createTicket: (newTicket: NewOrUpdatedTicketProps) => void;
 }
 
 interface ProjectDetailPaneProps {

@@ -44,9 +44,10 @@ export interface Comment {
     created: string,
 }
 
-export interface NewTicketProps {
+export interface NewOrUpdatedTicketProps {
     title: string;
     description?: string;
     developer?: string;
     priority: number;
+    resolution?: string;
 }

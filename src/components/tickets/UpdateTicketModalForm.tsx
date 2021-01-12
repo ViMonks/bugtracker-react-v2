@@ -1,31 +1,32 @@
-import { parse } from 'postcss';
 import React, { Fragment } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 // interface imports
-import { ProjectMembership, NewOrUpdatedTicketProps } from '../../types';
+import { ProjectMembership, NewOrUpdatedTicketProps, Ticket } from '../../types';
 
-interface CreateTicketModalFormProps {
+interface UpdateTicketModalFormProps {
+    ticket: Ticket;
     projectMembers: ProjectMembership[];
-    createTicket: (newTicket: NewOrUpdatedTicketProps) => void;
+    updateTicket: (updatedTicket: NewOrUpdatedTicketProps) => void;
 }
 
 interface ParamTypes {
     projectSlug: string;
 }
 
-const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps> = ({
+const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps> = ({
+    ticket,
     projectMembers,
-    createTicket,
-}: CreateTicketModalFormProps): React.ReactElement => {
+    updateTicket,
+}: UpdateTicketModalFormProps): React.ReactElement => {
     // getting the projectSlug from the URL
     const { projectSlug } = useParams<ParamTypes>();
 
     // state for form data
-    const [title, setTitle] = React.useState('');
-    const [description, setDescription] = React.useState('');
-    const [developer, setDeveloper] = React.useState('');
-    const [priority, setPriority] = React.useState('');
+    const [title, setTitle] = React.useState(ticket.title);
+    const [description, setDescription] = React.useState(ticket.description);
+    const [developer, setDeveloper] = React.useState(ticket.developer);
+    const [priority, setPriority] = React.useState(ticket.priority);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -40,7 +41,7 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
     };
 
     const handlePriorityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setPriority(e.target.value);
+        setPriority(convertPriorityToNumber(e.target.value));
     };
 
     // state for whether the modal is active or not
@@ -50,26 +51,26 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
         setIsActive(!isActive);
     };
 
+    const convertPriorityToNumber = (priority: string): number => {
+        if (priority === 'Low') {
+            return 1;
+        } else if (priority === 'High') {
+            return 2;
+        } else {
+            return 3;
+        }
+    };
+
     // submitting form data
     const handleSubmit = () => {
-        const convertPriorityToNumber = (priority: string): number => {
-            if (priority === 'Low') {
-                return 1;
-            } else if (priority === 'High') {
-                return 2;
-            } else {
-                return 3;
-            }
-        };
-
-        const newTicket = {
+        const updatedTicket = {
             title: title,
             description: description,
             developer: developer,
-            priority: convertPriorityToNumber(priority),
+            priority: priority,
             project: projectSlug,
         };
-        createTicket(newTicket);
+        updateTicket(updatedTicket);
         setIsActive(false);
     };
 
@@ -101,7 +102,7 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
     return (
         <Fragment>
             <button className="button is-primary" onClick={handleToggleIsActive}>
-                Submit Ticket
+                Update Ticket
             </button>
 
             <div className={isActive ? 'modal is-active' : 'modal'}>
@@ -184,4 +185,4 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
     );
 };
 
-export default CreateTicketModalForm;
+export default UpdateTicketModalForm;
