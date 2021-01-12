@@ -5,7 +5,7 @@ import teamList from '../../fakeAPI/teamList';
 import { Team } from '../../types';
 
 // internal imports
-
+import TeamListView from './TeamListView'
 
 const TeamListContainer = (): React.ReactElement => {
     const getTeams = (): Team[] => {

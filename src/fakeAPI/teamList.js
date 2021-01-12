@@ -1,4 +1,4 @@
-export default teamList = [
+const teamList = [
     {
       "title": "Monks Test Team",
       "slug": "monks-test-team",
@@ -38,5 +38,8 @@ export default teamList = [
       "created": "2020-11-30T09:23:09.154094-05:00",
       "url": "http://localhost:8000/api/teams/monks-test-team-2/",
       "projects_list": "http://localhost:8000/api/teams/monks-test-team-2/projects/"
-    }
+    },
+    
   ]
+
+export default teamList

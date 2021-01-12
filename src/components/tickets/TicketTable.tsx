@@ -32,8 +32,7 @@ const TicketTable: React.FunctionComponent<TicketTableProps> = ({ tickets }: Tic
                 {tickets.map((ticket) => {
                     return (
                         <tr key={ticket.slug}>
-                            {createLinkCell(ticket.title, `${url}/tickets/${ticket.slug}`)}
-                            {/* {createCell(ticket.title)} */}
+                            {createLinkCell(ticket.title, `tickets/${ticket.slug}`)}
                             {createCell(ticket.user)}
                             {ticket.developer ? createCell(ticket.developer) : createCell('')}
                             {createCell(getPriorityText(ticket.priority))}

@@ -24,7 +24,7 @@ const ProjectTable: React.FunctionComponent<ProjectTableProps> = ({
                 {projects.map((project) => {
                     return (
                         <tr key={project.slug}>
-                            {createLinkCell(project.title, `/projects/${project.slug}`)}
+                            {createLinkCell(project.title, `${project.slug}`)}
                             {createCell(project.description)}
                             {createCell(project.manager)}
                             {createCell(project.open_tickets)}
