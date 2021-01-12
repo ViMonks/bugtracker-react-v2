@@ -61,7 +61,7 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
                     <section className="modal-card-body">
                         <div className="field">
                             <div className="control">
-                                <textarea className="textarea" placeholder="Describe how you resolved this ticket.">
+                                <textarea className="textarea" placeholder="Describe how you resolved this ticket (optional).">
                                     {resolution}
                                 </textarea>
                             </div>

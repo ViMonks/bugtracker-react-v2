@@ -14,8 +14,6 @@ interface ParamTypes {
     projectSlug: string;
 }
 
-
-
 const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps> = ({
     projectMembers,
     createTicket,
@@ -56,13 +54,13 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
     const handleSubmit = () => {
         const convertPriorityToNumber = (priority: string): number => {
             if (priority === 'Low') {
-                return 1
+                return 1;
             } else if (priority === 'High') {
-                return 2
+                return 2;
             } else {
-                return 3
+                return 3;
             }
-        }
+        };
 
         const newTicket = {
             title: title,
@@ -71,8 +69,8 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
             priority: convertPriorityToNumber(priority),
             project: projectSlug,
         };
-        createTicket(newTicket)
-        setIsActive(false)
+        createTicket(newTicket);
+        setIsActive(false);
     };
 
     const createDevelopersOptionsList = (members: ProjectMembership[]): React.ReactElement => {
@@ -118,15 +116,25 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
                         <div className="field">
                             <label className="label">Title</label>
                             <div className="control">
-                                <input type="text" className="input" value={title} onChange={handleTitleChange}/>
+                                <input
+                                    type="text"
+                                    className={!title ? 'input is-danger' : 'input'}
+                                    value={title}
+                                    onChange={handleTitleChange}
+                                />
                             </div>
+                            {!title && <p className="help is-danger">Title is required.</p>}
                         </div>
 
                         {/* Description Field */}
                         <div className="field">
                             <label className="label">Description</label>
                             <div className="control">
-                                <textarea className="textarea" value={description} onChange={handleDescriptionChange}></textarea>
+                                <textarea
+                                    className="textarea"
+                                    value={description}
+                                    onChange={handleDescriptionChange}
+                                ></textarea>
                             </div>
                         </div>
 
@@ -140,7 +148,7 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
                         <div className="field">
                             <label className="label">Priority</label>
                             <div className="control">
-                                <div className="select">
+                                <div className={!priority ? 'select is-danger' : 'select'}>
                                     <select value={priority} onChange={handlePriorityChange}>
                                         <option selected disabled value="">
                                             Select priority
@@ -151,10 +159,20 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
                                     </select>
                                 </div>
                             </div>
+                            {!priority && <p className="help is-danger">Priority is required.</p>}
                         </div>
                     </section>
                     <footer className="modal-card-foot">
-                        <button className="button is-success" onClick={handleSubmit}>Submit</button>
+                        {!title || !priority ? (
+                            <button className="button is-success" disabled onClick={handleSubmit}>
+                                Submit
+                            </button>
+                        ) : (
+                            <button className="button is-success" onClick={handleSubmit}>
+                                Submit
+                            </button>
+                        )}
+
                         <button className="button" onClick={handleToggleIsActive}>
                             Cancel
                         </button>

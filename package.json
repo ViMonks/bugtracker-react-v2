@@ -15,6 +15,7 @@
     "@types/react-dom": "^16.9.10",
     "autoprefixer": "^9.8.6",
     "bulma": "^0.9.1",
+    "bulma-tooltip": "^3.0.2",
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "postcss": "^7.0.35",
