@@ -16,6 +16,11 @@ export interface TeamMembership {
     role_name: string,
 }
 
+export interface NewTeamProps {
+    title: string,
+    description: string,
+}
+
 export interface Project {
     title: string,    
     slug: string,

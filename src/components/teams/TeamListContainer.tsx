@@ -1,11 +1,13 @@
 import React from 'react';
 import teamList from '../../fakeAPI/teamList';
+import toast from 'react-hot-toast'
 
 // interfaces
-import { Team } from '../../types';
+import { Team, NewTeamProps } from '../../types';
 
 // internal imports
 import TeamListView from './TeamListView'
+import CreateTeamModalForm from './CreateTeamModalForm'
 
 const TeamListContainer = (): React.ReactElement => {
     const getTeams = (): Team[] => {
@@ -13,11 +15,21 @@ const TeamListContainer = (): React.ReactElement => {
         return teamList;
     };
 
+    const createTeam = (newTeam: NewTeamProps): void => {
+        // TODO: This is where the API call to submit a new team POST request will live
+        console.log('New Team')
+        console.log(newTeam)
+        toast.success('New team created!')
+    }
+
     const [teams, setTeams] = React.useState(getTeams());
 
     return (
-        <div>
-            <TeamListView teams={teams} />
+        <div className="container">
+            <div className="block">
+            <TeamListView teams={teams} /></div>
+            <div className="block">
+            <CreateTeamModalForm createTeam={createTeam} /></div>
         </div>
     );
 };
