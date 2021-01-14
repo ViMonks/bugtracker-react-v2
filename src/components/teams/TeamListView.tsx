@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 // interface imports
 import { Team } from '../../types';
 
-// internal imports
-import ManageTeam from './ManageTeam'
-
 interface TeamListViewProps {
     teams: Team[];
 }
@@ -45,9 +42,10 @@ const TeamCard: React.FunctionComponent<TeamCardProps> = ({ team }: TeamCardProp
                         <Link to={`teams/${team.slug}/manage`}>Manage</Link>
                         {/* <p>Manage</p> */}
                     </div>
-                    <div className="card-footer-item">
+                    {/* <div className="card-footer-item">
                         <p>Leave Team</p>
-                    </div>
+                    </div> */}
+                    {/* TODO: add ability to leave team */}
                 </div>
             </div>
         </div>

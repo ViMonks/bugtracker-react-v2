@@ -26,12 +26,12 @@ export const createCell = (value: string | number | null): React.ReactElement =>
     return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{value}</td>;
 };
 
-export const createDateCell = (value: string) => {
+export const createDateCell = (value: string): React.ReactElement => {
     const date = new Date(value);
     return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{date.toLocaleDateString()}</td>;
 };
 
-export const createElapsedTimeCell = (value: string) => {
+export const createElapsedTimeCell = (value: string): React.ReactElement => {
     const date = new Date(value);
     const momentDate = moment(date);
     return <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-gray-500">{momentDate.fromNow()}</td>;
@@ -49,14 +49,14 @@ export const getPriorityText = (priority: number): string => {
 };
 
 // converts a date string to a "updated x minutes ago" or whatever string
-export const getLastUpdatedString = (date: string) => {
+export const getLastUpdatedString = (date: string): string => {
     const dateObj = new Date(date);
     const momentDate = moment(dateObj);
     return momentDate.fromNow();
 };
 
 // validates an email address
-export function validateEmail (email: string) {
+export function validateEmail (email: string): boolean {
     const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regexp.test(email);
-  }
+};

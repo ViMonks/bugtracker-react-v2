@@ -3,7 +3,7 @@ import teamDetail from '../../fakeAPI/teamDetail';
 import { useParams } from 'react-router-dom';
 
 // interface imports
-import { Team, TeamMembership } from '../../types';
+import { Team } from '../../types';
 
 // internal imports
 import TeamMembersPanel from './TeamMembersPanel';

@@ -22,6 +22,7 @@ const ProjectDetailContainer = (props: any): React.ReactElement => {
 
     const createTicket = (newTicket: NewOrUpdatedTicketProps): void => {
         // TODO: the API call to create a new ticket will live here
+        // TODO: use react-router history.push and useHistory() hook to navigate to the ticket detail page after ticket creation
         console.log(newTicket)
         toast.success('Ticket created successfully!') // TODO: can map a Promise to a toast to have the toast update based on the Promise, like when fetching data. See implementation in docs: https://react-hot-toast.com/docs/toast
     }

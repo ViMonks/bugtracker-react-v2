@@ -1,6 +1,5 @@
-import { parse } from 'postcss';
 import React, { Fragment } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 // interface imports
 import { ProjectMembership, NewOrUpdatedTicketProps } from '../../types';
