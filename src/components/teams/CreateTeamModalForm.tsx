@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import { createPortal } from 'react-dom'
 
 // interface imports
 import { Team, NewTeamProps } from '../../types'

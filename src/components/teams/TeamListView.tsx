@@ -42,7 +42,8 @@ const TeamCard: React.FunctionComponent<TeamCardProps> = ({ team }: TeamCardProp
                         <Link to={`teams/${team.slug}/projects`}>View</Link>
                     </div>
                     <div className="card-footer-item">
-                        <p>Manage</p>
+                        <Link to={`teams/${team.slug}/manage`}>Manage</Link>
+                        {/* <p>Manage</p> */}
                     </div>
                     <div className="card-footer-item">
                         <p>Leave Team</p>
