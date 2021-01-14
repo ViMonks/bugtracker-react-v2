@@ -7,6 +7,7 @@ import { NewOrUpdatedTicketProps, Project, Ticket } from '../../types';
 import CreateTicketModalForm from '../tickets/CreateTicketModalForm';
 import TicketTableContainer from '../tickets/TicketTableContainer';
 import AssignedDevelopersList from './AssignedDevelopersList';
+import UpdateProjectModalForm from './UpdateProjectModalForm';
 
 interface ProjectDetailViewProps {
     project: Project;
@@ -67,9 +68,17 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
                 <AssignedDevelopersList memberships={memberships} />
             </div>
             <div className="block">
-                <button className="button is-warning is-dark">
-                    {is_archived ? 'Reopen project' : 'Archive project'}
-                </button>
+                <nav className="level"></nav>
+                <div className="level-left">
+                    <div className="level-item">
+                        <button className="button is-warning is-dark">
+                            {is_archived ? 'Reopen project' : 'Archive project'}
+                        </button>
+                    </div>
+                    <div className="level-item">
+                        <UpdateProjectModalForm project={project} />
+                    </div>
+                </div>
             </div>
         </div>
     );

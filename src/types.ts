@@ -36,6 +36,12 @@ export interface Project {
     open_tickets: number
 }
 
+export interface NewOrUpdatedProjectProps {
+    title: string;
+    description: string;
+    manager?: string;
+}
+
 export interface ProjectMembership {
     user: string,
     role: number,
