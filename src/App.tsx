@@ -8,24 +8,39 @@ import ProjectDetailContainer from './components/projects/ProjectDetailContainer
 import TicketDetailContainer from './components/tickets/TicketDetailContainer';
 import TeamListContainer from './components/teams/TeamListContainer';
 import ManageTeamController from './components/teams/ManageTeam';
+import SignUp from './components/auth/Signup';
+import Login from './components/auth/Login';
+import PrivateRoute from './components/auth/PrivateRoute';
+import { AuthProvider } from './components/context/AuthContext';
+import Dashboard from './components/auth/Dashboard'
+import ForgotPassword from './components/auth/ForgotPassword'
 
 function PrimaryLayout(): React.ReactElement {
     return (
-        <div className="App bg-gray-100 h-screen">
-            <main>
-                <Route exact path="/" component={TeamListContainer} />
-                <Route exact path="/teams/:teamSlug/projects/:projectSlug" component={ProjectDetailContainer} />
-                <Route exact path="/teams/:teamSlug/projects">
-                    <ProjectListContainer />
-                </Route>
-                <Route exact path="/teams/:teamSlug/manage" component={ManageTeamController} />
-                <Route
-                    exact
-                    path="/teams/:teamSlug/projects/:projectSlug/tickets/:ticketSlug"
-                    component={TicketDetailContainer}
-                />
-            </main>
-        </div>
+        <AuthProvider>
+            <div className="App bg-gray-100 h-screen">
+                <main>
+                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/signup" component={SignUp} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/forgot-password" component={ForgotPassword} />
+                    <PrivateRoute exact path="/teams" component={TeamListContainer} />
+                    <PrivateRoute
+                        exact
+                        path="/teams/:teamSlug/projects/:projectSlug"
+                        component={ProjectDetailContainer}
+                    />
+                    <PrivateRoute exact path="/teams/:teamSlug/projects" component={ProjectListContainer} />
+
+                    <PrivateRoute exact path="/teams/:teamSlug/manage" component={ManageTeamController} />
+                    <PrivateRoute
+                        exact
+                        path="/teams/:teamSlug/projects/:projectSlug/tickets/:ticketSlug"
+                        component={TicketDetailContainer}
+                    />
+                </main>
+            </div>
+        </AuthProvider>
     );
 }
 
