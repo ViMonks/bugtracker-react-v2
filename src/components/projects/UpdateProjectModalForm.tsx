@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { NewOrUpdatedProjectProps, Project, TeamMembership } from '../../types';
 
 // context
-import TeamContext from '../context/TeamContext';
+import TeamContext, { useTeam } from '../context/TeamContext';
 
 interface UpdateProjectModalFormProps {
     project: Project;
@@ -16,7 +16,7 @@ const UpdateProjectModalForm: React.FunctionComponent<UpdateProjectModalFormProp
     project,
 }: UpdateProjectModalFormProps): React.ReactElement => {
     const [isActive, setIsActive] = React.useState(false);
-    const team = React.useContext(TeamContext);
+    const { team } = useTeam()
 
     // form data
     const [title, setTitle] = React.useState(project.title);
@@ -83,14 +83,14 @@ const UpdateProjectModalForm: React.FunctionComponent<UpdateProjectModalFormProp
     return (
         <div className="container">
             <button className="button is-primary" onClick={() => setIsActive(!isActive)}>
-                Create New Project
+                Update Project
             </button>
 
             <div className={isActive ? 'modal is-active' : 'modal'}>
                 <div className="modal-background"></div>
                 <div className="modal-card">
                     <header className="modal-card-head">
-                        <p className="modal-card-title">Create New Project</p>
+                        <p className="modal-card-title">Update Project</p>
                         <button className="delete" aria-label="close" onClick={() => setIsActive(!isActive)}></button>
                     </header>
                     <section className="modal-card-body">

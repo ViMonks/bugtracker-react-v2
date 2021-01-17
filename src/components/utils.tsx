@@ -7,7 +7,7 @@ moment().format();
 export const createLinkCell = (value: string, href: string): React.ReactElement => {
     return (
         <td className="border border-gray-300 py-2 px-1 bg-gray-100 text-blue-500">
-            <Link to={location => `${location.pathname}/${href}`} className="hover:text-blue-600">
+            <Link to={location => `${location.pathname}/${href}`.replace('//', '/')} className="hover:text-blue-600">
                 {value}
             </Link>
         </td>

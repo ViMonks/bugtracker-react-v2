@@ -1,5 +1,4 @@
 import React from 'react';
-import teamDetail from '../../fakeAPI/teamDetail';
 import { useParams } from 'react-router-dom';
 
 // interface imports
@@ -8,6 +7,7 @@ import { Team } from '../../types';
 // internal imports
 import TeamMembersPanel from './TeamMembersPanel';
 import InviteUserToTeamModal from './InviteUserToTeamModal';
+import { useTeam } from '../context/TeamContext';
 
 // interface ManageTeamControllerProps {
 //     teamSlug: string;
@@ -22,20 +22,12 @@ interface ParamTypes {
 }
 
 const ManageTeamController: React.FunctionComponent = (): React.ReactElement => {
-    const getTeam = (teamSlug: string): Team => {
-        // TODO: The API call to get a specific team will live here
-        console.log(`Getting team ${teamSlug}`);
-        return teamDetail;
-    };
+    const { team } = useTeam();
 
-    const { teamSlug } = useParams<ParamTypes>();
-
-    return <ManageTeam team={getTeam(teamSlug)} />;
+    return <ManageTeam team={team} />;
 };
 
 const ManageTeam: React.FunctionComponent<ManageTeamProps> = ({ team }: ManageTeamProps): React.ReactElement => {
-    //TODO: extract team members, sort them, display them
-
     return (
         <div className="container mt-4">
             <div className="columns">

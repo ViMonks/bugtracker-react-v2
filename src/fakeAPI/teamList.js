@@ -22,7 +22,8 @@ const teamList = [
       ],
       "created": "2020-11-17T12:25:22.309277-05:00",
       "url": "http://localhost:8000/api/teams/monks-test-team/",
-      "projects_list": "http://localhost:8000/api/teams/monks-test-team/projects/"
+      "projects_list": "http://localhost:8000/api/teams/monks-test-team/projects/",
+      "user_is_admin": true,
     },
     {
       "title": "Monks Test Team 2",
@@ -31,13 +32,19 @@ const teamList = [
       "memberships": [
         {
           "user": "monks",
+          "role": 1,
+          "role_name": "Member"
+        },
+        {
+          "user": "AdminMan",
           "role": 2,
           "role_name": "Administrator"
-        }
+        },
       ],
       "created": "2020-11-30T09:23:09.154094-05:00",
       "url": "http://localhost:8000/api/teams/monks-test-team-2/",
-      "projects_list": "http://localhost:8000/api/teams/monks-test-team-2/projects/"
+      "projects_list": "http://localhost:8000/api/teams/monks-test-team-2/projects/",
+      "user_is_admin": false,
     },
     
   ]

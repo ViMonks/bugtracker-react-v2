@@ -25,7 +25,14 @@ const ticketList = [
           "text": "test comment",
           "created": "2021-01-01T11:23:18.769768-05:00"
         }
-      ]
+      ],
+      "user_permissions": {
+        "view": true,
+        "edit": true,
+        "change_developer": true,
+        "delete": true,
+        "close": true
+      },
     },
     {
         "title": "Test Ticket 2",
@@ -41,6 +48,13 @@ const ticketList = [
         "modified": "2020-11-21T16:34:22.462996-05:00",
         "url": "http://localhost:8000/api/teams/monks-test-team/projects/monks-test-project/tickets/test-ticket-2/",
         "comments": [],
+        "user_permissions": {
+          "view": true,
+          "edit": true,
+          "change_developer": true,
+          "delete": true,
+          "close": true
+        },
       },
       {
         "title": "Closed Ticket",
@@ -56,6 +70,13 @@ const ticketList = [
         "modified": "2020-11-21T16:34:22.462996-05:00",
         "url": "http://localhost:8000/api/teams/monks-test-team/projects/monks-test-project/tickets/closed-ticket/",
         "comments": [],
+        "user_permissions": {
+          "view": true,
+          "edit": true,
+          "change_developer": true,
+          "delete": true,
+          "close": true
+        },
       }
   ]
 

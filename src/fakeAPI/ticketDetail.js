@@ -24,7 +24,14 @@ const ticketDetail = {
         "text": "test comment",
         "created": "2021-01-01T11:23:18.769768-05:00"
       }
-    ]
+    ],
+    "user_permissions": {
+      "view": true,
+      "edit": true,
+      "change_developer": true,
+      "delete": true,
+      "close": true
+    }
   }
 
 export default ticketDetail

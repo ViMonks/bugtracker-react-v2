@@ -36,10 +36,10 @@ const TeamCard: React.FunctionComponent<TeamCardProps> = ({ team }: TeamCardProp
                 </div>
                 <div className="card-footer">
                     <div className="card-footer-item">
-                        <Link to={`teams/${team.slug}/projects`}>View</Link>
+                        <Link to={`/teams/${team.slug}/projects`}>View</Link>
                     </div>
                     <div className="card-footer-item">
-                        <Link to={`teams/${team.slug}/manage`}>Manage</Link>
+                        <Link to={`/teams/${team.slug}/manage`}>Manage</Link>
                         {/* <p>Manage</p> */}
                     </div>
                     {/* <div className="card-footer-item">

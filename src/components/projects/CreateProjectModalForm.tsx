@@ -6,11 +6,11 @@ import { useParams } from 'react-router-dom';
 import { NewOrUpdatedProjectProps, TeamMembership } from '../../types';
 
 // context
-import TeamContext from '../context/TeamContext';
+import TeamContext, { useTeam } from '../context/TeamContext';
 
 const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement => {
     const [isActive, setIsActive] = React.useState(false);
-    const team = React.useContext(TeamContext);
+    const { team } = useTeam()
 
     // form data
     const [title, setTitle] = React.useState('');

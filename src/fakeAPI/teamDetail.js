@@ -21,7 +21,8 @@ const teamDetail = {
     ],
     "created": "2020-11-17T12:25:22.309277-05:00",
     "url": "http://localhost:8000/api/teams/monks-test-team/",
-    "projects_list": "http://localhost:8000/api/teams/monks-test-team/projects/"
+    "projects_list": "http://localhost:8000/api/teams/monks-test-team/projects/",
+    "user_is_admin": true
   }
 
   export default teamDetail;

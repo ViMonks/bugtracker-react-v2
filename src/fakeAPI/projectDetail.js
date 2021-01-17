@@ -26,7 +26,13 @@ const projectDetail = {
     "modified": "2020-11-18T12:35:25.159585-05:00",
     "url": "http://localhost:8000/api/teams/monks-test-team/projects/monks-test-project/",
     "tickets_list": "http://localhost:8000/api/teams/monks-test-team/projects/monks-test-project/tickets/",
-    "open_tickets": 1
+    "open_tickets": 1,
+    "user_permissions": {
+      "view": true,
+      "edit": true,
+      "update_manager": true,
+      "create_tickets": true
+    }
   }
 
   export default projectDetail
