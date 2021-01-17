@@ -12,6 +12,7 @@ import { AuthProvider } from './components/context/AuthContext';
 import { TeamProvider } from './components/context/TeamContext';
 import Dashboard from './components/auth/Dashboard';
 import FirebaseUI from './components/auth/FirebaseUI';
+import Testing from './components/API/Testing';
 
 function PrimaryLayout(): React.ReactElement {
     return (
@@ -22,19 +23,20 @@ function PrimaryLayout(): React.ReactElement {
                     <PrivateRoute exact path="/teams" component={TeamListContainer} />
                     <TeamProvider>
                         <div>
-                        <PrivateRoute
-                            exact
-                            path="/teams/:teamSlug/projects/:projectSlug"
-                            component={ProjectDetailContainer}
-                        />
-                        <PrivateRoute exact path="/teams/:teamSlug/projects" component={ProjectListContainer} />
-                        <PrivateRoute exact path="/teams/:teamSlug/manage" component={ManageTeamController} />
-                        <PrivateRoute
-                            exact
-                            path="/teams/:teamSlug/projects/:projectSlug/tickets/:ticketSlug"
-                            component={TicketDetailContainer}
-                        />
-                    </div>
+                            <PrivateRoute exact path="/testing" component={Testing} />
+                            <PrivateRoute
+                                exact
+                                path="/teams/:teamSlug/projects/:projectSlug"
+                                component={ProjectDetailContainer}
+                            />
+                            <PrivateRoute exact path="/teams/:teamSlug/projects" component={ProjectListContainer} />
+                            <PrivateRoute exact path="/teams/:teamSlug/manage" component={ManageTeamController} />
+                            <PrivateRoute
+                                exact
+                                path="/teams/:teamSlug/projects/:projectSlug/tickets/:ticketSlug"
+                                component={TicketDetailContainer}
+                            />
+                        </div>
                     </TeamProvider>
                     <Route exact path="/auth" component={FirebaseUI} />
                 </main>
