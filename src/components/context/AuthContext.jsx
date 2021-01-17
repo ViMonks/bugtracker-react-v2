@@ -12,25 +12,24 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = React.useState();
     const [loading, setLoading] = React.useState(true)
 
-    function signup(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password);
-    }
+    // function signup(email, password) {
+    //     return auth.createUserWithEmailAndPassword(email, password);
+    // }
 
-    function login(email, password) {
-        return auth.signInWithEmailAndPassword(email, password)
-    }
+    // function login(email, password) {
+    //     return auth.signInWithEmailAndPassword(email, password)
+    // }
 
     function logout() {
         auth.signOut()
     }
 
-    function resetPassword(email) {
-        return auth.sendPasswordResetEmail(email)
-    }
+    // function resetPassword(email) {
+    //     return auth.sendPasswordResetEmail(email)
+    // }
 
     React.useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            
+        const unsubscribe = auth.onAuthStateChanged((user) => {            
             setCurrentUser(user);
             setLoading(false)
         });
@@ -40,10 +39,10 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
-        login,
-        signup,
+        // login,
+        // signup,
         logout,
-        resetPassword
+        // resetPassword
     };
 
     return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;

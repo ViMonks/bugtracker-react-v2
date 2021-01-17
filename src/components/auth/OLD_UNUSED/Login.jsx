@@ -1,11 +1,13 @@
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
-export default function ForgotPassword() {
+export default function Login() {
     const emailRef = React.useRef();
-    const { resetPassword } = useAuth();
+    const passwordRef = React.useRef();
+    const { login } = useAuth();
+    const history = useHistory()
 
     const [error, setError] = React.useState('');
     const [loading, setLoading] = React.useState(false);
@@ -14,8 +16,8 @@ export default function ForgotPassword() {
         try {
             setError('');
             setLoading(true);
-            await resetPassword(emailRef.current.value);
-            toast.success('Check your email for instructions on resetting your password.')
+            await login(emailRef.current.value, passwordRef.current.value);
+            history.push('/teams')
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
@@ -27,7 +29,7 @@ export default function ForgotPassword() {
         <div className="container mt-4">
             <div className="columns">
                 <div className="column is-4 is-offset-4">
-                <h1 className="title">Password Reset</h1>
+                    <h1 className="title">Log In</h1>
                     <div className="field">
                         <label className="label">Email</label>
                         <p className="control has-icons-left">
@@ -37,22 +39,33 @@ export default function ForgotPassword() {
                             </span>
                         </p>
                     </div>
-                    
+                    <div className="field">
+                        <label className="label">Password</label>
+                        <p className="control has-icons-left">
+                            <input className="input" type="password" ref={passwordRef} />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
                     <div className="field">
                         <p className="control">
                             {loading ? (
                                 <button className="button is-link" onClick={handleSubmit} disabled>
-                                    Reset Password
+                                    Login
                                 </button>
                             ) : (
                                 <button className="button is-link" onClick={handleSubmit}>
-                                    Reset Password
+                                    Login
                                 </button>
                             )}
                         </p>
-                    </div>                    
+                    </div>
+                    <div className="field">
+                        <p><Link to="/forgot-password">Forgot password?</Link></p>
+                    </div>
                     <div className="">
-                        <p><Link to={`/login`}>Return to login</Link></p>
+                        <p>Not yet registered? <Link to={`/signup`}>Sign Up</Link></p>
                     </div>
                 </div>
             </div>
