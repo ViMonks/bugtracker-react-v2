@@ -11,9 +11,27 @@ export const getTeamsList = (token) =>
         }
     });
 
-export const getProjectList = ({user, teamSlug}) =>
+export const getProjectList = ({ user, teamSlug }) =>
+    axios.get(`${baseURL}teams/${teamSlug}/projects/`, { headers: getHeaders(user) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });
+
+export const getTeamDetails = ({ user, teamSlug }) =>
+    axios.get(`${baseURL}teams/${teamSlug}`, { headers: getHeaders(user) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });
+
+export const getTicketList = ({ user, teamSlug, projectSlug }) =>
     axios
-        .get(`${baseURL}teams/${teamSlug}/projects/`, { headers: getHeaders(user) })
+        .get(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/`, { headers: getHeaders(user) })
         .catch((err) => {
             if (err.response) {
                 throw new Error(
@@ -24,11 +42,15 @@ export const getProjectList = ({user, teamSlug}) =>
             }
         });
 
-export const getTeamDetails = ({user, teamSlug}) =>
-    axios.get(`${baseURL}teams/${teamSlug}`, { headers: getHeaders(user) }).catch((err) => {
-        if (err.response) {
-            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
-        } else {
-            throw new Error(err);
-        }
-    });
+export const getProjectDetails = ({ user, teamSlug, projectSlug }) =>
+    axios
+        .get(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/`, { headers: getHeaders(user) })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });

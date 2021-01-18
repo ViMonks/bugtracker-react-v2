@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { useAuth } from '../context/AuthContext';
 import { useTeam } from '../context/TeamContext';
-import { getProjectList, getTeamsList, getTeamDetails } from './Api';
+import { getProjectList, getTeamsList, getTeamDetails, getProjectDetails } from './Api';
 import { ReactQueryDevtools } from 'react-query/devtools'
 import axios from 'axios'
 
@@ -14,19 +14,22 @@ import axios from 'axios'
 // }
 
 export default function Testing(): React.ReactElement {
-    const { currentUser } = useAuth();
+    const { currentUser, token } = useAuth();
     const { team } = useTeam();
-    const [token, setToken] = React.useState('')
+    // const [token, setToken] = React.useState('')
     const {data: user} = useQuery('user', async () => await currentUser.getIdToken())
 
     const teamSlug = 'monks-test-team'
-
+    const projectSlug = 'monks-test-project'
     // const { isLoading, error, data } = useQuery(['teamsList', user], () => getTeamsList(user), {enabled: !!user})
     // const { isLoading, error, data } = useQuery(['projectList', user], () => getProjectList(user), {enabled: !!user})
     // const { isLoading: teamsIsLoading, error: teamsError, data: teams } = useQuery(['teamsList', user], () => getTeamsList(user), {enabled: !!user})
     // const { isLoading, error, data } = useQuery(['teamDetails', {user, slug}], () => getTeamDetails({user, slug}), {enabled: !!user})
-    const { isLoading, error, data } = useQuery(['projectList', {user, teamSlug}], () => getProjectList({user, teamSlug}), {enabled: !!user})
-
+    const { isLoading: projectIsLoading, error: projectError, data: projectDetails } = useQuery<any, Error>(
+        ['projectDetails', { user, teamSlug, projectSlug }],
+        () => getProjectDetails({ user, teamSlug, projectSlug }),
+        { enabled: !!user },
+    );
     
 
     const handleGetTeams = () => {

@@ -13,9 +13,11 @@ import { getTeamsList } from '../API/Api';
 import LoadingBar from '../LoadingBar';
 
 const TeamListContainer = (): React.ReactElement => {
-    const { currentUser } = useAuth();
-    const { data: user } = useQuery('user', async () => await currentUser.getIdToken());
-    const { isLoading, error, data } = useQuery<any, Error>(['team', user], () => getTeamsList(user), { enabled: !!user });
+    const { currentUser, token } = useAuth();
+    const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
+    const { isLoading, error, data } = useQuery<any, Error>(['team', user], () => getTeamsList(user), {
+        enabled: !!user,
+    });
 
     const createTeam = (newTeam: NewTeamProps): void => {
         // TODO: This is where the API call to submit a new team POST request will live

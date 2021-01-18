@@ -20,7 +20,7 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
     // const { team } = useTeam();
     const { teamSlug } = useParams<ParamTypes>();
     const { currentUser } = useAuth();
-    const { data: user } = useQuery('user', async () => await currentUser.getIdToken());
+    const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data: team } = useQuery<any, Error>(
         ['teamDetails', { user, teamSlug }],
         () => getTeamDetails({ user, teamSlug }),

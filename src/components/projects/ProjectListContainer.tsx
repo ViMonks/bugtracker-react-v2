@@ -23,7 +23,7 @@ const ProjectListContainer = (): React.ReactElement => {
     const { team } = useTeam();
     const { teamSlug } = useParams<ParamTypes>();
     const { currentUser } = useAuth();
-    const { data: user } = useQuery('user', async () => await currentUser.getIdToken());
+    const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(
         ['projectList', { user, teamSlug }],
         () => getProjectList({ user, teamSlug }),

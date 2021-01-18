@@ -1,7 +1,7 @@
 const projectDetail = {
     "title": "Monks Test Project",
     "slug": "monks-test-project",
-    "description": "This is a project description!",
+    "description": "This is a project description! FAKE",
     "team": "monks-test-team",
     "is_archived": false,
     "manager": "monks",

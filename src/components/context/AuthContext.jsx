@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from 'react';
+import { setTokenSourceMapRange } from 'typescript';
 import { auth } from '../../auth/firebase';
 
 const AuthContext = React.createContext();
@@ -10,7 +11,8 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = React.useState();
-    const [loading, setLoading] = React.useState(true)
+    const [loading, setLoading] = React.useState(true);
+    const [token, setToken] = React.useState('')
 
     // function signup(email, password) {
     //     return auth.createUserWithEmailAndPassword(email, password);
@@ -32,6 +34,7 @@ export function AuthProvider({ children }) {
         const unsubscribe = auth.onAuthStateChanged((user) => {            
             setCurrentUser(user);
             setLoading(false)
+            currentUser.getIdToken().then(token => setToken(token))
         });
 
         return unsubscribe;
@@ -39,6 +42,7 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
+        token,
         // login,
         // signup,
         logout,
