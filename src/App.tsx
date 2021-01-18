@@ -19,7 +19,7 @@ function PrimaryLayout(): React.ReactElement {
     return (
         <MyQueryClientProvider>
             <AuthProvider>
-                <div className="App bg-gray-100 h-screen">
+                <div className="App h-screen">
                     <main>
                         <Route exact path="/dashboard" component={Dashboard} />
                         <PrivateRoute exact path="/teams" component={TeamListContainer} />

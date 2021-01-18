@@ -11,11 +11,12 @@ import { Team, NewTeamProps } from '../../types';
 import TeamListView from './TeamListView';
 import CreateTeamModalForm from './CreateTeamModalForm';
 import { getTeamsList } from '../API/Api';
+import LoadingBar from '../LoadingBar';
 
 const TeamListContainer = (): React.ReactElement => {
     const { currentUser } = useAuth();
     const { data: user } = useQuery('user', async () => await currentUser.getIdToken());
-    const { isLoading, error, data } = useQuery(['team', user], () => getTeamsList(user), { enabled: !!user });
+    const { isLoading, error, data } = useQuery<any, Error>(['team', user], () => getTeamsList(user), { enabled: !!user });
 
     const getTeams = (): Team[] => {
         // TODO: this is where the API call to get a user's teams will live
@@ -34,10 +35,9 @@ const TeamListContainer = (): React.ReactElement => {
     return (
         <div className="container">
             <div className="block">
-                {isLoading ? 'Loading, yo' : null}
-                {error ? 'Error' : null}
+                {isLoading ? <LoadingBar /> : null}
+                {error ? error.message : null}
                 {data ? <TeamListView teams={data.data} /> : null}
-                {/* <TeamListView teams={teams} /> */}
             </div>
             <div className="block">
                 <CreateTeamModalForm createTeam={createTeam} />
