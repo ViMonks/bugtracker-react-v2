@@ -13,35 +13,38 @@ import { TeamProvider } from './components/context/TeamContext';
 import Dashboard from './components/auth/Dashboard';
 import FirebaseUI from './components/auth/FirebaseUI';
 import Testing from './components/API/Testing';
+import MyQueryClientProvider from './components/API/MyQueryClientProvider';
 
 function PrimaryLayout(): React.ReactElement {
     return (
-        <AuthProvider>
-            <div className="App bg-gray-100 h-screen">
-                <main>
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <PrivateRoute exact path="/teams" component={TeamListContainer} />
-                    <TeamProvider>
-                        <div>
-                            <PrivateRoute exact path="/testing" component={Testing} />
-                            <PrivateRoute
-                                exact
-                                path="/teams/:teamSlug/projects/:projectSlug"
-                                component={ProjectDetailContainer}
-                            />
-                            <PrivateRoute exact path="/teams/:teamSlug/projects" component={ProjectListContainer} />
-                            <PrivateRoute exact path="/teams/:teamSlug/manage" component={ManageTeamController} />
-                            <PrivateRoute
-                                exact
-                                path="/teams/:teamSlug/projects/:projectSlug/tickets/:ticketSlug"
-                                component={TicketDetailContainer}
-                            />
-                        </div>
-                    </TeamProvider>
-                    <Route exact path="/auth" component={FirebaseUI} />
-                </main>
-            </div>
-        </AuthProvider>
+        <MyQueryClientProvider>
+            <AuthProvider>
+                <div className="App bg-gray-100 h-screen">
+                    <main>
+                        <Route exact path="/dashboard" component={Dashboard} />
+                        <PrivateRoute exact path="/teams" component={TeamListContainer} />
+                        <TeamProvider>
+                            <div>
+                                <PrivateRoute exact path="/testing" component={Testing} />
+                                <PrivateRoute
+                                    exact
+                                    path="/teams/:teamSlug/projects/:projectSlug"
+                                    component={ProjectDetailContainer}
+                                />
+                                <PrivateRoute exact path="/teams/:teamSlug/projects" component={ProjectListContainer} />
+                                <PrivateRoute exact path="/teams/:teamSlug/manage" component={ManageTeamController} />
+                                <PrivateRoute
+                                    exact
+                                    path="/teams/:teamSlug/projects/:projectSlug/tickets/:ticketSlug"
+                                    component={TicketDetailContainer}
+                                />
+                            </div>
+                        </TeamProvider>
+                        <Route exact path="/auth" component={FirebaseUI} />
+                    </main>
+                </div>
+            </AuthProvider>
+        </MyQueryClientProvider>
     );
 }
 
