@@ -43,14 +43,19 @@ export const getTicketList = ({ user, teamSlug, projectSlug }) =>
         });
 
 export const getProjectDetails = ({ user, teamSlug, projectSlug }) =>
-    axios
-        .get(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/`, { headers: getHeaders(user) })
-        .catch((err) => {
-            if (err.response) {
-                throw new Error(
-                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
-                );
-            } else {
-                throw new Error(err);
-            }
-        });
+    axios.get(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/`, { headers: getHeaders(user) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });
+
+export const getTicketDetails = ({ user, teamSlug, projectSlug, ticketSlug }) =>
+    axios.get(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/${ticketSlug}`, { headers: getHeaders(user) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });

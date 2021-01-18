@@ -13,10 +13,10 @@ import { getTeamsList } from '../API/Api';
 import LoadingBar from '../LoadingBar';
 
 const TeamListContainer = (): React.ReactElement => {
-    const { currentUser, token } = useAuth();
-    const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
+    const { currentUser, user } = useAuth();
+    // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(['team', user], () => getTeamsList(user), {
-        enabled: !!user,
+        enabled: !!user, staleTime: 30000
     });
 
     const createTeam = (newTeam: NewTeamProps): void => {

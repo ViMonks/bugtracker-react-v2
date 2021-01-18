@@ -15,7 +15,7 @@ const ticketDetail = {
       {
         "user": "monks",
         "ticket": "test-ticket",
-        "text": "custom action comment",
+        "text": "custom action comment FAKE",
         "created": "2021-01-01T11:46:34.148222-05:00"
       },
       {
