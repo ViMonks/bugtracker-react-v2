@@ -3,21 +3,32 @@ import { useQuery, useQueryClient } from 'react-query';
 import { baseURL, getHeaders } from './ApiConfig';
 
 export const getTeamsList = (token) =>
-    axios.get(baseURL+'teams/', {headers: getHeaders(token)})
-        .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'])
-            } else {
-                throw new Error(err)
-            }
-        })
+    axios.get(baseURL + 'teams/', { headers: getHeaders(token) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });
 
-export const getProjectList = (token) =>
-    axios.get("http://localhost:5001/api/teams/monks-test-team/projects/", {headers: getHeaders(token)})
-        .catch(err => {
+export const getProjectList = ({user, teamSlug}) =>
+    axios
+        .get(`${baseURL}teams/${teamSlug}/projects/`, { headers: getHeaders(user) })
+        .catch((err) => {
             if (err.response) {
-                throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'])
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
             } else {
-                throw new Error(err)
+                throw new Error(err);
             }
-        })
+        });
+
+export const getTeamDetails = ({user, teamSlug}) =>
+    axios.get(`${baseURL}teams/${teamSlug}`, { headers: getHeaders(user) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });

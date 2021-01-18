@@ -2,7 +2,7 @@ const projectList = [
     {
       "title": "Monks Test Project",
       "slug": "monks-test-project",
-      "description": "This is a project description!",
+      "description": "FAKE",
       "team": "monks-test-team",
       "is_archived": false,
       "manager": "monks",

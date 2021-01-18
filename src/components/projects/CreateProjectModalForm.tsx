@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { useAuth } from '../context/AuthContext';
+import { getTeamDetails } from '../API/Api';
 
 // interface imports
 import { NewOrUpdatedProjectProps, TeamMembership } from '../../types';
@@ -8,9 +11,21 @@ import { NewOrUpdatedProjectProps, TeamMembership } from '../../types';
 // context
 import TeamContext, { useTeam } from '../context/TeamContext';
 
+interface ParamTypes {
+    teamSlug: string;
+}
+
 const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement => {
     const [isActive, setIsActive] = React.useState(false);
-    const { team } = useTeam()
+    // const { team } = useTeam();
+    const { teamSlug } = useParams<ParamTypes>();
+    const { currentUser } = useAuth();
+    const { data: user } = useQuery('user', async () => await currentUser.getIdToken());
+    const { isLoading, error, data: team } = useQuery<any, Error>(
+        ['teamDetails', { user, teamSlug }],
+        () => getTeamDetails({ user, teamSlug }),
+        { enabled: !!user },
+    );
 
     // form data
     const [title, setTitle] = React.useState('');
@@ -77,69 +92,79 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
 
     return (
         <div className="container">
-            <button className="button is-primary" onClick={() => setIsActive(!isActive)}>
+            <button
+                className={isLoading ? 'button is-primary is-loading' : 'button is-primary'}
+                onClick={() => setIsActive(!isActive)}
+            >
                 Create New Project
             </button>
 
-            <div className={isActive ? 'modal is-active' : 'modal'}>
-                <div className="modal-background"></div>
-                <div className="modal-card">
-                    <header className="modal-card-head">
-                        <p className="modal-card-title">Create New Project</p>
-                        <button className="delete" aria-label="close" onClick={() => setIsActive(!isActive)}></button>
-                    </header>
-                    <section className="modal-card-body">
-                        {/* Title Field */}
-                        <div className="field">
-                            <label className="label">Title</label>
-                            <div className="control">
-                                <input
-                                    type="text"
-                                    className={!title ? 'input is-danger' : 'input'}
-                                    value={title}
-                                    onChange={handleTitleChange}
-                                />
+            {error ? error.message : null}
+            {team && (
+                <div className={isActive ? 'modal is-active' : 'modal'}>
+                    <div className="modal-background"></div>
+                    <div className="modal-card">
+                        <header className="modal-card-head">
+                            <p className="modal-card-title">Create New Project</p>
+                            <button
+                                className="delete"
+                                aria-label="close"
+                                onClick={() => setIsActive(!isActive)}
+                            ></button>
+                        </header>
+                        <section className="modal-card-body">
+                            {/* Title Field */}
+                            <div className="field">
+                                <label className="label">Title</label>
+                                <div className="control">
+                                    <input
+                                        type="text"
+                                        className={!title ? 'input is-danger' : 'input'}
+                                        value={title}
+                                        onChange={handleTitleChange}
+                                    />
+                                </div>
+                                {!title && <p className="help is-danger">Title is required.</p>}
                             </div>
-                            {!title && <p className="help is-danger">Title is required.</p>}
-                        </div>
 
-                        {/* Description Field */}
-                        <div className="field">
-                            <label className="label">Description</label>
-                            <div className="control">
-                                <textarea
-                                    className={!description ? 'textarea is-danger' : 'textarea'}
-                                    value={description}
-                                    onChange={handleDescriptionChange}
-                                ></textarea>
+                            {/* Description Field */}
+                            <div className="field">
+                                <label className="label">Description</label>
+                                <div className="control">
+                                    <textarea
+                                        className={!description ? 'textarea is-danger' : 'textarea'}
+                                        value={description}
+                                        onChange={handleDescriptionChange}
+                                    ></textarea>
+                                </div>
+                                {!description && <p className="help is-danger">Description is required.</p>}
                             </div>
-                            {!description && <p className="help is-danger">Description is required.</p>}
-                        </div>
 
-                        {/* Manager Field */}
-                        <div className="field">
-                            <label className="label">Manager</label>
-                            <div className="control">{createManagersOptionsList(team.memberships)}</div>
-                        </div>
-                    </section>
-                    <footer className="modal-card-foot">
-                        {!title || !description ? (
-                            <button className="button is-success" disabled onClick={handleSubmit}>
-                                Submit
-                            </button>
-                        ) : (
-                            <button className="button is-success" onClick={handleSubmit}>
-                                Submit
-                            </button>
-                        )}
+                            {/* Manager Field */}
+                            <div className="field">
+                                <label className="label">Manager</label>
+                                <div className="control">{createManagersOptionsList(team.data.memberships)}</div>
+                            </div>
+                        </section>
+                        <footer className="modal-card-foot">
+                            {!title || !description ? (
+                                <button className="button is-success" disabled onClick={handleSubmit}>
+                                    Submit
+                                </button>
+                            ) : (
+                                <button className="button is-success" onClick={handleSubmit}>
+                                    Submit
+                                </button>
+                            )}
 
-                        <button className="button" onClick={() => setIsActive(!isActive)}>
-                            Cancel
-                        </button>
-                    </footer>
+                            <button className="button" onClick={() => setIsActive(!isActive)}>
+                                Cancel
+                            </button>
+                        </footer>
+                    </div>
+                    <button className="modal-close is-large" onClick={() => setIsActive(!isActive)}></button>
                 </div>
-                <button className="modal-close is-large" onClick={() => setIsActive(!isActive)}></button>
-            </div>
+            )}
         </div>
     );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { useAuth } from '../context/AuthContext';
 import { useTeam } from '../context/TeamContext';
-import { getProjectList, getTeamsList } from './Api';
+import { getProjectList, getTeamsList, getTeamDetails } from './Api';
 import { ReactQueryDevtools } from 'react-query/devtools'
 import axios from 'axios'
 
@@ -19,22 +19,26 @@ export default function Testing(): React.ReactElement {
     const [token, setToken] = React.useState('')
     const {data: user} = useQuery('user', async () => await currentUser.getIdToken())
 
+    const teamSlug = 'monks-test-team'
+
     // const { isLoading, error, data } = useQuery(['teamsList', user], () => getTeamsList(user), {enabled: !!user})
-    const { isLoading, error, data } = useQuery(['projectList', user], () => getProjectList(user), {enabled: !!user})
-    const { isLoading: teamsIsLoading, error: teamsError, data: teams } = useQuery(['teamsList', user], () => getTeamsList(user), {enabled: !!user})
+    // const { isLoading, error, data } = useQuery(['projectList', user], () => getProjectList(user), {enabled: !!user})
+    // const { isLoading: teamsIsLoading, error: teamsError, data: teams } = useQuery(['teamsList', user], () => getTeamsList(user), {enabled: !!user})
+    // const { isLoading, error, data } = useQuery(['teamDetails', {user, slug}], () => getTeamDetails({user, slug}), {enabled: !!user})
+    const { isLoading, error, data } = useQuery(['projectList', {user, teamSlug}], () => getProjectList({user, teamSlug}), {enabled: !!user})
 
     
 
     const handleGetTeams = () => {
         console.log(`Current user is: ${currentUser.email}`);
         console.log('Getting teams...');
-        console.log(teams)
+        // console.log(teams)
     };
 
     const handleGetProjects = () => {
         console.log(`Current user is: ${currentUser.email}`);
         console.log('Getting projects...');
-        console.log(data)
+        // console.log(data)
     };
 
     const handleGetTickets = () => {
