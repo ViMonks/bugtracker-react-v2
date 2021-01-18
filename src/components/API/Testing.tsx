@@ -17,10 +17,7 @@ export default function Testing(): React.ReactElement {
     const { currentUser } = useAuth();
     const { team } = useTeam();
     const [token, setToken] = React.useState('')
-    const {data: user} = useQuery('user', async () => {
-        const data = await currentUser.getIdToken()
-        return data
-    })
+    const {data: user} = useQuery('user', async () => await currentUser.getIdToken())
 
     // const { isLoading, error, data } = useQuery(['teamsList', user], () => getTeamsList(user), {enabled: !!user})
     const { isLoading, error, data } = useQuery(['projectList', user], () => getProjectList(user), {enabled: !!user})
