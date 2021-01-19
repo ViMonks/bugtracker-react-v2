@@ -3,11 +3,11 @@ import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 // Interface imports
-import { Project, ProjectMembership } from '../../types';
+import { Project } from '../../types';
 import { useAuth } from '../context/AuthContext';
 
 // Internal imports
-import { createLinkCell, createHeader, createCell, createDateCell } from '../utils';
+import { createLinkCell, createCell, createDateCell } from '../utils';
 import { getProjectDetails, getTicketList } from '../API/Api';
 
 interface ProjectTableRowProps {

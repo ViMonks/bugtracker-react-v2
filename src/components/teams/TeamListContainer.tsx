@@ -1,20 +1,19 @@
 import React from 'react';
 import toast from 'react-hot-toast';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 
 // interfaces
-import { NewTeamProps, Team } from '../../types';
+import { NewTeamProps } from '../../types';
 
 // internal imports
 import TeamListView from './TeamListView';
 import CreateTeamModalForm from './CreateTeamModalForm';
 import { useAuth } from '../context/AuthContext';
-import { getTeamsList, getProjectList } from '../API/Api';
+import { getTeamsList } from '../API/Api';
 import LoadingBar from '../LoadingBar';
 
 const TeamListContainer = (): React.ReactElement => {
     const { user } = useAuth();
-    // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(['team', user], () => getTeamsList(user), {
         enabled: !!user,
         staleTime: 30000,

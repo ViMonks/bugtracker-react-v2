@@ -1,26 +1,17 @@
 import React from 'react';
-import { useRouteMatch } from 'react-router-dom';
 
 // Interface imports
-import { Project, ProjectMembership, Ticket, Comment } from '../../types';
+import { Ticket } from '../../types';
 
 // Internal imports
-import {
-    createLinkCell,
-    createHeader,
-    createCell,
-    createDateCell,
-    createElapsedTimeCell,
-    getPriorityText,
-} from '../utils';
+import TicketTableRow from './TicketTableRow';
+import { createHeader } from '../utils';
 
 interface TicketTableProps {
     tickets: Ticket[];
 }
 
 const TicketTable: React.FunctionComponent<TicketTableProps> = ({ tickets }: TicketTableProps): React.ReactElement => {
-    const { url } = useRouteMatch();
-
     const headers: string[] = ['Title', 'User', 'Developer', 'Priority', 'Created', 'Updated'];
 
     return (
@@ -29,18 +20,9 @@ const TicketTable: React.FunctionComponent<TicketTableProps> = ({ tickets }: Tic
                 <tr>{headers.map((header: string, index: number) => createHeader(header, index.toString()))}</tr>
             </thead>
             <tbody>
-                {tickets.map((ticket) => {
-                    return (
-                        <tr key={ticket.slug}>
-                            {createLinkCell(ticket.title, `tickets/${ticket.slug}`)}
-                            {createCell(ticket.user)}
-                            {ticket.developer ? createCell(ticket.developer) : createCell('')}
-                            {createCell(getPriorityText(ticket.priority))}
-                            {createDateCell(ticket.created)}
-                            {createElapsedTimeCell(ticket.modified)}
-                        </tr>
-                    );
-                })}
+                {tickets.map((ticket) => (
+                    <TicketTableRow key={ticket.slug} ticket={ticket} />
+                ))}
             </tbody>
         </table>
     );

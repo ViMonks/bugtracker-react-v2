@@ -1,10 +1,10 @@
 import React from 'react';
 
 // Interface imports
-import { Project, ProjectMembership } from '../../types';
+import { Project } from '../../types';
 
 // Internal imports
-import { createLinkCell, createHeader, createCell, createDateCell } from '../utils';
+import { createHeader } from '../utils';
 import ProjectTableRow from './ProjectTableRow'
 
 interface ProjectTableProps {

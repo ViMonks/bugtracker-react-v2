@@ -2,12 +2,6 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
-// interfaces
-import { Project, Team } from '../../types';
-
-// context
-import TeamContext, { useTeam } from '../context/TeamContext';
-
 // internal imports
 import ProjectListView from './ProjectListView';
 import CreateProjectModalForm from './CreateProjectModalForm';
@@ -21,9 +15,8 @@ interface ParamTypes {
 
 const ProjectListContainer = (): React.ReactElement => {
     // project details and ticket list prefetching happens in the ProjectTableRow component
-    const { team } = useTeam();
     const { teamSlug } = useParams<ParamTypes>();
-    const { currentUser, user } = useAuth();
+    const { user } = useAuth();
     // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(
         ['projectList', { user, teamSlug }],

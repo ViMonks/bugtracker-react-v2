@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 // Interface imports
 import { Project, ProjectMembership } from '../../types';

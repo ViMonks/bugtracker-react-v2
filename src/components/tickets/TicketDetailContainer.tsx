@@ -7,11 +7,10 @@ import { useQuery } from 'react-query';
 import { useAuth } from '../context/AuthContext';
 import { getTicketDetails } from '../API/Api';
 
-import TeamContext, { useTeam } from '../context/TeamContext';
 import LoadingBar from '../LoadingBar';
 
 // interfaces
-import { NewOrUpdatedTicketProps, Ticket, Project } from '../../types';
+import { NewOrUpdatedTicketProps, Project } from '../../types';
 
 import TicketDetailView from './TicketDetailView';
 
@@ -23,7 +22,7 @@ interface ParamTypes {
 
 const TicketDetailContainer = (props: any): React.ReactElement => {
     const { ticketSlug, projectSlug, teamSlug } = useParams<ParamTypes>();
-    const { currentUser, user } = useAuth();
+    const { user } = useAuth();
     // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(
         ['ticketDetails', { user, teamSlug }],
