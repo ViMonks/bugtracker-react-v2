@@ -1,23 +1,26 @@
 import React from 'react';
 import toast from 'react-hot-toast';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 // interfaces
-import { NewTeamProps } from '../../types';
+import { NewTeamProps, Team } from '../../types';
 
 // internal imports
 import TeamListView from './TeamListView';
 import CreateTeamModalForm from './CreateTeamModalForm';
 import { useAuth } from '../context/AuthContext';
-import { getTeamsList } from '../API/Api';
+import { getTeamsList, getProjectList } from '../API/Api';
 import LoadingBar from '../LoadingBar';
 
 const TeamListContainer = (): React.ReactElement => {
-    const { currentUser, user } = useAuth();
+    const { user } = useAuth();
     // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(['team', user], () => getTeamsList(user), {
-        enabled: !!user, staleTime: 30000
+        enabled: !!user,
+        staleTime: 30000,
     });
+
+    // prefetching project details happens in the TeamCard component
 
     const createTeam = (newTeam: NewTeamProps): void => {
         // TODO: This is where the API call to submit a new team POST request will live

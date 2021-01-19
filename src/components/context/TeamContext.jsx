@@ -27,11 +27,6 @@ export function TeamProvider({ children }) {
     const { teamSlug } = useParams();    
     const [team, setTeam] = React.useState(getTeam(teamSlug))    
 
-    // React.useEffect(() => { // don't think this is necessary and in fact causes problems
-    //     setTeam(getTeam(teamSlug))
-    //     console.log(`Getting team ${teamSlug}`)
-    // }, [teamSlug])
-
     const value = {
         team,
     }
