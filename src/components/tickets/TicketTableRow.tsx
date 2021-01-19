@@ -36,7 +36,7 @@ export default function TicketTableRow({ ticket }: TicketTableRowProps): React.R
         await queryClient.prefetchQuery(
             ['ticketDetails', { user, teamSlug }],
             () => getTicketDetails({ user, teamSlug, projectSlug, ticketSlug }),
-            { staleTime: 30000 },
+            { staleTime: Infinity },
         );
     };
 

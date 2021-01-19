@@ -34,7 +34,7 @@ const TeamCard: React.FunctionComponent<TeamCardProps> = ({ team }: TeamCardProp
     const prefetchProjectList = async () => {
         await user;
         await queryClient.prefetchQuery(['projectList', { user, teamSlug }], () => getProjectList({ user, teamSlug }), {
-            staleTime: 30000,
+            staleTime: Infinity,
         });
     };
 

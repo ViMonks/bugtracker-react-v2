@@ -9,16 +9,17 @@ import TeamListContainer from './components/teams/TeamListContainer';
 import ManageTeamController from './components/teams/ManageTeam';
 import PrivateRoute from './components/auth/PrivateRoute';
 import { AuthProvider } from './components/context/AuthContext';
-import { TeamProvider } from './components/context/TeamContextDEPRECATED';
 import Dashboard from './components/auth/Dashboard';
 import FirebaseUI from './components/auth/FirebaseUI';
 import Testing from './components/API/Testing';
 import MyQueryClientProvider from './components/API/MyQueryClientProvider';
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 function PrimaryLayout(): React.ReactElement {
     return (
-        <MyQueryClientProvider>
+        <MyQueryClientProvider>            
             <AuthProvider>
+                <ReactQueryDevtools />
                 <div className="App h-screen">
                     <main>
                         <Route exact path="/dashboard" component={Dashboard} />

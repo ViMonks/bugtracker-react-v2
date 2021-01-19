@@ -29,7 +29,7 @@ export default function ProjectTableRow({ project }: ProjectTableRowProps): Reac
         await queryClient.prefetchQuery(
             ['ticketList', { user, teamSlug, projectSlug }],
             () => getTicketList({ user, teamSlug, projectSlug }),
-            { staleTime: 30000 },
+            { staleTime: Infinity },
         );
     };
 
@@ -38,7 +38,7 @@ export default function ProjectTableRow({ project }: ProjectTableRowProps): Reac
         await queryClient.prefetchQuery(
             ['projectDetails', { user, teamSlug, projectSlug }],
             () => getProjectDetails({ user, teamSlug, projectSlug }),
-            { staleTime: 30000 },
+            { staleTime: Infinity },
         );
     };
 

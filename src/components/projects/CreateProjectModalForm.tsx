@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useHistory, useParams } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useAuth } from '../context/AuthContext';
-import { getTeamDetails } from '../API/Api';
+import { getTeamDetails, createProject } from '../API/Api';
 
 // interface imports
 import { NewOrUpdatedProjectProps, TeamMembership } from '../../types';
@@ -29,6 +29,7 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [manager, setManager] = React.useState('');
+    const history = useHistory()
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -42,13 +43,18 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
         setManager(e.target.value);
     };
 
-    const createNewProject = (newProject: NewOrUpdatedProjectProps): void => {
-        console.log(newProject);
-        // TODO: API call to submit new project; will have to get teamSlug and include it in the POST
-        toast.success('New project created!');
-        // TODO: react-router history.push and useHistory to redirect to project's details page
-    };
-
+    const queryClient = useQueryClient();
+    const mutation = useMutation(createProject, {
+        onSuccess: (data) => {
+            queryClient.invalidateQueries();
+            queryClient.refetchQueries({ stale: true });            
+            toast.success('New project created!');
+            history.push(data.data.slug)
+        },
+        onError: () => {
+            toast.error('Something went wrong. Please try again.');
+        },
+    });
     const handleSubmit = () => {
         let newProject;
         if (manager) {
@@ -63,7 +69,7 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
                 description: description,
             };
         }
-        createNewProject(newProject);
+        mutation.mutate({ user, teamSlug, newProject });
         setIsActive(false);
     };
 

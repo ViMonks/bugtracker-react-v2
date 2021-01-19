@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
 // interface imports
-import { Team, NewTeamProps } from '../../types'
+import { NewTeamProps } from '../../types'
 
 interface CreateTeamModalFormProps {
     createTeam: (newTeam: NewTeamProps) => void
