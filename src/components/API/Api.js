@@ -2,14 +2,17 @@ import axios from 'axios';
 import { useQuery, useQueryClient } from 'react-query';
 import { baseURL, getHeaders } from './ApiConfig';
 
-export const getTeamsList = (token) =>
-    axios.get(baseURL + 'teams/', { headers: getHeaders(token) }).catch((err) => {
-        if (err.response) {
-            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
-        } else {
-            throw new Error(err);
-        }
-    });
+export const getTeamsList = (token) => {
+    return (
+        axios.get(baseURL + 'teams/', { headers: getHeaders(token) }).catch((err) => {
+            if (err.response) {
+                throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+            } else {
+                throw new Error(err);
+            }
+        })
+    )
+}
 
 export const getProjectList = ({ user, teamSlug }) =>
     axios.get(`${baseURL}teams/${teamSlug}/projects/`, { headers: getHeaders(user) }).catch((err) => {
@@ -59,3 +62,15 @@ export const getTicketDetails = ({ user, teamSlug, projectSlug, ticketSlug }) =>
             throw new Error(err);
         }
     });
+
+export const createTeam = ({user, newTeam}) => {
+    return (
+        axios.post(baseURL + 'teams/', newTeam, { headers: getHeaders(user) }).catch((err) => {
+            if (err.response) {
+                throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+            } else {
+                throw new Error(err);
+            }
+        })
+    )
+}
