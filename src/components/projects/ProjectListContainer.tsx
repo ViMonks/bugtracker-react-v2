@@ -20,6 +20,7 @@ interface ParamTypes {
 }
 
 const ProjectListContainer = (): React.ReactElement => {
+    // project details and ticket list prefetching happens in the ProjectTableRow component
     const { team } = useTeam();
     const { teamSlug } = useParams<ParamTypes>();
     const { currentUser, user } = useAuth();

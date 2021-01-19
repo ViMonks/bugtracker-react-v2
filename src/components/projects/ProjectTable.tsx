@@ -5,6 +5,7 @@ import { Project, ProjectMembership } from '../../types';
 
 // Internal imports
 import { createLinkCell, createHeader, createCell, createDateCell } from '../utils';
+import ProjectTableRow from './ProjectTableRow'
 
 interface ProjectTableProps {
     projects: Project[];
@@ -21,17 +22,7 @@ const ProjectTable: React.FunctionComponent<ProjectTableProps> = ({
                 <tr>{headers.map((header: string, index: number) => createHeader(header, index.toString()))}</tr>
             </thead>
             <tbody>
-                {projects.map((project) => {
-                    return (
-                        <tr key={project.slug}>
-                            {createLinkCell(project.title, `${project.slug}`)}
-                            {createCell(project.description)}
-                            {createCell(project.manager)}
-                            {createCell(project.open_tickets)}
-                            {createDateCell(project.created)}
-                        </tr>
-                    );
-                })}
+                {projects.map((project) => <ProjectTableRow key={project.slug} project={project} />)}
             </tbody>
         </table>
     );

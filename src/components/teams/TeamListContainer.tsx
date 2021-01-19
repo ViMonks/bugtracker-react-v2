@@ -20,7 +20,7 @@ const TeamListContainer = (): React.ReactElement => {
         staleTime: 30000,
     });
 
-    // prefetching project details happens in the TeamCard component
+    // background prefetching project list happens in the TeamCard component
 
     const createTeam = (newTeam: NewTeamProps): void => {
         // TODO: This is where the API call to submit a new team POST request will live
