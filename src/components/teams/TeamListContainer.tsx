@@ -1,6 +1,6 @@
 import React from 'react';
 import toast from 'react-hot-toast';
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 // interfaces
 import { NewTeamProps } from '../../types';
@@ -21,13 +21,16 @@ const TeamListContainer = (): React.ReactElement => {
 
     // background prefetching project list happens in the TeamCard component
 
-    const OLDcreateTeam = (newTeam: NewTeamProps): void => {
-        // TODO: This is where the API call to submit a new team POST request will live
-        console.log('New Team');
-        console.log(newTeam);
-        toast.success('New team created!');
-    };
-    const mutation = useMutation(createTeam);
+    const queryClient = useQueryClient()
+    const mutation = useMutation(createTeam, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('team')
+            toast.success('New team created!')
+        },
+        onError: () => {
+            toast.error('Something went wrong. Please try again.')
+        }
+    });
     const handleCreateTeam = (newTeam: NewTeamProps) => {
         mutation.mutate({ user, newTeam });
     };
