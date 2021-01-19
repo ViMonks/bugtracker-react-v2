@@ -17,10 +17,8 @@ interface ParamTypes {
 
 const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement => {
     const [isActive, setIsActive] = React.useState(false);
-    // const { team } = useTeam();
     const { teamSlug } = useParams<ParamTypes>();
     const { user } = useAuth();
-    // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data: team } = useQuery<any, Error>(
         ['teamDetails', { user, teamSlug }],
         () => getTeamDetails({ user, teamSlug }),

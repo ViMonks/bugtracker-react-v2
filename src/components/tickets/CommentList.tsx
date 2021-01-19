@@ -12,7 +12,7 @@ interface CommentListProps {
 const CommentList: React.FunctionComponent<CommentListProps> = ({ comments }: CommentListProps): React.ReactElement => {
     const createCommentElement = (comment: Comment) => {
         return (
-            <div className="panel-block">
+            <div key={comment.created} className="panel-block">
                 <div className="content">
                     <p>
                         {comment.text}
