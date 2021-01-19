@@ -9,7 +9,7 @@ import { getTeamDetails } from '../API/Api';
 import { NewOrUpdatedProjectProps, TeamMembership } from '../../types';
 
 // context
-import TeamContext, { useTeam } from '../context/TeamContext';
+import TeamContext, { useTeam } from '../context/TeamContextDEPRECATED';
 
 interface ParamTypes {
     teamSlug: string;

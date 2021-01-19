@@ -10,6 +10,8 @@ interface CommentListProps {
 }
 
 const CommentList: React.FunctionComponent<CommentListProps> = ({ comments }: CommentListProps): React.ReactElement => {
+    // TODO add post comment API call
+
     const createCommentElement = (comment: Comment) => {
         return (
             <div key={comment.created} className="panel-block">

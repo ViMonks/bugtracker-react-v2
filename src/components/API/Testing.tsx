@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useAuth } from '../context/AuthContext';
-import { useTeam } from '../context/TeamContext';
+import { useTeam } from '../context/TeamContextDEPRECATED';
 import { getProjectList, getTeamsList, getTeamDetails, getProjectDetails } from './Api';
 import { ReactQueryDevtools } from 'react-query/devtools'
 import axios from 'axios'

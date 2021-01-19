@@ -18,7 +18,6 @@ export function useTeam() {
 
 export function TeamProvider({ children }) {
     const getTeam = (teamSlug) => {
-        // TODO: API call to get team info based on current URL
         // Actually, not sure this is correct; might should just pass teamSlug as context and let the individual views call the API
         // if I do it here, the ENTIRE UI needs to wait on the team to be retrieved before it can update
         return teamDetail

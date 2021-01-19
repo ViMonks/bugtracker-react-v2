@@ -9,7 +9,7 @@ import TeamListContainer from './components/teams/TeamListContainer';
 import ManageTeamController from './components/teams/ManageTeam';
 import PrivateRoute from './components/auth/PrivateRoute';
 import { AuthProvider } from './components/context/AuthContext';
-import { TeamProvider } from './components/context/TeamContext';
+import { TeamProvider } from './components/context/TeamContextDEPRECATED';
 import Dashboard from './components/auth/Dashboard';
 import FirebaseUI from './components/auth/FirebaseUI';
 import Testing from './components/API/Testing';
@@ -23,7 +23,7 @@ function PrimaryLayout(): React.ReactElement {
                     <main>
                         <Route exact path="/dashboard" component={Dashboard} />
                         <PrivateRoute exact path="/teams" component={TeamListContainer} />
-                        <TeamProvider>
+                        {/* <TeamProvider>*/} 
                             <div>
                                 <PrivateRoute exact path="/testing" component={Testing} />
                                 <PrivateRoute
@@ -39,7 +39,7 @@ function PrimaryLayout(): React.ReactElement {
                                     component={TicketDetailContainer}
                                 />
                             </div>
-                        </TeamProvider>
+                        {/* </TeamProvider> */}
                         <Route exact path="/auth" component={FirebaseUI} />
                     </main>
                 </div>
@@ -58,3 +58,4 @@ function App(): React.ReactElement {
 }
 
 export default App;
+// TODO: remove TeamContextProvider

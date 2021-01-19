@@ -10,7 +10,7 @@ import { getProjectDetails, getTicketList } from '../API/Api';
 import { Project, Ticket, NewOrUpdatedTicketProps, Team } from '../../types';
 
 import ProjectDetailView from './ProjectDetailView';
-import TeamContext, { useTeam } from '../context/TeamContext';
+import TeamContext, { useTeam } from '../context/TeamContextDEPRECATED';
 import LoadingBar from '../LoadingBar';
 
 interface ParamTypes {

@@ -74,9 +74,10 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
 
     const createDevelopersOptionsList = (members: ProjectMembership[]): React.ReactElement => {
         const developers: string[] = members
-            .filter((member) => {
-                return member.role_name == 'Developer';
-            })
+        // uncomment the following three lines if you want the possible developers to NOT include managers
+            // .filter((member) => { 
+            //     return member.role_name == 'Developer';
+            // })
             .map((developer) => developer.user);
 
         return (

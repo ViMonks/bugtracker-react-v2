@@ -7,7 +7,7 @@ import { Team } from '../../types';
 // internal imports
 import TeamMembersPanel from './TeamMembersPanel';
 import InviteUserToTeamModal from './InviteUserToTeamModal';
-import { useTeam } from '../context/TeamContext';
+import { useTeam } from '../context/TeamContextDEPRECATED';
 
 // interface ManageTeamControllerProps {
 //     teamSlug: string;

@@ -87,6 +87,4 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
 export default ProjectDetailView;
 // TODO: add submit ticket view
 // TODO: add manage developers view
-// TODO: add update project view
 // TODO: add archive project button
-// TODO: add subscribe to project button
