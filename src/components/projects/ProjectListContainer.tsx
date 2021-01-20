@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import ProjectListView from './ProjectListView';
 import CreateProjectModalForm from './CreateProjectModalForm';
 import { useAuth } from '../context/AuthContext';
-import { getProjectList } from '../API/Api';
+import { getProjectList } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 
 interface ParamTypes {

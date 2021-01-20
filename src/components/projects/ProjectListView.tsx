@@ -65,7 +65,7 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
     // calls filterProjects when state changes based on input values from ProjectFilter, then sets the newly filtered projects to state
     React.useEffect(() => {
         setFilteredProjects(filterProjects(projects));
-    }, [title, startDate, endDate, manager, viewingArchived]);
+    }, [title, startDate, endDate, manager, viewingArchived, projects]);
 
     // Callback functions passed down to ProjectFilter to handle input changes
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {

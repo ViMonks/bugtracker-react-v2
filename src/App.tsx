@@ -19,7 +19,7 @@ function PrimaryLayout(): React.ReactElement {
     return (
         <MyQueryClientProvider>            
             <AuthProvider>
-                <ReactQueryDevtools />
+                {/* <ReactQueryDevtools /> */}
                 <div className="App h-screen">
                     <main>
                         <Route exact path="/dashboard" component={Dashboard} />

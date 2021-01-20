@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 
 // Internal imports
 import { createLinkCell, createCell, createDateCell } from '../utils';
-import { getProjectDetails, getTicketList } from '../API/Api';
+import { getProjectDetails, getTicketList } from '../API/FirebaseAPI';
 
 interface ProjectTableRowProps {
     project: Project;
@@ -28,7 +28,7 @@ export default function ProjectTableRow({ project }: ProjectTableRowProps): Reac
         await user;
         await queryClient.prefetchQuery(
             ['ticketList', { user, teamSlug, projectSlug }],
-            () => getTicketList({ user, teamSlug, projectSlug }),
+            () => getTicketList({ teamSlug, projectSlug }),
             { staleTime: Infinity },
         );
     };
@@ -37,7 +37,7 @@ export default function ProjectTableRow({ project }: ProjectTableRowProps): Reac
         await user;
         await queryClient.prefetchQuery(
             ['projectDetails', { user, teamSlug, projectSlug }],
-            () => getProjectDetails({ user, teamSlug, projectSlug }),
+            () => getProjectDetails({ teamSlug, projectSlug }),
             { staleTime: Infinity },
         );
     };

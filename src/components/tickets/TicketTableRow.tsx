@@ -14,7 +14,7 @@ import {
     createElapsedTimeCell,
     getPriorityText,
 } from '../utils';
-import { getTicketDetails } from '../API/Api';
+import { getTicketDetails } from '../API/FirebaseAPI';
 
 interface TicketTableRowProps {
     ticket: Ticket;
@@ -25,7 +25,7 @@ interface ParamTypes {
     projectSlug: string;
 }
 
-export default function TicketTableRow({ ticket }: TicketTableRowProps): React.ReactElement {
+export default function TicketTableRow({ ticket, }: TicketTableRowProps): React.ReactElement {
     const queryClient = useQueryClient();
     const { user } = useAuth();
     const { teamSlug, projectSlug } = useParams<ParamTypes>();

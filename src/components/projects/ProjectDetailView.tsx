@@ -32,7 +32,7 @@ const ProjectDetailView: React.FunctionComponent<ProjectDetailViewProps> = ({
                 </div>
                 <div className="column">
                     <div className="block">
-                        <TicketTableContainer tickets={tickets} />
+                        <TicketTableContainer openTickets={project.open_tickets} tickets={[...tickets]} />
                     </div>
                     <div className="block">
                         <CreateTicketModalForm projectMembers={project.memberships} createTicket={createTicket} />
@@ -46,7 +46,7 @@ const ProjectDetailView: React.FunctionComponent<ProjectDetailViewProps> = ({
 const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
     project,
 }: ProjectDetailPaneProps): React.ReactElement => {
-    const { title, manager, description, created, memberships, is_archived } = project;
+    const { title, manager, description, created, memberships, is_archived, open_tickets } = project;
 
     return (
         <div className="container">
@@ -63,6 +63,7 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
                 </p>
 
                 <p className="text-gray-700 pt-1">Created: {new Date(created).toLocaleDateString()}</p>
+
             </div>
             <div className="block">
                 <AssignedDevelopersList memberships={memberships} />

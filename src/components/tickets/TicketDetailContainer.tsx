@@ -5,7 +5,7 @@ import projectDetail from '../../fakeAPI/projectDetail';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useAuth } from '../context/AuthContext';
-import { getTicketDetails } from '../API/Api';
+import { getTicketDetails } from '../API/FirebaseAPI';
 
 import LoadingBar from '../LoadingBar';
 

@@ -9,7 +9,7 @@ import { NewTeamProps } from '../../types';
 import TeamListView from './TeamListView';
 import CreateTeamModalForm from './CreateTeamModalForm';
 import { useAuth } from '../context/AuthContext';
-import { getTeamsList, createTeam } from '../API/Api';
+import { getTeamsList, createTeam } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 
 const TeamListContainer = (): React.ReactElement => {

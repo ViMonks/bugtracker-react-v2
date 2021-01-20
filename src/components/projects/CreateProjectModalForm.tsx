@@ -3,13 +3,10 @@ import toast from 'react-hot-toast';
 import { useHistory, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useAuth } from '../context/AuthContext';
-import { getTeamDetails, createProject } from '../API/Api';
+import { getTeamDetails, createProject } from '../API/FirebaseAPI';
 
 // interface imports
 import { NewOrUpdatedProjectProps, TeamMembership } from '../../types';
-
-// context
-import TeamContext, { useTeam } from '../context/TeamContextDEPRECATED';
 
 interface ParamTypes {
     teamSlug: string;
@@ -49,7 +46,7 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
             queryClient.invalidateQueries();
             queryClient.refetchQueries({ stale: true });            
             toast.success('New project created!');
-            history.push(data.data.slug)
+            // history.push(data.data.slug)
         },
         onError: () => {
             toast.error('Something went wrong. Please try again.');

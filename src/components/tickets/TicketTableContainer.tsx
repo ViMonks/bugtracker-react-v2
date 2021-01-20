@@ -9,10 +9,12 @@ import TicketFilter from './TicketFilter';
 
 interface TicketTableContainerProps {
     tickets: Ticket[];
+    openTickets: number
 }
 
 const TicketTableContainer: React.FunctionComponent<TicketTableContainerProps> = ({
     tickets,
+    openTickets
 }: TicketTableContainerProps): React.ReactElement => {
     const [title, setTitle] = React.useState('');
     const [viewingClosed, setViewingClosed] = React.useState(false);
@@ -35,7 +37,7 @@ const TicketTableContainer: React.FunctionComponent<TicketTableContainerProps> =
     // Filters ticket array based on values from TicketFilter element
     const filterTickets = (tickets: Ticket[]): Ticket[] => {
         const filteredTickets: Ticket[] = [];
-        tickets.forEach((ticket) => {
+        [...tickets].forEach((ticket) => {
             const titleMatches = ticket.title.toLowerCase().indexOf(title.toLowerCase()) !== -1;
             const viewingClosedMatches = !ticket.is_open === viewingClosed;
             const allFiltersMatch = titleMatches && viewingClosedMatches;
@@ -48,13 +50,13 @@ const TicketTableContainer: React.FunctionComponent<TicketTableContainerProps> =
 
     // calls filterTickets when state changes based on input values from TicketFilter, then sets the newly filtered tickets to state
     React.useEffect(() => {
-        setFilteredTickets(filterTickets(tickets));
-    }, [title, viewingClosed]);
+        setFilteredTickets(filterTickets([...tickets]));
+    }, [title, viewingClosed, tickets]);
 
     return (
         <div className="container">
             <div className="block">
-                <h1 className="title is-2 has-text-grey-dark mt-3">{viewingClosed ? 'Closed Tickets' : 'Open Tickets'}</h1>
+                <h1 className="title is-2 has-text-grey-dark mt-3">{viewingClosed ? 'Closed Tickets' : `Open Tickets (${openTickets})`}</h1>
             </div>
             <div className="block">
                 <TicketFilter
@@ -66,7 +68,7 @@ const TicketTableContainer: React.FunctionComponent<TicketTableContainerProps> =
                 />
             </div>
             <div className="block">
-                <TicketTable tickets={filteredTickets} />
+                <TicketTable openTickets={openTickets} tickets={[...filteredTickets]} />
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useAuth } from '../context/AuthContext';
-import { getTeamDetails } from '../API/Api';
+import { getTeamDetails } from '../API/FirebaseAPI';
 
 // interface imports
 import { NewOrUpdatedProjectProps, Project, TeamMembership } from '../../types';

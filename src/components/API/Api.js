@@ -90,3 +90,17 @@ export const createProject = ({ user, teamSlug, newProject }) => {
             }
         });
 };
+
+export const createTicket = ({ user, teamSlug, projectSlug, newTicket }) => {
+    return axios
+        .post(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/`, newTicket, { headers: getHeaders(user) })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
