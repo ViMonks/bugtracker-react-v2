@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useAuth } from '../context/AuthContext';
-import { getTeamDetails } from '../API/FirebaseAPI';
+import { getTeamDetails, updateProject } from '../API/FirebaseAPI';
 
 // interface imports
 import { NewOrUpdatedProjectProps, Project, TeamMembership } from '../../types';
@@ -14,13 +14,14 @@ interface UpdateProjectModalFormProps {
 
 interface ParamTypes {
     teamSlug: string;
+    projectSlug: string;
 }
 
 const UpdateProjectModalForm: React.FunctionComponent<UpdateProjectModalFormProps> = ({
     project,
 }: UpdateProjectModalFormProps): React.ReactElement => {
     const [isActive, setIsActive] = React.useState(false);
-    const { teamSlug } = useParams<ParamTypes>();
+    const { teamSlug, projectSlug } = useParams<ParamTypes>();
     const { isLoading, error, data: team } = useQuery<any, Error>(
         ['teamDetails', { teamSlug }],
         () => getTeamDetails({ teamSlug }),
@@ -44,11 +45,13 @@ const UpdateProjectModalForm: React.FunctionComponent<UpdateProjectModalFormProp
         setManager(e.target.value);
     };
 
-    const updateProject = (updatedProject: NewOrUpdatedProjectProps): void => {
-        console.log(updatedProject);
-        // TODO: API call to update project; will have to get teamSlug and include in POST; same for Ticket forms
-        toast.success('Project updated!');
-    };
+    const queryClient = useQueryClient();
+    const mutation = useMutation(updateProject, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['projectDetails', { teamSlug, projectSlug }]);
+            toast.success('Project updated!');
+        },
+    });
 
     const handleSubmit = () => {
         let updatedProject;
@@ -64,7 +67,7 @@ const UpdateProjectModalForm: React.FunctionComponent<UpdateProjectModalFormProp
                 description: description,
             };
         }
-        updateProject(updatedProject);
+        mutation.mutate({ teamSlug, projectSlug, updatedProject })
         setIsActive(false);
     };
 
@@ -135,7 +138,7 @@ const UpdateProjectModalForm: React.FunctionComponent<UpdateProjectModalFormProp
                         {/* Manager Field */}
                         <div className="field">
                             <label className="label">Manager</label>
-                            <div className="control">{createManagersOptionsList(team.data.memberships)}</div>
+                            <div className="control">{createManagersOptionsList(project.memberships)}</div>
                         </div>
                     </section>
                     <footer className="modal-card-foot">

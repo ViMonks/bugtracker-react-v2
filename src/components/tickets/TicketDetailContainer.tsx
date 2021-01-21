@@ -23,7 +23,6 @@ interface ParamTypes {
 const TicketDetailContainer = (props: any): React.ReactElement => {
     const { ticketSlug, projectSlug, teamSlug } = useParams<ParamTypes>();
     const history = useHistory();
-    // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(
         ['ticketDetails', { teamSlug, ticketSlug }],
         () => getTicketDetails({ teamSlug, projectSlug, ticketSlug }),

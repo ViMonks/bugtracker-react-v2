@@ -12,7 +12,7 @@ const AssignedDevelopersList: React.FunctionComponent<AssignedDevelopersListProp
 }: AssignedDevelopersListProps): React.ReactElement => {
     // filter initial array of memberships to only developers, then map to an array of usernames
     const developers = memberships
-        .filter((membership) => membership.role_name == 'Developer')
+        // .filter((membership) => membership.role_name == 'Developer')
         .map((membership) => membership.user);
 
     // state setup for filtering developers by username
@@ -37,7 +37,7 @@ const AssignedDevelopersList: React.FunctionComponent<AssignedDevelopersListProp
 
     React.useEffect(() => {
         setFilteredDevelopers(filterDevelopers(developers));
-    }, [searchValue]);
+    }, [searchValue, memberships]);
 
     // helper function to create list item for each developer
     const createListItem = (text: string) => {
@@ -46,13 +46,13 @@ const AssignedDevelopersList: React.FunctionComponent<AssignedDevelopersListProp
 
     return (
         <div className="panel is-info is-light">
-            <p className="panel-heading">Developers</p>
+            <p className="panel-heading">Members</p>
             <div className="panel-block">
                 <p className="control has-icons-left">
                     <input
                         type="text"
                         className="input"
-                        placeholder="Search developers"
+                        placeholder="Search members"
                         value={searchValue}
                         onChange={handleDeveloperSearchChange}
                     />
@@ -62,6 +62,7 @@ const AssignedDevelopersList: React.FunctionComponent<AssignedDevelopersListProp
                 </p>
             </div>
             {filteredDevelopers.map((item) => createListItem(item))}
+            {developers.length === 0 && <div className="panel-block">No members assigned to project.</div>}
             <div className="panel-block">
                 <button
                     className="button is-light is-outlined is-link is-fullwidth"

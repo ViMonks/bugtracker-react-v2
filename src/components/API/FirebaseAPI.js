@@ -86,6 +86,96 @@ export const createProject = async ({ teamSlug, newProject }) => {
         });
 };
 
+export const updateProject = async ({ teamSlug, projectSlug, updatedProject }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .put(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/`, updatedProject, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
+export const addProjectMember = async ({ teamSlug, projectSlug, member }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .put(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/add_member/`, member, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
+export const removeProjectMember = async ({ teamSlug, projectSlug, member }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .put(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/remove_member/`, member, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
+export const archiveProject = async ({ teamSlug, projectSlug, data }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .put(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/`, data, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
+export const unarchiveProject = async ({ teamSlug, projectSlug, data }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .put(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/`, data, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
 // TICKETS
 
 export const getTicketList = async ({ teamSlug, projectSlug }) => {

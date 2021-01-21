@@ -90,8 +90,8 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
         return (
             <Fragment>
                 <div className="select">
-                    <select value={developer} onChange={handleDeveloperChange}>
-                        <option value="" selected disabled>
+                    <select value={developer} defaultValue={"NONE"} onChange={handleDeveloperChange}>
+                        <option value="NONE" disabled>
                             Assign a developer (optional)
                         </option>
                         {developers.map((developer) => (

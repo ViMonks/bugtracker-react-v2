@@ -11,7 +11,6 @@ interface ProjectListViewProps {
     projects: Project[];
 }
 
-// TODO: implement new project button
 const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
     projects,
 }: ProjectListViewProps): React.ReactElement => {

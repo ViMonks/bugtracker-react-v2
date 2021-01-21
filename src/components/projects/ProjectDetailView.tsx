@@ -1,12 +1,17 @@
 import React from 'react';
+import toast from 'react-hot-toast';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useHistory, useParams } from 'react-router-dom';
 
 // Interface imports
 import { NewOrUpdatedTicketProps, Project, Ticket } from '../../types';
+import { archiveProject, getTeamDetails, unarchiveProject } from '../API/FirebaseAPI';
 
 // internal imports
 import CreateTicketModalForm from '../tickets/CreateTicketModalForm';
 import TicketTableContainer from '../tickets/TicketTableContainer';
 import AssignedDevelopersList from './AssignedDevelopersList';
+import ManageProjectMembers from './ManageProjectMembers';
 import UpdateProjectModalForm from './UpdateProjectModalForm';
 
 interface ProjectDetailViewProps {
@@ -17,6 +22,12 @@ interface ProjectDetailViewProps {
 
 interface ProjectDetailPaneProps {
     project: Project;
+}
+
+
+interface ParamTypes {
+    teamSlug: string;
+    projectSlug: string;
 }
 
 const ProjectDetailView: React.FunctionComponent<ProjectDetailViewProps> = ({
@@ -47,6 +58,49 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
     project,
 }: ProjectDetailPaneProps): React.ReactElement => {
     const { title, manager, description, created, memberships, is_archived } = project;
+    const history = useHistory()
+
+    const { teamSlug, projectSlug } = useParams<ParamTypes>();
+    const { isLoading, error, data: team } = useQuery<any, Error>(
+        ['teamDetails', { teamSlug }],
+        () => getTeamDetails({ teamSlug }),
+        { staleTime: 30000 },
+    );
+
+    // archiving and unarchiving projects
+    const queryClient = useQueryClient();
+    const archiveProjectMutation = useMutation(archiveProject, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('projectList');
+            queryClient.invalidateQueries('projectDetails');
+            queryClient.refetchQueries();
+            toast.success('Project archived!');
+            history.push(`/teams/${teamSlug}/projects/`)
+        },
+        onError: () => {
+            toast.error('Something went wrong. Please try again.');
+        },
+    });
+    const handleArchiveProject = (): void => {
+        const data = { is_archived: true, title: project.title }
+        archiveProjectMutation.mutate({ teamSlug, projectSlug, data });
+    };
+
+    const unarchiveProjectMutation = useMutation(unarchiveProject, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('projectList');
+            queryClient.invalidateQueries('projectDetails');
+            queryClient.refetchQueries();
+            toast.success('Project reopened!');
+        },
+        onError: () => {
+            toast.error('Something went wrong. Please try again.');
+        },
+    });
+    const handleUnarchiveProject = (): void => {
+        const data = { is_archived: false, title: project.title }
+        unarchiveProjectMutation.mutate({ teamSlug, projectSlug, data });
+    };
 
     return (
         <div className="container">
@@ -72,20 +126,25 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
                 <nav className="level"></nav>
                 <div className="level-left">
                     <div className="level-item">
-                        <button className="button is-warning is-dark">
-                            {is_archived ? 'Reopen project' : 'Archive project'}
-                        </button>
+                        {is_archived ? (
+                            <button className="button is-warning is-dark" onClick={() => handleUnarchiveProject()}>Reopen project</button>
+                        ) : (
+                            <button className="button is-warning is-dark" onClick={() => handleArchiveProject()}>Archive project</button>
+                        )}
                     </div>
                     <div className="level-item">
                         <UpdateProjectModalForm project={project} />
-                    </div>
+                    </div>                    
                 </div>
+            </div>
+            <div className="block">
+                {isLoading ? <button className="button is-white is-loading">Manage project members</button> : <ManageProjectMembers team={team.data} project={project} />}
+                
             </div>
         </div>
     );
 };
 
 export default ProjectDetailView;
-// TODO: add submit ticket view
 // TODO: add manage developers view
 // TODO: add archive project button
