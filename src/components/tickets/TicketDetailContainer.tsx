@@ -29,8 +29,8 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
         { staleTime: 30000 },
     );
 
-    const closeTicket = (ticketSlug: string): void => {
-        console.log(`Closing ticket ${ticketSlug}`);
+    const closeTicket = (ticketSlug: string, resolutionState?: string): void => {
+        console.log(`Closing ticket ${ticketSlug} with resolution ${resolutionState ? resolutionState : 'unspecified.'}`);
         toast.success('Ticket closed!'); // implementation with Promises: https://react-hot-toast.com/docs/toast
         // TODO: the API call to close the current ticket will be made here
     };

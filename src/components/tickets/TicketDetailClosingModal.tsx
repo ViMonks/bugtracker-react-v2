@@ -4,12 +4,13 @@ import { useParams, useHistory } from 'react-router-dom';
 interface TicketModalProps {
     isOpen: boolean;
     resolution?: string;
-    closeTicket: (ticketSlug: string) => void;
+    closeTicket: (ticketSlug: string, resolutionState?: string) => void;
 }
 
 interface ParamTypes {
     projectSlug: string;
     ticketSlug: string;
+    teamSlug: string;
 }
 
 const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
@@ -17,6 +18,10 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
     resolution,
     closeTicket,
 }: TicketModalProps): React.ReactElement => {
+    const [resolutionState, setResolutionState] = React.useState(resolution)
+    const handleResolutionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setResolutionState(e.target.value);
+    };
     /*
     This component takes in three props, as seen in the above interface. isOpen represents whether the ticket being viewed is open or closed.
     This determines whether the button says 'Close Ticket' or 'Reopen Ticket'.
@@ -24,7 +29,7 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
     <closeTicket> is a function defined in the TicketDetailContainer component. This function handles the API call necessary to close or reopen a ticket.
     */
     const [isActive, setIsActive] = React.useState(false);
-    const { projectSlug, ticketSlug } = useParams<ParamTypes>();
+    const { projectSlug, ticketSlug, teamSlug } = useParams<ParamTypes>();
     const history = useHistory();
 
     const handleToggleIsActive = () => {
@@ -35,9 +40,9 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
         // this function calls closeTicket, which is handled by TicketDetailContainer
         // then, if the ticket was originally open, it is now being closed, so user is redirected to project detail view
         // otherwise, the ticket is being reopened, so the user remains on this page, and the modal closes
-        closeTicket(ticketSlug);
+        closeTicket(ticketSlug, resolutionState);
         if (isOpen) {
-            history.push(`/projects/${projectSlug}`);
+            history.push(`/teams/${teamSlug}/projects/${projectSlug}`);
         } else {
             handleToggleIsActive();
         }
@@ -61,8 +66,8 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
                     <section className="modal-card-body">
                         <div className="field">
                             <div className="control">
-                                <textarea className="textarea" placeholder="Describe how you resolved this ticket (optional).">
-                                    {resolution}
+                                <textarea className="textarea" placeholder="Describe how you resolved this ticket (optional)." onChange={handleResolutionChange}>
+                                    {resolutionState}
                                 </textarea>
                             </div>
                         </div>
