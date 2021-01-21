@@ -5,7 +5,7 @@ import projectDetail from '../../fakeAPI/projectDetail';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useAuth } from '../context/AuthContext';
-import { closeTicket, getTicketDetails, reopenTicket } from '../API/FirebaseAPI';
+import { closeTicket, getTicketDetails, reopenTicket, updateTicket } from '../API/FirebaseAPI';
 
 import LoadingBar from '../LoadingBar';
 
@@ -57,12 +57,17 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
         reopeningMutation.mutate({ teamSlug, projectSlug, ticketSlug });
     };
 
-    const updateTicket = (updatedTicket: NewOrUpdatedTicketProps): void => {
+    const updatingTicketMutation = useMutation(updateTicket, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['ticketDetails', { teamSlug, ticketSlug }]);
+            toast.success('Ticket updated!');
+        },
+    });
+
+    const handleUpdateTicket = (updatedTicket: NewOrUpdatedTicketProps): void => {
         console.log(`Updating ticket ${ticketSlug}`);
         console.log(updatedTicket);
-        toast.success('Ticket updated!');
-        // TODO: the API call to update the current ticket will live here
-        // TODO: will have to figure out how to re-render the TicketDetailContainer when this happens so the updated version of the ticket is fetched
+        updatingTicketMutation.mutate({ teamSlug, projectSlug, ticketSlug, updatedTicket })
     };
 
     return (
@@ -70,7 +75,7 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
             {isLoading ? <LoadingBar /> : null}
             {error ? error.message : null}
             {data && (
-                <TicketDetailView ticket={data.data} handleCloseTicket={handleCloseTicket} handleReopenTicket={handleReopenTicket} updateTicket={updateTicket} />
+                <TicketDetailView ticket={data.data} handleCloseTicket={handleCloseTicket} handleReopenTicket={handleReopenTicket} updateTicket={handleUpdateTicket} />
             )}
         </div>
     );

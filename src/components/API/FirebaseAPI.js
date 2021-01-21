@@ -175,3 +175,21 @@ export const reopenTicket = async ({ teamSlug, projectSlug, ticketSlug }) => {
             }
         });
 };
+
+export const updateTicket = async ({ teamSlug, projectSlug, ticketSlug, updatedTicket }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .patch(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/${ticketSlug}/`, updatedTicket, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
