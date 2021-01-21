@@ -7,7 +7,9 @@ import { Team } from '../../types';
 // internal imports
 import TeamMembersPanel from './TeamMembersPanel';
 import InviteUserToTeamModal from './InviteUserToTeamModal';
-import { useTeam } from '../context/TeamContextDEPRECATED';
+import { useQuery } from 'react-query';
+import { getTeamDetails } from '../API/FirebaseAPI';
+import LoadingBar from '../LoadingBar';
 
 // interface ManageTeamControllerProps {
 //     teamSlug: string;
@@ -22,9 +24,21 @@ interface ParamTypes {
 }
 
 const ManageTeamController: React.FunctionComponent = (): React.ReactElement => {
-    const { team } = useTeam();
+    const {teamSlug} = useParams<ParamTypes>();
 
-    return <ManageTeam team={team} />;
+    const { isLoading, error, data } = useQuery<any, Error>(
+        ['teamDetails', { teamSlug }],
+        () => getTeamDetails({ teamSlug }),
+        { staleTime: 30000 },
+    );
+
+    return (
+    <div className="container">
+        {isLoading ? <LoadingBar /> : null}
+        {error ? error.message : null}
+        {data && <ManageTeam team={data.data} />}
+    </div>
+    );
 };
 
 const ManageTeam: React.FunctionComponent<ManageTeamProps> = ({ team }: ManageTeamProps): React.ReactElement => {

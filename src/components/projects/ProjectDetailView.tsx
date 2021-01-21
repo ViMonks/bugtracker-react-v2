@@ -146,5 +146,3 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
 };
 
 export default ProjectDetailView;
-// TODO: add manage developers view
-// TODO: add archive project button

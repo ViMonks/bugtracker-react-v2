@@ -40,6 +40,24 @@ export const createTeam = async ({ newTeam }) => {
     });
 };
 
+export const inviteToTeam = async ({ teamSlug, data }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .post(`${baseURL}teams/${teamSlug}/invitations/`, data, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
 // PROJECTS
 
 export const getProjectList = async ({ teamSlug }) => {
