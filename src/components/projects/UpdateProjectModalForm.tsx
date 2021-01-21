@@ -21,11 +21,10 @@ const UpdateProjectModalForm: React.FunctionComponent<UpdateProjectModalFormProp
 }: UpdateProjectModalFormProps): React.ReactElement => {
     const [isActive, setIsActive] = React.useState(false);
     const { teamSlug } = useParams<ParamTypes>();
-    const { user } = useAuth();
     const { isLoading, error, data: team } = useQuery<any, Error>(
-        ['teamDetails', { user, teamSlug }],
-        () => getTeamDetails({ user, teamSlug }),
-        { enabled: !!user, staleTime: 30000 },
+        ['teamDetails', { teamSlug }],
+        () => getTeamDetails({ teamSlug }),
+        { staleTime: 30000 },
     );
 
     // form data

@@ -27,15 +27,13 @@ interface ParamTypes {
 
 export default function TicketTableRow({ ticket, }: TicketTableRowProps): React.ReactElement {
     const queryClient = useQueryClient();
-    const { user } = useAuth();
     const { teamSlug, projectSlug } = useParams<ParamTypes>();
     const ticketSlug = ticket.slug;
 
     const prefetchTicketDetails = async () => {
-        await user;
         await queryClient.prefetchQuery(
-            ['ticketDetails', { user, teamSlug }],
-            () => getTicketDetails({ user, teamSlug, projectSlug, ticketSlug }),
+            ['ticketDetails', { teamSlug }],
+            () => getTicketDetails({ teamSlug, projectSlug, ticketSlug }),
             { staleTime: Infinity },
         );
     };

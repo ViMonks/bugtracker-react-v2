@@ -1,24 +1,30 @@
 import React, { Fragment } from 'react';
+import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 // interface imports
 import { ProjectMembership, NewOrUpdatedTicketProps } from '../../types';
+import { getProjectDetails } from '../API/FirebaseAPI';
 
 interface CreateTicketModalFormProps {
-    projectMembers: ProjectMembership[];
     createTicket: (newTicket: NewOrUpdatedTicketProps) => void;
 }
 
 interface ParamTypes {
     projectSlug: string;
+    teamSlug: string;
 }
 
 const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps> = ({
-    projectMembers,
     createTicket,
 }: CreateTicketModalFormProps): React.ReactElement => {
     // getting the projectSlug from the URL
-    const { projectSlug } = useParams<ParamTypes>();
+    const { projectSlug, teamSlug } = useParams<ParamTypes>();
+    const { isLoading, error, data: project } = useQuery<any, Error>(
+        ['projectDetails', { teamSlug, projectSlug }],
+        () => getProjectDetails({ teamSlug, projectSlug }),
+        { staleTime: 30000 },
+    );
 
     // state for form data
     const [title, setTitle] = React.useState('');
@@ -74,10 +80,10 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
 
     const createDevelopersOptionsList = (members: ProjectMembership[]): React.ReactElement => {
         const developers: string[] = members
-        // uncomment the following three lines if you want the possible developers to NOT include managers
-            // .filter((member) => { 
-            //     return member.role_name == 'Developer';
-            // })
+        // // uncomment the following three lines if you want the possible developers to NOT include managers
+        //     // .filter((member) => { 
+        //     //     return member.role_name == 'Developer';
+        //     // })
             .map((developer) => developer.user);
 
         return (
@@ -100,10 +106,12 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
 
     return (
         <Fragment>
-            <button className="button is-primary" onClick={handleToggleIsActive}>
+            <button className={isLoading ? 'button is-primary is-loading' : 'button is-primary'} onClick={handleToggleIsActive}>
                 Submit Ticket
             </button>
 
+            {error ? error.message : null}
+            {project && (
             <div className={isActive ? 'modal is-active' : 'modal'}>
                 <div className="modal-background"></div>
                 <div className="modal-card">
@@ -141,7 +149,7 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
                         {/* Developer Field */}
                         <div className="field">
                             <label className="label">Developer</label>
-                            <div className="control">{createDevelopersOptionsList(projectMembers)}</div>
+                            <div className="control">{createDevelopersOptionsList(project.data.memberships)}</div>
                         </div>
 
                         {/* Priority Field */}
@@ -179,7 +187,7 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
                     </footer>
                 </div>
                 <button className="modal-close is-large" onClick={handleToggleIsActive}></button>
-            </div>
+            </div>)}
         </Fragment>
     );
 };

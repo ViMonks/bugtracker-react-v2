@@ -16,12 +16,11 @@ interface ParamTypes {
 const ProjectListContainer = (): React.ReactElement => {
     // project details and ticket list prefetching happens in the ProjectTableRow component
     const { teamSlug } = useParams<ParamTypes>();
-    const { user } = useAuth();
     // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(
-        ['projectList', { user, teamSlug }],
-        () => getProjectList({ user, teamSlug }),
-        { enabled: !!user, staleTime: 30000 },
+        ['projectList', { teamSlug }],
+        () => getProjectList({ teamSlug }),
+        { staleTime: 30000 },
     );
 
     return (

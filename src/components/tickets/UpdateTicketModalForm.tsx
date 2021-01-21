@@ -1,26 +1,32 @@
 import React, { Fragment } from 'react';
+import { useQuery } from 'react-query';
 import { useParams, useHistory } from 'react-router-dom';
 
 // interface imports
 import { ProjectMembership, NewOrUpdatedTicketProps, Ticket } from '../../types';
+import { getProjectDetails } from '../API/FirebaseAPI';
 
 interface UpdateTicketModalFormProps {
     ticket: Ticket;
-    projectMembers: ProjectMembership[];
     updateTicket: (updatedTicket: NewOrUpdatedTicketProps) => void;
 }
 
 interface ParamTypes {
     projectSlug: string;
+    teamSlug: string;
 }
 
 const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps> = ({
     ticket,
-    projectMembers,
     updateTicket,
 }: UpdateTicketModalFormProps): React.ReactElement => {
     // getting the projectSlug from the URL
-    const { projectSlug } = useParams<ParamTypes>();
+    const { projectSlug, teamSlug } = useParams<ParamTypes>();
+    const { isLoading, error, data: project } = useQuery<any, Error>(
+        ['projectDetails', { teamSlug, projectSlug }],
+        () => getProjectDetails({ teamSlug, projectSlug }),
+        { staleTime: 30000 },
+    );
 
     // state for form data
     const [title, setTitle] = React.useState(ticket.title);
@@ -76,9 +82,9 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
 
     const createDevelopersOptionsList = (members: ProjectMembership[]): React.ReactElement => {
         const developers: string[] = members
-            .filter((member) => {
-                return member.role_name == 'Developer';
-            })
+            // .filter((member) => {
+            //     return member.role_name == 'Developer';
+            // })
             .map((developer) => developer.user);
 
         return (
@@ -101,10 +107,12 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
 
     return (
         <Fragment>
-            <button className="button is-primary" onClick={handleToggleIsActive}>
+            <button className={isLoading ? 'button is-primary is-loading' : 'button is-primary'} onClick={handleToggleIsActive}>
                 Update Ticket
             </button>
 
+            {error ? error.message : null}
+            {project && (
             <div className={isActive ? 'modal is-active' : 'modal'}>
                 <div className="modal-background"></div>
                 <div className="modal-card">
@@ -142,7 +150,7 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
                         {/* Developer Field */}
                         <div className="field">
                             <label className="label">Developer</label>
-                            <div className="control">{createDevelopersOptionsList(projectMembers)}</div>
+                            <div className="control">{createDevelopersOptionsList(project.data.memberships)}</div>
                         </div>
 
                         {/* Priority Field */}
@@ -180,7 +188,7 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
                     </footer>
                 </div>
                 <button className="modal-close is-large" onClick={handleToggleIsActive}></button>
-            </div>
+            </div>)}
         </Fragment>
     );
 };

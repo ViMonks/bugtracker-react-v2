@@ -29,11 +29,9 @@ const TeamListView: React.FunctionComponent<TeamListViewProps> = ({ teams }: Tea
 
 const TeamCard: React.FunctionComponent<TeamCardProps> = ({ team }: TeamCardProps): React.ReactElement => {
     const queryClient = useQueryClient()
-    const { user } = useAuth()
     const teamSlug = team.slug
     const prefetchProjectList = async () => {
-        await user;
-        await queryClient.prefetchQuery(['projectList', { user, teamSlug }], () => getProjectList({ user, teamSlug }), {
+        await queryClient.prefetchQuery(['projectList', { teamSlug }], () => getProjectList({ teamSlug }), {
             staleTime: Infinity,
         });
     };

@@ -22,19 +22,12 @@ interface ParamTypes {
 
 const TicketDetailContainer = (props: any): React.ReactElement => {
     const { ticketSlug, projectSlug, teamSlug } = useParams<ParamTypes>();
-    const { user } = useAuth();
     // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(
-        ['ticketDetails', { user, teamSlug }],
-        () => getTicketDetails({ user, teamSlug, projectSlug, ticketSlug }),
-        { enabled: !!user, staleTime: 30000 },
+        ['ticketDetails', { teamSlug }],
+        () => getTicketDetails({ teamSlug, projectSlug, ticketSlug }),
+        { staleTime: 30000 },
     );
-
-    const getProject = (projectSlug: string): Project => {
-        // TODO: this is where the API call to get the ticket's associated project will live
-        console.log({ projectSlug });
-        return projectDetail;
-    };
 
     const closeTicket = (ticketSlug: string): void => {
         console.log(`Closing ticket ${ticketSlug}`);
@@ -59,7 +52,6 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
                     ticket={data.data}
                     closeTicket={closeTicket}
                     updateTicket={updateTicket}
-                    project={getProject(projectSlug)}
                 />
             )}
         </div>

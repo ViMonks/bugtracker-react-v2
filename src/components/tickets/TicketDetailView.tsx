@@ -13,21 +13,18 @@ import { Z_BLOCK } from 'zlib';
 
 interface TicketDetailViewProps {
     ticket: Ticket;
-    project: Project;
     closeTicket: (ticketSlug: string) => void;
     updateTicket: (updatedTicket: NewOrUpdatedTicketProps) => void;
 }
 
 interface TicketDetailPaneProps {
     ticket: Ticket;
-    project: Project;
     closeTicket: (ticketSlug: string) => void;
     updateTicket: (updatedTicket: NewOrUpdatedTicketProps) => void;
 }
 
 const TicketDetailView: React.FunctionComponent<TicketDetailViewProps> = ({
     ticket,
-    project,
     closeTicket,
     updateTicket,
 }: TicketDetailViewProps): React.ReactElement => {
@@ -35,7 +32,7 @@ const TicketDetailView: React.FunctionComponent<TicketDetailViewProps> = ({
         <div className="container mt-4">
             <div className="columns">
                 <div className="column">
-                    <TicketDetailPane ticket={ticket} updateTicket={updateTicket} closeTicket={closeTicket} project={project} />
+                    <TicketDetailPane ticket={ticket} updateTicket={updateTicket} closeTicket={closeTicket} />
                 </div>
                 <div className="column">
                     <CommentList comments={ticket.comments} />
@@ -47,7 +44,6 @@ const TicketDetailView: React.FunctionComponent<TicketDetailViewProps> = ({
 
 const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
     ticket,
-    project,
     closeTicket,
     updateTicket,
 }: TicketDetailPaneProps): React.ReactElement => {
@@ -66,7 +62,7 @@ const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
             <nav className="level">
                 <div className="level-left">
                     <div className="level-item ml-3">
-                        <UpdateTicketModalForm ticket={ticket} updateTicket={updateTicket} projectMembers={project.memberships} />
+                        <UpdateTicketModalForm ticket={ticket} updateTicket={updateTicket} />
                     </div>
                     <div className="level-item">
                         <TicketDetailClosingModal isOpen={is_open} resolution={resolution} closeTicket={closeTicket} />

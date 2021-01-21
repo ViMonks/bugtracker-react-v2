@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { useQuery, useQueryClient } from 'react-query';
 import { baseURL, getHeaders } from './ApiConfig';
 import { auth } from '../../auth/firebase';
 
-export const getTeamsList = async (token) => {
+// TEAMS
+
+export const getTeamsList = async () => {
     const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
 
     return axios.get(baseURL + 'teams/', { headers: getHeaders(accessToken) }).catch((err) => {
@@ -15,19 +16,7 @@ export const getTeamsList = async (token) => {
     });
 };
 
-export const getProjectList = async ({ user, teamSlug }) => {
-    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
-
-    return axios.get(`${baseURL}teams/${teamSlug}/projects/`, { headers: getHeaders(accessToken) }).catch((err) => {
-        if (err.response) {
-            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
-        } else {
-            throw new Error(err);
-        }
-    });
-};
-
-export const getTeamDetails = async ({ user, teamSlug }) => {
+export const getTeamDetails = async ({ teamSlug }) => {
     const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
 
     return axios.get(`${baseURL}teams/${teamSlug}/`, { headers: getHeaders(accessToken) }).catch((err) => {
@@ -39,20 +28,30 @@ export const getTeamDetails = async ({ user, teamSlug }) => {
     });
 };
 
-export const getTicketList = async ({ teamSlug, projectSlug }) => {
+export const createTeam = async ({ newTeam }) => {
     const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
 
-    return axios
-        .get(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/`, { headers: getHeaders(accessToken) })
-        .catch((err) => {
-            if (err.response) {
-                throw new Error(
-                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
-                );
-            } else {
-                throw new Error(err);
-            }
-        });
+    return axios.post(baseURL + 'teams/', newTeam, { headers: getHeaders(accessToken) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });
+};
+
+// PROJECTS
+
+export const getProjectList = async ({ teamSlug }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios.get(`${baseURL}teams/${teamSlug}/projects/`, { headers: getHeaders(accessToken) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });
 };
 
 export const getProjectDetails = async ({ teamSlug, projectSlug }) => {
@@ -71,7 +70,41 @@ export const getProjectDetails = async ({ teamSlug, projectSlug }) => {
         });
 };
 
-export const getTicketDetails = async ({ user, teamSlug, projectSlug, ticketSlug }) => {
+export const createProject = async ({ teamSlug, newProject }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .post(`${baseURL}teams/${teamSlug}/projects/`, newProject, { headers: getHeaders(accessToken) })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
+// TICKETS
+
+export const getTicketList = async ({ teamSlug, projectSlug }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .get(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/`, { headers: getHeaders(accessToken) })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
+export const getTicketDetails = async ({ teamSlug, projectSlug, ticketSlug }) => {
     const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
 
     return axios
@@ -89,25 +122,13 @@ export const getTicketDetails = async ({ user, teamSlug, projectSlug, ticketSlug
         });
 };
 
-// POST REQUESTS
-
-export const createTeam = async ({ user, newTeam }) => {
-    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
-
-    return axios.post(baseURL + 'teams/', newTeam, { headers: getHeaders(accessToken) }).catch((err) => {
-        if (err.response) {
-            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
-        } else {
-            throw new Error(err);
-        }
-    });
-};
-
-export const createProject = async ({ user, teamSlug, newProject }) => {
+export const createTicket = async ({ teamSlug, projectSlug, newTicket }) => {
     const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
 
     return axios
-        .post(`${baseURL}teams/${teamSlug}/projects/`, newProject, { headers: getHeaders(accessToken) })
+        .post(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/`, newTicket, {
+            headers: getHeaders(accessToken),
+        })
         .catch((err) => {
             if (err.response) {
                 throw new Error(
@@ -119,11 +140,11 @@ export const createProject = async ({ user, teamSlug, newProject }) => {
         });
 };
 
-export const createTicket = async ({ teamSlug, projectSlug, newTicket }) => {
+export const closeTicket = async ({ teamSlug, projectSlug, data }) => {
     const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
 
     return axios
-        .post(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/`, newTicket, {
+        .patch(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/`, data, {
             headers: getHeaders(accessToken),
         })
         .catch((err) => {

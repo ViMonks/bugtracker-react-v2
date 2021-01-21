@@ -13,9 +13,7 @@ import { getTeamsList, createTeam } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 
 const TeamListContainer = (): React.ReactElement => {
-    const { user } = useAuth();
-    const { isLoading, error, data } = useQuery<any, Error>(['team', user], () => getTeamsList(user), {
-        enabled: !!user,
+    const { isLoading, error, data } = useQuery<any, Error>(['team'], () => getTeamsList(), {
         staleTime: 30000,
     });
 
@@ -32,7 +30,7 @@ const TeamListContainer = (): React.ReactElement => {
         }
     });
     const handleCreateTeam = (newTeam: NewTeamProps) => {
-        mutation.mutate({ user, newTeam });
+        mutation.mutate({ newTeam });
     };
 
     return (

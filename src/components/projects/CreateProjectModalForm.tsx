@@ -15,11 +15,10 @@ interface ParamTypes {
 const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement => {
     const [isActive, setIsActive] = React.useState(false);
     const { teamSlug } = useParams<ParamTypes>();
-    const { user } = useAuth();
     const { isLoading, error, data: team } = useQuery<any, Error>(
-        ['teamDetails', { user, teamSlug }],
-        () => getTeamDetails({ user, teamSlug }),
-        { enabled: !!user, staleTime: 30000 },
+        ['teamDetails', { teamSlug }],
+        () => getTeamDetails({ teamSlug }),
+        { staleTime: 30000 },
     );
 
     // form data
@@ -42,7 +41,7 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
 
     const queryClient = useQueryClient();
     const mutation = useMutation(createProject, {
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries();
             queryClient.refetchQueries({ stale: true });            
             toast.success('New project created!');
@@ -66,7 +65,7 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
                 description: description,
             };
         }
-        mutation.mutate({ user, teamSlug, newProject });
+        mutation.mutate({ teamSlug, newProject });
         setIsActive(false);
     };
 

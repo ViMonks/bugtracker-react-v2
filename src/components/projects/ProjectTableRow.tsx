@@ -20,23 +20,20 @@ interface ParamTypes {
 
 export default function ProjectTableRow({ project }: ProjectTableRowProps): React.ReactElement {
     const queryClient = useQueryClient();
-    const { user } = useAuth();
     const { teamSlug } = useParams<ParamTypes>();
     const projectSlug = project.slug;
 
     const prefetchTicketList = async () => {
-        await user;
         await queryClient.prefetchQuery(
-            ['ticketList', { user, teamSlug, projectSlug }],
+            ['ticketList', { teamSlug, projectSlug }],
             () => getTicketList({ teamSlug, projectSlug }),
             { staleTime: Infinity },
         );
     };
 
     const prefetchProjectDetails = async () => {
-        await user;
         await queryClient.prefetchQuery(
-            ['projectDetails', { user, teamSlug, projectSlug }],
+            ['projectDetails', { teamSlug, projectSlug }],
             () => getProjectDetails({ teamSlug, projectSlug }),
             { staleTime: Infinity },
         );
