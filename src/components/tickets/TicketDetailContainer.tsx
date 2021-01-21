@@ -5,7 +5,7 @@ import projectDetail from '../../fakeAPI/projectDetail';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useAuth } from '../context/AuthContext';
-import { closeTicket, getTicketDetails } from '../API/FirebaseAPI';
+import { closeTicket, getTicketDetails, reopenTicket } from '../API/FirebaseAPI';
 
 import LoadingBar from '../LoadingBar';
 
@@ -31,19 +31,30 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
     );
 
     const queryClient = useQueryClient();
-    const mutation = useMutation(closeTicket, {
+    const closingMutation = useMutation(closeTicket, {
         onSuccess: () => {
             queryClient.invalidateQueries(['ticketDetails', { teamSlug, ticketSlug }]);
             queryClient.invalidateQueries(['ticketList', { teamSlug, projectSlug }]);
-            history.push(`/teams/${teamSlug}/projects/${projectSlug}`);
+            history.push(`/teams/${teamSlug}/projects/${projectSlug}/`);
             toast.success('Ticket closed!');
         },
     });
 
     const handleCloseTicket = (ticketSlug: string, resolutionState?: string): void => {
-        console.log('Closing...');
         const data = { is_open: false, resolution: resolutionState ? resolutionState : 'Unspecified.' };
-        mutation.mutate({ teamSlug, projectSlug, ticketSlug, data });
+        closingMutation.mutate({ teamSlug, projectSlug, ticketSlug, data });
+    };
+
+    const reopeningMutation = useMutation(reopenTicket, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['ticketDetails', { teamSlug, ticketSlug }]);
+            queryClient.invalidateQueries(['ticketList', { teamSlug, projectSlug }]);
+            toast.success('Ticket reopened!');
+        },
+    });
+
+    const handleReopenTicket = (ticketSlug: string): void => {
+        reopeningMutation.mutate({ teamSlug, projectSlug, ticketSlug });
     };
 
     const updateTicket = (updatedTicket: NewOrUpdatedTicketProps): void => {
@@ -59,7 +70,7 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
             {isLoading ? <LoadingBar /> : null}
             {error ? error.message : null}
             {data && (
-                <TicketDetailView ticket={data.data} handleCloseTicket={handleCloseTicket} updateTicket={updateTicket} />
+                <TicketDetailView ticket={data.data} handleCloseTicket={handleCloseTicket} handleReopenTicket={handleReopenTicket} updateTicket={updateTicket} />
             )}
         </div>
     );
