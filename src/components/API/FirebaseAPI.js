@@ -193,3 +193,21 @@ export const updateTicket = async ({ teamSlug, projectSlug, ticketSlug, updatedT
             }
         });
 };
+
+export const createComment = async ({ teamSlug, projectSlug, ticketSlug, comment }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .post(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/${ticketSlug}/create_comment/`, comment, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};

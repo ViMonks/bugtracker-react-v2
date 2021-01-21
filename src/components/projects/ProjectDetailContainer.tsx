@@ -18,7 +18,6 @@ interface ParamTypes {
 
 const ProjectDetailContainer = (props: any): React.ReactElement => {
     const { teamSlug, projectSlug } = useParams<ParamTypes>();
-    const { currentUser } = useAuth();
 
     const { isLoading: projectIsLoading, error: projectError, data: projectDetails } = useQuery<any, Error>(
         ['projectDetails', { teamSlug, projectSlug }],
