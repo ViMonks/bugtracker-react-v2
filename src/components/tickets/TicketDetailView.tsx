@@ -9,30 +9,29 @@ import { getPriorityText, getLastUpdatedString } from '../utils';
 import projectList from '../../fakeAPI/projectList';
 import TicketDetailClosingModal from './TicketDetailClosingModal';
 import UpdateTicketModalForm from './UpdateTicketModalForm'
-import { Z_BLOCK } from 'zlib';
 
 interface TicketDetailViewProps {
     ticket: Ticket;
-    closeTicket: (ticketSlug: string) => void;
+    handleCloseTicket: (ticketSlug: string, resolutionState?: string) => void;
     updateTicket: (updatedTicket: NewOrUpdatedTicketProps) => void;
 }
 
 interface TicketDetailPaneProps {
     ticket: Ticket;
-    closeTicket: (ticketSlug: string) => void;
+    handleCloseTicket: (ticketSlug: string, resolutionState?: string) => void;
     updateTicket: (updatedTicket: NewOrUpdatedTicketProps) => void;
 }
 
 const TicketDetailView: React.FunctionComponent<TicketDetailViewProps> = ({
     ticket,
-    closeTicket,
+    handleCloseTicket,
     updateTicket,
 }: TicketDetailViewProps): React.ReactElement => {
     return (
         <div className="container mt-4">
             <div className="columns">
                 <div className="column">
-                    <TicketDetailPane ticket={ticket} updateTicket={updateTicket} closeTicket={closeTicket} />
+                    <TicketDetailPane ticket={ticket} updateTicket={updateTicket} handleCloseTicket={handleCloseTicket} />
                 </div>
                 <div className="column">
                     <CommentList comments={ticket.comments} />
@@ -44,7 +43,7 @@ const TicketDetailView: React.FunctionComponent<TicketDetailViewProps> = ({
 
 const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
     ticket,
-    closeTicket,
+    handleCloseTicket,
     updateTicket,
 }: TicketDetailPaneProps): React.ReactElement => {
     const { title, description, user, priority, is_open, created, modified, resolution, developer } = ticket;
@@ -65,7 +64,7 @@ const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
                         <UpdateTicketModalForm ticket={ticket} updateTicket={updateTicket} />
                     </div>
                     <div className="level-item">
-                        <TicketDetailClosingModal isOpen={is_open} resolution={resolution} closeTicket={closeTicket} />
+                        <TicketDetailClosingModal isOpen={is_open} resolution={resolution} handleCloseTicket={handleCloseTicket} />
                     </div>
                 </div>
             </nav>

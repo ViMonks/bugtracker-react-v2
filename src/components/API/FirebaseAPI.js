@@ -140,11 +140,11 @@ export const createTicket = async ({ teamSlug, projectSlug, newTicket }) => {
         });
 };
 
-export const closeTicket = async ({ teamSlug, projectSlug, data }) => {
+export const closeTicket = async ({ teamSlug, projectSlug, ticketSlug, data }) => {
     const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
 
     return axios
-        .patch(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/`, data, {
+        .patch(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/${ticketSlug}/`, data, {
             headers: getHeaders(accessToken),
         })
         .catch((err) => {

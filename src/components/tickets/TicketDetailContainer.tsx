@@ -2,10 +2,10 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import projectDetail from '../../fakeAPI/projectDetail';
 
-import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useHistory, useParams } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useAuth } from '../context/AuthContext';
-import { getTicketDetails } from '../API/FirebaseAPI';
+import { closeTicket, getTicketDetails } from '../API/FirebaseAPI';
 
 import LoadingBar from '../LoadingBar';
 
@@ -22,17 +22,28 @@ interface ParamTypes {
 
 const TicketDetailContainer = (props: any): React.ReactElement => {
     const { ticketSlug, projectSlug, teamSlug } = useParams<ParamTypes>();
+    const history = useHistory();
     // const { data: user } = useQuery('user', async () => await currentUser.getIdToken(), {staleTime: Infinity});
     const { isLoading, error, data } = useQuery<any, Error>(
-        ['ticketDetails', { teamSlug }],
+        ['ticketDetails', { teamSlug, ticketSlug }],
         () => getTicketDetails({ teamSlug, projectSlug, ticketSlug }),
         { staleTime: 30000 },
     );
 
-    const closeTicket = (ticketSlug: string, resolutionState?: string): void => {
-        console.log(`Closing ticket ${ticketSlug} with resolution ${resolutionState ? resolutionState : 'unspecified.'}`);
-        toast.success('Ticket closed!'); // implementation with Promises: https://react-hot-toast.com/docs/toast
-        // TODO: the API call to close the current ticket will be made here
+    const queryClient = useQueryClient();
+    const mutation = useMutation(closeTicket, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['ticketDetails', { teamSlug, ticketSlug }]);
+            queryClient.invalidateQueries(['ticketList', { teamSlug, projectSlug }]);
+            history.push(`/teams/${teamSlug}/projects/${projectSlug}`);
+            toast.success('Ticket closed!');
+        },
+    });
+
+    const handleCloseTicket = (ticketSlug: string, resolutionState?: string): void => {
+        console.log('Closing...');
+        const data = { is_open: false, resolution: resolutionState ? resolutionState : 'Unspecified.' };
+        mutation.mutate({ teamSlug, projectSlug, ticketSlug, data });
     };
 
     const updateTicket = (updatedTicket: NewOrUpdatedTicketProps): void => {
@@ -48,11 +59,7 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
             {isLoading ? <LoadingBar /> : null}
             {error ? error.message : null}
             {data && (
-                <TicketDetailView
-                    ticket={data.data}
-                    closeTicket={closeTicket}
-                    updateTicket={updateTicket}
-                />
+                <TicketDetailView ticket={data.data} handleCloseTicket={handleCloseTicket} updateTicket={updateTicket} />
             )}
         </div>
     );

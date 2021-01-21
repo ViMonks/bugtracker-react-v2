@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 interface TicketModalProps {
     isOpen: boolean;
     resolution?: string;
-    closeTicket: (ticketSlug: string, resolutionState?: string) => void;
+    handleCloseTicket: (ticketSlug: string, resolutionState?: string) => void;
 }
 
 interface ParamTypes {
@@ -16,7 +16,7 @@ interface ParamTypes {
 const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
     isOpen,
     resolution,
-    closeTicket,
+    handleCloseTicket,
 }: TicketModalProps): React.ReactElement => {
     const [resolutionState, setResolutionState] = React.useState(resolution)
     const handleResolutionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -36,16 +36,12 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
         setIsActive(!isActive);
     };
 
-    const handleCloseTicket = () => {
+    const handleSubmit = () => {
         // this function calls closeTicket, which is handled by TicketDetailContainer
         // then, if the ticket was originally open, it is now being closed, so user is redirected to project detail view
         // otherwise, the ticket is being reopened, so the user remains on this page, and the modal closes
-        closeTicket(ticketSlug, resolutionState);
-        if (isOpen) {
-            history.push(`/teams/${teamSlug}/projects/${projectSlug}`);
-        } else {
-            handleToggleIsActive();
-        }
+        handleCloseTicket(ticketSlug, resolutionState);
+        handleToggleIsActive();
     };
 
     return (
@@ -73,7 +69,7 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
                         </div>
                     </section>
                     <footer className="modal-card-foot">
-                        <button className="button is-success" onClick={handleCloseTicket}>
+                        <button className="button is-success" onClick={handleSubmit}>
                             Close Ticket
                         </button>
                         <button className="button" onClick={handleToggleIsActive}>
