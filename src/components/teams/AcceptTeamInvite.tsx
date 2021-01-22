@@ -1,6 +1,6 @@
 import React from 'react'
 import queryString from 'query-string'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useMutation, useQueryClient } from 'react-query';
 import { acceptTeamInvite } from '../API/FirebaseAPI';
 import toast from 'react-hot-toast';
@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 export default function AcceptTeamInvite() {
     const currentUrl = useLocation();
     const querystrings = queryString.parse(currentUrl.search)
-    console.log(querystrings);
+    const history = useHistory();
 
     const queryClient = useQueryClient();
 
@@ -17,6 +17,7 @@ export default function AcceptTeamInvite() {
             queryClient.invalidateQueries('teamList');
             queryClient.refetchQueries();
             toast.success('Invite accepted!');
+            history.push('/teams/')
         },
         onError: (error: any) => {
             toast.error(error.message);
