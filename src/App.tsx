@@ -14,6 +14,7 @@ import FirebaseUI from './components/auth/FirebaseUI';
 import Testing from './components/API/Testing';
 import MyQueryClientProvider from './components/API/MyQueryClientProvider';
 import { ReactQueryDevtools } from 'react-query/devtools'
+import AcceptTeamInvite from './components/teams/AcceptTeamInvite';
 
 function PrimaryLayout(): React.ReactElement {
     return (
@@ -24,6 +25,7 @@ function PrimaryLayout(): React.ReactElement {
                     <main>
                         <Route exact path="/dashboard" component={Dashboard} />
                         <PrivateRoute exact path="/teams" component={TeamListContainer} />
+                        <PrivateRoute exact path="/invitation/" component={AcceptTeamInvite} />
                         {/* <TeamProvider>*/} 
                             <div>
                                 <PrivateRoute exact path="/testing" component={Testing} />
