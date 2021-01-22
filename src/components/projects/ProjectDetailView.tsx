@@ -113,7 +113,7 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
             <div className="block">
                 <p className="pt-1 text-gray-700">
                     <strong>Manager: </strong>
-                    {manager}
+                    {manager ? manager : 'None assigned'}
                 </p>
 
                 <p className="text-gray-700 pt-1">Created: {new Date(created).toLocaleDateString()}</p>
