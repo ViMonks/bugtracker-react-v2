@@ -91,6 +91,7 @@ const TeamMembersPanel: React.FunctionComponent<TeamMembersPanelProps> = ({
     return (
         <nav className="panel is-link">
             <p className="panel-heading">Remove Members</p>
+            {members.filter((member) => member.role_name !== 'Administrator').length > 0 ? null : <p className='panel-block'>This team has no members</p>}
             {members.filter((member) => member.role_name !== 'Administrator').map((member) => <TeamPanelBlock key={member.user} member={member} />)}
         </nav>
     );

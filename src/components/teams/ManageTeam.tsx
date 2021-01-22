@@ -10,6 +10,7 @@ import InviteUserToTeamModal from './InviteUserToTeamModal';
 import { useQuery } from 'react-query';
 import { getTeamDetails } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
+import LeaveTeamModal from './LeaveTeamModal';
 
 // interface ManageTeamControllerProps {
 //     teamSlug: string;
@@ -55,6 +56,7 @@ const ManageTeam: React.FunctionComponent<ManageTeamProps> = ({ team }: ManageTe
                 </div>
                 <div className="column">
                     <TeamMembersPanel members={team.memberships} />
+                    <LeaveTeamModal />
                 </div>
             </div>
         </div>

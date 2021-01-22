@@ -76,6 +76,24 @@ export const removeTeamMember = async ({ teamSlug, member }) => {
         });
 };
 
+export const leaveTeam = async ({ teamSlug }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .get(`${baseURL}teams/${teamSlug}/leave_team/`, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
 // PROJECTS
 
 export const getProjectList = async ({ teamSlug }) => {
@@ -288,9 +306,13 @@ export const reopenTicket = async ({ teamSlug, projectSlug, ticketSlug }) => {
     const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
 
     return axios
-        .patch(`${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/${ticketSlug}/`, {is_open: true}, {
-            headers: getHeaders(accessToken),
-        })
+        .patch(
+            `${baseURL}teams/${teamSlug}/projects/${projectSlug}/tickets/${ticketSlug}/`,
+            { is_open: true },
+            {
+                headers: getHeaders(accessToken),
+            },
+        )
         .catch((err) => {
             if (err.response) {
                 throw new Error(
