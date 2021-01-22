@@ -8,7 +8,7 @@ import { Team } from '../../types';
 import AdminTeamMembersPanel from './AdminsTeamMembersPanel';
 import InviteUserToTeamModal from './InviteUserToTeamModal';
 import { useQuery } from 'react-query';
-import { getTeamDetails } from '../API/FirebaseAPI';
+import { getTeamDetails, promoteToAdmin } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 import LeaveTeamModal from './LeaveTeamModal';
 import StepDownAsAdmin from './StepDownAsAdmin';
@@ -63,9 +63,11 @@ const ManageTeam: React.FunctionComponent<ManageTeamProps> = ({ team }: ManageTe
                     <div className="block">
                         <p>Created on {new Date(team.created).toLocaleDateString()}</p>
                     </div>
-                    <div className="block">
-                        <InviteUserToTeamModal /> {/* TODO: this should only appear for admins */}
-                    </div>
+                    {team.user_is_admin && (
+                        <div className="block">
+                            <InviteUserToTeamModal />
+                        </div>
+                    )}
                 </div>
                 <div className="column">
                     {team.user_is_admin ? (
@@ -77,12 +79,31 @@ const ManageTeam: React.FunctionComponent<ManageTeamProps> = ({ team }: ManageTe
                     <div className="level">
                         <div className="level-left">
                             <div className="level-item">
-                                <LeaveTeamModal />
+                                {team.user_is_admin ? (
+                                    <button
+                                        className="button is-outlined is-danger"
+                                        data-tooltip="You cannot leave as team admin. Step down as admin first."
+                                        disabled
+                                    >
+                                        Leave Team
+                                    </button>
+                                ) : (
+                                    <LeaveTeamModal />
+                                )}
                             </div>
-                            {team.user_is_admin && (
+                            {team.user_is_admin && team.admins.length > 1 && (
                                 <div className="level-item">
                                     <StepDownAsAdmin />
                                 </div>
+                            )}
+                            {team.user_is_admin && team.admins.length === 1 && (
+                                <button
+                                    className="button is-outlined is-danger"
+                                    data-tooltip="You must promote another member to team admin before you may step down."
+                                    disabled
+                                >
+                                    Step down as team admin
+                                </button>
                             )}
                         </div>
                     </div>

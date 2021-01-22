@@ -205,7 +205,7 @@ const AdminTeamMembersPanel: React.FunctionComponent<TeamMembersPanelProps> = ({
     return (
         <nav className="panel">
             <p className="panel-heading">Members</p>
-            <p className="panel-block has-text-weight-light bg-gray-50">You may remove members from your team here.</p>
+            <p className="panel-block has-text-weight-light bg-gray-50">You may promote or remove members here.</p>
             <div className="panel-block">
                 <p className="control has-icons-left">
                     <input

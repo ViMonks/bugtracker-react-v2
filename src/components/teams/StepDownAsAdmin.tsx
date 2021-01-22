@@ -48,7 +48,7 @@ export default function StepDownAsAdmin() {
                                 </button>
                             </div>
                             <div className="card-footer-item">
-                                <button className="button is-info" onClick={() => setIsActive(!isActive)}>
+                                <button className="button" onClick={() => setIsActive(!isActive)}>
                                     Cancel
                                 </button>
                             </div>
