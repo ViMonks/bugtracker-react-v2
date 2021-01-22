@@ -79,9 +79,11 @@ const ManageTeam: React.FunctionComponent<ManageTeamProps> = ({ team }: ManageTe
                             <div className="level-item">
                                 <LeaveTeamModal />
                             </div>
-                            <div className="level-item">
-                                <StepDownAsAdmin />
-                            </div>
+                            {team.user_is_admin && (
+                                <div className="level-item">
+                                    <StepDownAsAdmin />
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

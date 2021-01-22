@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast';
 // interface imports
 import { TeamMembership } from '../../types';
 import { useMutation, useQueryClient } from 'react-query';
-import { removeTeamMember } from '../API/FirebaseAPI';
+import { promoteToAdmin, removeTeamMember } from '../API/FirebaseAPI';
 
 interface TeamMembersPanelProps {
     members: TeamMembership[];
@@ -23,7 +23,9 @@ const TeamPanelBlock: React.FunctionComponent<TeamPanelBlockProps> = ({
     member,
 }: TeamPanelBlockProps): React.ReactElement => {
     const { teamSlug } = useParams<ParamTypes>();
-    const [isActive, setIsActive] = React.useState(false);
+    const [removeMemberIsActive, setRemoveMemberIsActive] = React.useState(false);
+    const [promoteToAdminIsActive, setPromoteToAdminIsActive] = React.useState(false);
+    const [chooseOptionIsActive, setChooseOptionIsActive] = React.useState(false);
     const username = member;
 
     const queryClient = useQueryClient();
@@ -33,7 +35,7 @@ const TeamPanelBlock: React.FunctionComponent<TeamPanelBlockProps> = ({
             queryClient.invalidateQueries('teamDetails');
             queryClient.refetchQueries();
             toast.success('User removed from team.');
-            setIsActive(false);
+            setRemoveMemberIsActive(false);
         },
         onError: (error: any) => {
             toast.error(error.message);
@@ -45,41 +47,140 @@ const TeamPanelBlock: React.FunctionComponent<TeamPanelBlockProps> = ({
         removeMemberMutation.mutate({ teamSlug, member });
     };
 
-    const toggleIsActive = () => {
-        setIsActive(!isActive);
+    const promoteMemberMutation = useMutation(promoteToAdmin, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('teamDetails');
+            queryClient.refetchQueries();
+            toast.success('User promoted to team administrator!');
+            setPromoteToAdminIsActive(false);
+        },
+        onError: (error: any) => {
+            toast.error(error.message);
+        },
+    });
+
+    const promoteMember = () => {
+        const member = { user: username };
+        promoteMemberMutation.mutate({ teamSlug, member });
+    };
+
+    const closeAllModals = () => {
+        setRemoveMemberIsActive(false);
+        setPromoteToAdminIsActive(false);
+        setChooseOptionIsActive(false);
+    };
+
+    const activateRemoveMemberModal = () => {
+        setRemoveMemberIsActive(true);
+        setPromoteToAdminIsActive(false);
+        setChooseOptionIsActive(false);
+    };
+
+    const activatePromoteMemberModal = () => {
+        setRemoveMemberIsActive(false);
+        setPromoteToAdminIsActive(true);
+        setChooseOptionIsActive(false);
     };
 
     return (
         <Fragment>
-            <a className="panel-block" onClick={toggleIsActive}>
+            <a className="panel-block" onClick={() => setChooseOptionIsActive(!chooseOptionIsActive)}>
                 <span className="panel-icon">
                     <i className="fas fa-user"></i>
                 </span>
                 {member}
             </a>
 
-            <div className={isActive ? 'modal is-active' : 'modal'}>
+            {/* Choose option modal */}
+            <div className={chooseOptionIsActive ? 'modal is-active' : 'modal'}>
                 <div className="modal-background"></div>
                 <div className="modal-content">
                     <div className="card">
+                        <header className="card-header">
+                            <p className="card-header-title">Manage member</p>
+                        </header>
                         <div className="card-content">
-                            <div className="content">Are you sure you wish to remove {member} from your team?</div>
+                            <div className="content">What would you like to do?</div>
                         </div>
                         <div className="card-footer">
                             <div className="card-footer-item">
-                                <button className="button is-danger" onClick={removeMember}>
-                                    Remove Member
+                                <button className="button" onClick={activateRemoveMemberModal}>
+                                    Remove member
                                 </button>
                             </div>
                             <div className="card-footer-item">
-                                <button className="button is-info" onClick={toggleIsActive}>
+                                <button className="button" onClick={activatePromoteMemberModal}>
+                                    Promote member to admin
+                                </button>
+                            </div>
+                            <div className="card-footer-item">
+                                <button className="button is-text" onClick={closeAllModals}>
                                     Cancel
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button className="modal-close is-large" aria-label="close" onClick={toggleIsActive}></button>
+                <button className="modal-close is-large" aria-label="close" onClick={closeAllModals}></button>
+            </div>
+
+            {/* Removing Member Modal */}
+            <div className={removeMemberIsActive ? 'modal is-active' : 'modal'}>
+                <div className="modal-background"></div>
+                <div className="modal-content">
+                    <div className="card">
+                        <header className="card-header">
+                            <p className="card-header-title">Remove member</p>
+                        </header>
+                        <div className="card-content">
+                            <div className="content">Are you sure you wish to remove {member} from your team?</div>
+                        </div>
+                        <div className="card-footer">
+                            <div className="card-footer-item">
+                                <button className="button is-danger is-light" onClick={removeMember}>
+                                    Remove member
+                                </button>
+                            </div>
+                            <div className="card-footer-item">
+                                <button className="button" onClick={closeAllModals}>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button className="modal-close is-large" aria-label="close" onClick={closeAllModals}></button>
+            </div>
+
+            {/* Promoting to admin modal */}
+            <div className={promoteToAdminIsActive ? 'modal is-active' : 'modal'}>
+                <div className="modal-background"></div>
+                <div className="modal-content">
+                    <div className="card">
+                        <header className="card-header">
+                            <p className="card-header-title">Promote member</p>
+                        </header>
+                        <div className="card-content">
+                            <div className="content">
+                                Are you sure you wish to promote {member} to a team administrator? This{' '}
+                                <strong>cannot</strong> be undone. This user will have all administrator privileges.
+                            </div>
+                        </div>
+                        <div className="card-footer">
+                            <div className="card-footer-item">
+                                <button className="button is-primary is-light" onClick={promoteMember}>
+                                    Promote member
+                                </button>
+                            </div>
+                            <div className="card-footer-item">
+                                <button className="button" onClick={closeAllModals}>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button className="modal-close is-large" aria-label="close" onClick={closeAllModals}></button>
             </div>
         </Fragment>
     );
@@ -88,18 +189,18 @@ const TeamPanelBlock: React.FunctionComponent<TeamPanelBlockProps> = ({
 const AdminTeamMembersPanel: React.FunctionComponent<TeamMembersPanelProps> = ({
     members,
 }: TeamMembersPanelProps): React.ReactElement => {
-    const [search, setSearch] = React.useState('')
-    const [filteredMembers, setFilteredMembers] = React.useState(members.map(member => member.user))
+    const [search, setSearch] = React.useState('');
+    const [filteredMembers, setFilteredMembers] = React.useState(members.map((member) => member.user));
 
-    const noMembers: boolean = members.filter((member) => member.role_name !== 'Administrator').length === 0
+    const noMembers: boolean = members.filter((member) => member.role_name !== 'Administrator').length === 0;
 
     React.useEffect(() => {
-        const nonAdmins: string[] = members.filter((member) => member.role_name !== 'Administrator').map((member) => member.user)
-        const filtered = nonAdmins.filter(
-            (member) => member.toLowerCase().indexOf(search.toLowerCase()) !== -1,
-        );
-        setFilteredMembers(filtered)
-    }, [search, members])
+        const nonAdmins: string[] = members
+            .filter((member) => member.role_name !== 'Administrator')
+            .map((member) => member.user);
+        const filtered = nonAdmins.filter((member) => member.toLowerCase().indexOf(search.toLowerCase()) !== -1);
+        setFilteredMembers(filtered);
+    }, [search, members]);
 
     return (
         <nav className="panel">
@@ -119,8 +220,10 @@ const AdminTeamMembersPanel: React.FunctionComponent<TeamMembersPanelProps> = ({
                     </span>
                 </p>
             </div>
-            {noMembers && <p className='panel-block'>This team has no members</p>}
-            {filteredMembers.map((member) => <TeamPanelBlock key={member} member={member} />)}            
+            {noMembers && <p className="panel-block">This team has no members</p>}
+            {filteredMembers.map((member) => (
+                <TeamPanelBlock key={member} member={member} />
+            ))}
         </nav>
     );
 };

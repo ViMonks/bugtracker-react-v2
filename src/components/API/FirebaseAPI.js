@@ -112,6 +112,24 @@ export const stepDownAsTeamAdmin = async ({ teamSlug }) => {
         });
 };
 
+export const promoteToAdmin = async ({ teamSlug, member }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .post(`${baseURL}teams/${teamSlug}/promote_admin/`, member, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
 // PROJECTS
 
 export const getProjectList = async ({ teamSlug }) => {
