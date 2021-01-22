@@ -8,7 +8,7 @@ import { Team } from '../../types';
 import AdminTeamMembersPanel from './AdminsTeamMembersPanel';
 import InviteUserToTeamModal from './InviteUserToTeamModal';
 import { useQuery } from 'react-query';
-import { getTeamDetails, promoteToAdmin } from '../API/FirebaseAPI';
+import { getTeamDetails } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 import LeaveTeamModal from './LeaveTeamModal';
 import StepDownAsAdmin from './StepDownAsAdmin';

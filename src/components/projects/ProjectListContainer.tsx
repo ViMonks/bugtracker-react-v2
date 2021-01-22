@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import ProjectListView from './ProjectListView';
 import CreateProjectModalForm from './CreateProjectModalForm';
 import { useAuth } from '../context/AuthContext';
-import { getProjectList } from '../API/FirebaseAPI';
+import { getProjectList, getTeamDetails } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 
 interface ParamTypes {
@@ -23,6 +23,12 @@ const ProjectListContainer = (): React.ReactElement => {
         { staleTime: 30000 },
     );
 
+    const { isLoading: teamIsLoading, error: teamError, data: team } = useQuery<any, Error>(
+        ['teamDetails', { teamSlug }],
+        () => getTeamDetails({ teamSlug }),
+        { staleTime: 30000 },
+    );
+
     return (
         <div className="container">
             <div className="block">
@@ -35,9 +41,11 @@ const ProjectListContainer = (): React.ReactElement => {
                 {error ? error.message : null}
                 {data ? <ProjectListView projects={data.data} /> : null}
             </div>
-            <div className="block">
-                <CreateProjectModalForm />
-            </div>
+            {!teamIsLoading && team.data.user_is_admin && (
+                <div className="block">
+                    <CreateProjectModalForm />
+                </div>
+            )}            
         </div>
     );
 };

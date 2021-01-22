@@ -47,8 +47,8 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
             toast.success('New project created!');
             // history.push(data.data.slug)
         },
-        onError: () => {
-            toast.error('Something went wrong. Please try again.');
+        onError: (error: any) => {
+            toast.error(error.message);
         },
     });
     const handleSubmit = () => {
