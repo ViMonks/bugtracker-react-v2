@@ -8,6 +8,8 @@ export interface Team {
     memberships: TeamMembership[],
     projects_list: string,
     url: string,
+    user_is_admin: boolean,
+    admins: string[],
 }
 
 export interface TeamMembership {

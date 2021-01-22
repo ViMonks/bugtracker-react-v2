@@ -49,6 +49,8 @@ const ManageTeam: React.FunctionComponent<ManageTeamProps> = ({ team }: ManageTe
                 <div className="column">
                     <h1 className="title">{team.title}</h1>
                     <p>{team.description}</p>
+                    <p>Admin: {team.user_is_admin.toString()}</p>
+                    <p>Admin list:{team.admins}</p>
                     <p>Created on {new Date(team.created).toLocaleDateString()}</p>
                     <div className="mt-2">
                         <InviteUserToTeamModal /> {/* TODO: this should only appear for admins */}
