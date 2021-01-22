@@ -58,6 +58,24 @@ export const inviteToTeam = async ({ teamSlug, data }) => {
         });
 };
 
+export const removeTeamMember = async ({ teamSlug, member }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .put(`${baseURL}teams/${teamSlug}/remove_member/`, member, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
 // PROJECTS
 
 export const getProjectList = async ({ teamSlug }) => {
