@@ -12,7 +12,7 @@ interface TeamMembersPanelProps {
 }
 
 interface TeamPanelBlockProps {
-    member: TeamMembership;
+    member: string;
 }
 
 interface ParamTypes {
@@ -24,7 +24,7 @@ const TeamPanelBlock: React.FunctionComponent<TeamPanelBlockProps> = ({
 }: TeamPanelBlockProps): React.ReactElement => {
     const { teamSlug } = useParams<ParamTypes>();
     const [isActive, setIsActive] = React.useState(false);
-    const username = member.user;
+    const username = member;
 
     const queryClient = useQueryClient();
 
@@ -50,12 +50,12 @@ const TeamPanelBlock: React.FunctionComponent<TeamPanelBlockProps> = ({
     };
 
     return (
-        <Fragment key={member.user}>
+        <Fragment>
             <a className="panel-block" onClick={toggleIsActive}>
                 <span className="panel-icon">
                     <i className="fas fa-user"></i>
                 </span>
-                {member.user}
+                {member}
             </a>
 
             <div className={isActive ? 'modal is-active' : 'modal'}>
@@ -63,7 +63,7 @@ const TeamPanelBlock: React.FunctionComponent<TeamPanelBlockProps> = ({
                 <div className="modal-content">
                     <div className="card">
                         <div className="card-content">
-                            <div className="content">Are you sure you wish to remove {member.user} from your team?</div>
+                            <div className="content">Are you sure you wish to remove {member} from your team?</div>
                         </div>
                         <div className="card-footer">
                             <div className="card-footer-item">
@@ -88,11 +88,39 @@ const TeamPanelBlock: React.FunctionComponent<TeamPanelBlockProps> = ({
 const TeamMembersPanel: React.FunctionComponent<TeamMembersPanelProps> = ({
     members,
 }: TeamMembersPanelProps): React.ReactElement => {
+    const [search, setSearch] = React.useState('')
+    const [filteredMembers, setFilteredMembers] = React.useState(members.map(member => member.user))
+
+    const noMembers: boolean = members.filter((member) => member.role_name !== 'Administrator').length === 0
+
+    React.useEffect(() => {
+        const nonAdmins: string[] = members.filter((member) => member.role_name !== 'Administrator').map((member) => member.user)
+        const filtered = nonAdmins.filter(
+            (member) => member.toLowerCase().indexOf(search.toLowerCase()) !== -1,
+        );
+        setFilteredMembers(filtered)
+    }, [search, members])
+
     return (
         <nav className="panel">
-            <p className="panel-heading">Remove Members</p>
+            <p className="panel-heading">Members</p>
+            <p className="panel-block has-text-weight-light bg-gray-50">You may remove members from your team here.</p>
+            <div className="panel-block">
+                <p className="control has-icons-left">
+                    <input
+                        type="text"
+                        className="input"
+                        placeholder="Search members"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <span className="icon is-left">
+                        <i className="fas fa-search"></i>
+                    </span>
+                </p>
+            </div>
             {members.filter((member) => member.role_name !== 'Administrator').length > 0 ? null : <p className='panel-block'>This team has no members</p>}
-            {members.filter((member) => member.role_name !== 'Administrator').map((member) => <TeamPanelBlock key={member.user} member={member} />)}
+            {filteredMembers.map((member) => <TeamPanelBlock key={member} member={member} />)}            
         </nav>
     );
 };
