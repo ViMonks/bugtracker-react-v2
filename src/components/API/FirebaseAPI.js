@@ -94,6 +94,24 @@ export const leaveTeam = async ({ teamSlug }) => {
         });
 };
 
+export const stepDownAsTeamAdmin = async ({ teamSlug }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .get(`${baseURL}teams/${teamSlug}/step_down_as_admin/`, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
 // PROJECTS
 
 export const getProjectList = async ({ teamSlug }) => {

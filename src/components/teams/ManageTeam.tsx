@@ -11,6 +11,7 @@ import { useQuery } from 'react-query';
 import { getTeamDetails } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 import LeaveTeamModal from './LeaveTeamModal';
+import StepDownAsAdmin from './StepDownAsAdmin';
 
 // interface ManageTeamControllerProps {
 //     teamSlug: string;
@@ -25,7 +26,7 @@ interface ParamTypes {
 }
 
 const ManageTeamController: React.FunctionComponent = (): React.ReactElement => {
-    const {teamSlug} = useParams<ParamTypes>();
+    const { teamSlug } = useParams<ParamTypes>();
 
     const { isLoading, error, data } = useQuery<any, Error>(
         ['teamDetails', { teamSlug }],
@@ -34,11 +35,11 @@ const ManageTeamController: React.FunctionComponent = (): React.ReactElement => 
     );
 
     return (
-    <div className="container">
-        {isLoading ? <LoadingBar /> : null}
-        {error ? error.message : null}
-        {data && <ManageTeam team={data.data} />}
-    </div>
+        <div className="container">
+            {isLoading ? <LoadingBar /> : null}
+            {error ? error.message : null}
+            {data && <ManageTeam team={data.data} />}
+        </div>
     );
 };
 
@@ -48,17 +49,35 @@ const ManageTeam: React.FunctionComponent<ManageTeamProps> = ({ team }: ManageTe
             <div className="columns">
                 <div className="column">
                     <h1 className="title">{team.title}</h1>
-                    <p>{team.description}</p>
-                    <p>Admin: {team.user_is_admin.toString()}</p>
-                    <p>Admin list:{team.admins}</p>
-                    <p>Created on {new Date(team.created).toLocaleDateString()}</p>
-                    <div className="mt-2">
+                    <div className="block">
+                        <p>{team.description}</p>
+                    </div>
+                    <div className="block">
+                        {team.admins.length === 1 ? (
+                            <p>Administrator: {team.admins[0]}</p>
+                        ) : (
+                            <p>Administrators: {team.admins.join(', ')}</p>
+                        )}
+                    </div>
+                    <div className="block">
+                        <p>Created on {new Date(team.created).toLocaleDateString()}</p>
+                    </div>
+                    <div className="block">
                         <InviteUserToTeamModal /> {/* TODO: this should only appear for admins */}
                     </div>
                 </div>
                 <div className="column">
                     <TeamMembersPanel members={team.memberships} />
-                    <LeaveTeamModal />
+                    <div className="level">
+                        <div className="level-left">
+                            <div className="level-item">
+                                <LeaveTeamModal />
+                            </div>
+                            <div className="level-item">
+                                <StepDownAsAdmin />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
