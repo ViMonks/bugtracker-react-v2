@@ -60,7 +60,7 @@ const InviteUserToTeamModal: React.FunctionComponent = (): React.ReactElement =>
                     {emailIsValid ? (
                         <button className="button is-primary" onClick={handleSubmit}>Invite</button>
                     ) : (
-                        <button className="button is-primary" disabled>
+                        <button className="button is-primary" disabled data-tooltip="Enter a valid email address.">
                             Invite
                         </button>
                     )}

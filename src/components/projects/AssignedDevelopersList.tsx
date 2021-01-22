@@ -45,7 +45,7 @@ const AssignedDevelopersList: React.FunctionComponent<AssignedDevelopersListProp
     };
 
     return (
-        <div className="panel is-info is-light">
+        <div className="panel">
             <p className="panel-heading">Members</p>
             <div className="panel-block">
                 <p className="control has-icons-left">

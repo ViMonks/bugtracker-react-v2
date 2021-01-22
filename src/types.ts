@@ -36,6 +36,15 @@ export interface Project {
     url: string,
     tickets_list: string,
     open_tickets: number
+    user_permissions: ProjectUserPermissions
+}
+
+export interface ProjectUserPermissions {
+    view: boolean,
+    edit: boolean,
+    update_manager: boolean,
+    create_tickets: boolean,
+    assign_developer: boolean,
 }
 
 export interface NewOrUpdatedProjectProps {
@@ -64,6 +73,15 @@ export interface Ticket {
     modified: string,
     url: string,
     comments: Comment[],
+    user_permissions: TicketUserPermissions
+}
+
+export interface TicketUserPermissions {
+    view: boolean,
+    edit: boolean,
+    change_developer: boolean,
+    delete: boolean,
+    close: boolean,
 }
 
 export interface Comment {

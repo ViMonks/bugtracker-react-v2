@@ -59,6 +59,7 @@ const TicketDetailContainer = (props: any): React.ReactElement => {
     const updatingTicketMutation = useMutation(updateTicket, {
         onSuccess: () => {
             queryClient.invalidateQueries(['ticketDetails', { teamSlug, ticketSlug }]);
+            queryClient.invalidateQueries(['ticketList', { teamSlug, projectSlug }]);
             toast.success('Ticket updated!');
         },
     });

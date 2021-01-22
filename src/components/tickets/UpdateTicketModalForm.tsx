@@ -90,7 +90,7 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
         return (
             <Fragment>
                 <div className="select">
-                    <select value={developer} defaultValue={"NONE"} onChange={handleDeveloperChange}>
+                    <select value={developer} defaultValue={'NONE'} onChange={handleDeveloperChange}>
                         <option value="NONE" disabled>
                             Assign a developer (optional)
                         </option>
@@ -107,88 +107,96 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
 
     return (
         <Fragment>
-            <button className={isLoading ? 'button is-primary is-loading' : 'button is-primary'} onClick={handleToggleIsActive}>
+            <button
+                className={isLoading ? 'button is-primary is-loading' : 'button is-primary'}
+                onClick={handleToggleIsActive}
+            >
                 Update Ticket
             </button>
 
             {error ? error.message : null}
             {project && (
-            <div className={isActive ? 'modal is-active' : 'modal'}>
-                <div className="modal-background"></div>
-                <div className="modal-card">
-                    <header className="modal-card-head">
-                        <p className="modal-card-title">Submit Ticket</p>
-                        <button className="delete" aria-label="close" onClick={handleToggleIsActive}></button>
-                    </header>
-                    <section className="modal-card-body">
-                        {/* Title Field */}
-                        <div className="field">
-                            <label className="label">Title</label>
-                            <div className="control">
-                                <input
-                                    type="text"
-                                    className={!title ? 'input is-danger' : 'input'}
-                                    value={title}
-                                    onChange={handleTitleChange}
-                                />
+                <div className={isActive ? 'modal is-active' : 'modal'}>
+                    <div className="modal-background"></div>
+                    <div className="modal-card">
+                        <header className="modal-card-head">
+                            <p className="modal-card-title">Submit Ticket</p>
+                            <button className="delete" aria-label="close" onClick={handleToggleIsActive}></button>
+                        </header>
+                        <section className="modal-card-body">
+                            {/* Title Field */}
+                            <div className="field">
+                                <label className="label">Title</label>
+                                <div className="control">
+                                    <input
+                                        type="text"
+                                        className={!title ? 'input is-danger' : 'input'}
+                                        value={title}
+                                        onChange={handleTitleChange}
+                                    />
+                                </div>
+                                {!title && <p className="help is-danger">Title is required.</p>}
                             </div>
-                            {!title && <p className="help is-danger">Title is required.</p>}
-                        </div>
 
-                        {/* Description Field */}
-                        <div className="field">
-                            <label className="label">Description</label>
-                            <div className="control">
-                                <textarea
-                                    className="textarea"
-                                    value={description}
-                                    onChange={handleDescriptionChange}
-                                ></textarea>
-                            </div>
-                        </div>
-
-                        {/* Developer Field */}
-                        <div className="field">
-                            <label className="label">Developer</label>
-                            <div className="control">{createDevelopersOptionsList(project.data.memberships)}</div>
-                        </div>
-
-                        {/* Priority Field */}
-                        <div className="field">
-                            <label className="label">Priority</label>
-                            <div className="control">
-                                <div className={!priority ? 'select is-danger' : 'select'}>
-                                    <select value={priority} onChange={handlePriorityChange}>
-                                        <option selected disabled value="">
-                                            Select priority
-                                        </option>
-                                        <option>Low</option>
-                                        <option>High</option>
-                                        <option>Urgent</option>
-                                    </select>
+                            {/* Description Field */}
+                            <div className="field">
+                                <label className="label">Description</label>
+                                <div className="control">
+                                    <textarea
+                                        className="textarea"
+                                        value={description}
+                                        onChange={handleDescriptionChange}
+                                    ></textarea>
                                 </div>
                             </div>
-                            {!priority && <p className="help is-danger">Priority is required.</p>}
-                        </div>
-                    </section>
-                    <footer className="modal-card-foot">
-                        {!title || !priority ? (
-                            <button className="button is-success" disabled onClick={handleSubmit}>
-                                Submit
-                            </button>
-                        ) : (
-                            <button className="button is-success" onClick={handleSubmit}>
-                                Submit
-                            </button>
-                        )}
 
-                        <button className="button" onClick={handleToggleIsActive}>
-                            Cancel
-                        </button>
-                    </footer>
+                            {/* Developer Field */}
+                            {ticket.user_permissions.change_developer && (
+                                <div className="field">
+                                    <label className="label">Developer</label>
+                                    <div className="control">
+                                        {createDevelopersOptionsList(project.data.memberships)}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Priority Field */}
+                            <div className="field">
+                                <label className="label">Priority</label>
+                                <div className="control">
+                                    <div className={!priority ? 'select is-danger' : 'select'}>
+                                        <select value={priority} onChange={handlePriorityChange}>
+                                            <option selected disabled value="">
+                                                Select priority
+                                            </option>
+                                            <option>Low</option>
+                                            <option>High</option>
+                                            <option>Urgent</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {!priority && <p className="help is-danger">Priority is required.</p>}
+                            </div>
+                        </section>
+                        <footer className="modal-card-foot">
+                            {!title || !priority ? (
+                                <button className="button is-success" disabled onClick={handleSubmit}>
+                                    Submit
+                                </button>
+                            ) : (
+                                <button className="button is-success" onClick={handleSubmit}>
+                                    Submit
+                                </button>
+                            )}
+
+                            <button className="button" onClick={handleToggleIsActive}>
+                                Cancel
+                            </button>
+                        </footer>
+                    </div>
+                    <button className="modal-close is-large" onClick={handleToggleIsActive}></button>
                 </div>
-                <button className="modal-close is-large" onClick={handleToggleIsActive}></button>
-            </div>)}
+            )}
         </Fragment>
     );
 };

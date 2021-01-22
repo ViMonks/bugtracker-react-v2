@@ -24,7 +24,6 @@ interface ProjectDetailPaneProps {
     project: Project;
 }
 
-
 interface ParamTypes {
     teamSlug: string;
     projectSlug: string;
@@ -46,7 +45,9 @@ const ProjectDetailView: React.FunctionComponent<ProjectDetailViewProps> = ({
                         <TicketTableContainer openTickets={project.open_tickets} tickets={[...tickets]} />
                     </div>
                     <div className="block">
-                        <CreateTicketModalForm createTicket={createTicket} />
+                        {project.user_permissions.create_tickets && (
+                            <CreateTicketModalForm createTicket={createTicket} canAssignDeveloper={project.user_permissions.assign_developer} />
+                        )}
                     </div>
                 </div>
             </div>
@@ -57,8 +58,8 @@ const ProjectDetailView: React.FunctionComponent<ProjectDetailViewProps> = ({
 const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
     project,
 }: ProjectDetailPaneProps): React.ReactElement => {
-    const { title, manager, description, created, memberships, is_archived } = project;
-    const history = useHistory()
+    const { title, manager, description, created, memberships, is_archived, user_permissions } = project;
+    const history = useHistory();
 
     const { teamSlug, projectSlug } = useParams<ParamTypes>();
     const { isLoading, error, data: team } = useQuery<any, Error>(
@@ -75,14 +76,14 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
             queryClient.invalidateQueries('projectDetails');
             queryClient.refetchQueries();
             toast.success('Project archived!');
-            history.push(`/teams/${teamSlug}/projects/`)
+            history.push(`/teams/${teamSlug}/projects/`);
         },
         onError: () => {
             toast.error('Something went wrong. Please try again.');
         },
     });
     const handleArchiveProject = (): void => {
-        const data = { is_archived: true, title: project.title }
+        const data = { is_archived: true, title: project.title };
         archiveProjectMutation.mutate({ teamSlug, projectSlug, data });
     };
 
@@ -98,7 +99,7 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
         },
     });
     const handleUnarchiveProject = (): void => {
-        const data = { is_archived: false, title: project.title }
+        const data = { is_archived: false, title: project.title };
         unarchiveProjectMutation.mutate({ teamSlug, projectSlug, data });
     };
 
@@ -117,30 +118,48 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
                 </p>
 
                 <p className="text-gray-700 pt-1">Created: {new Date(created).toLocaleDateString()}</p>
-
             </div>
             <div className="block">
                 <AssignedDevelopersList memberships={memberships} />
             </div>
-            <div className="block">
-                <nav className="level"></nav>
-                <div className="level-left">
-                    <div className="level-item">
-                        {is_archived ? (
-                            <button className="button is-warning is-dark" onClick={() => handleUnarchiveProject()}>Reopen project</button>
+
+            {/* This block loads conditional on the current user having permission to edit the project. */}
+            {user_permissions.edit && (
+                <div>
+                    <div className="block">
+                        <nav className="level"></nav>
+                        <div className="level-left">
+                            <div className="level-item">
+                                {is_archived ? (
+                                    <button
+                                        className="button is-warning is-dark"
+                                        onClick={() => handleUnarchiveProject()}
+                                    >
+                                        Reopen project
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="button is-warning is-dark"
+                                        onClick={() => handleArchiveProject()}
+                                    >
+                                        Archive project
+                                    </button>
+                                )}
+                            </div>
+                            <div className="level-item">
+                                <UpdateProjectModalForm project={project} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="block">
+                        {isLoading ? (
+                            <button className="button is-white is-loading">Manage project members</button>
                         ) : (
-                            <button className="button is-warning is-dark" onClick={() => handleArchiveProject()}>Archive project</button>
+                            <ManageProjectMembers team={team.data} project={project} />
                         )}
                     </div>
-                    <div className="level-item">
-                        <UpdateProjectModalForm project={project} />
-                    </div>                    
                 </div>
-            </div>
-            <div className="block">
-                {isLoading ? <button className="button is-white is-loading">Manage project members</button> : <ManageProjectMembers team={team.data} project={project} />}
-                
-            </div>
+            )}
         </div>
     );
 };

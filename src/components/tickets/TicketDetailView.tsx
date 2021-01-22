@@ -27,7 +27,7 @@ const TicketDetailView: React.FunctionComponent<TicketDetailViewProps> = ({
     ticket,
     handleCloseTicket,
     updateTicket,
-    handleReopenTicket
+    handleReopenTicket,
 }: TicketDetailViewProps): React.ReactElement => {
     return (
         <div className="container mt-4">
@@ -52,7 +52,7 @@ const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
     ticket,
     handleCloseTicket,
     updateTicket,
-    handleReopenTicket
+    handleReopenTicket,
 }: TicketDetailPaneProps): React.ReactElement => {
     const { title, description, user, priority, is_open, created, modified, resolution, developer } = ticket;
 
@@ -71,26 +71,33 @@ const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
                 </p>
             )}
             {resolution && <p className="panel-block">Resolution: {resolution}</p>}
-            <nav className="level">
-                <div className="level-left">
-                    <div className="level-item ml-3">
-                        <UpdateTicketModalForm ticket={ticket} updateTicket={updateTicket} />
+            {ticket.user_permissions.edit && (
+                <nav className="level">
+                    <div className="level-left">
+                        <div className="level-item ml-3">
+                            <UpdateTicketModalForm ticket={ticket} updateTicket={updateTicket} />
+                        </div>
+                        <div className="level-item">
+                            {is_open ? (
+                                <TicketDetailClosingModal
+                                    isOpen={is_open}
+                                    resolution={resolution}
+                                    handleCloseTicket={handleCloseTicket}
+                                />
+                            ) : (
+                                <div className="panel-block">
+                                    <button
+                                        className="button is-warning"
+                                        onClick={() => handleReopenTicket(ticket.slug)}
+                                    >
+                                        Reopen Ticket
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                    <div className="level-item">
-                        {is_open ? (
-                            <TicketDetailClosingModal
-                                isOpen={is_open}
-                                resolution={resolution}
-                                handleCloseTicket={handleCloseTicket}
-                            />
-                        ) : (
-                            <div className="panel-block">
-                                <button className="button is-warning" onClick={() => handleReopenTicket(ticket.slug)}>Reopen Ticket</button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </nav>
+                </nav>
+            )}
         </div>
     );
 };
