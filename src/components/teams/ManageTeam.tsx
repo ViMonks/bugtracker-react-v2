@@ -5,13 +5,14 @@ import { useParams } from 'react-router-dom';
 import { Team } from '../../types';
 
 // internal imports
-import TeamMembersPanel from './TeamMembersPanel';
+import AdminTeamMembersPanel from './AdminsTeamMembersPanel';
 import InviteUserToTeamModal from './InviteUserToTeamModal';
 import { useQuery } from 'react-query';
 import { getTeamDetails } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 import LeaveTeamModal from './LeaveTeamModal';
 import StepDownAsAdmin from './StepDownAsAdmin';
+import NonAdminTeamMembersPanel from './NonAdminsTeamMembersPanel';
 
 // interface ManageTeamControllerProps {
 //     teamSlug: string;
@@ -67,7 +68,12 @@ const ManageTeam: React.FunctionComponent<ManageTeamProps> = ({ team }: ManageTe
                     </div>
                 </div>
                 <div className="column">
-                    <TeamMembersPanel members={team.memberships} />
+                    {team.user_is_admin ? (
+                        <AdminTeamMembersPanel members={team.memberships} />
+                    ) : (
+                        <NonAdminTeamMembersPanel members={team.memberships} />
+                    )}
+
                     <div className="level">
                         <div className="level-left">
                             <div className="level-item">

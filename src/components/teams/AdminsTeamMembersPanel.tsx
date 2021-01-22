@@ -85,7 +85,7 @@ const TeamPanelBlock: React.FunctionComponent<TeamPanelBlockProps> = ({
     );
 };
 
-const TeamMembersPanel: React.FunctionComponent<TeamMembersPanelProps> = ({
+const AdminTeamMembersPanel: React.FunctionComponent<TeamMembersPanelProps> = ({
     members,
 }: TeamMembersPanelProps): React.ReactElement => {
     const [search, setSearch] = React.useState('')
@@ -119,10 +119,10 @@ const TeamMembersPanel: React.FunctionComponent<TeamMembersPanelProps> = ({
                     </span>
                 </p>
             </div>
-            {members.filter((member) => member.role_name !== 'Administrator').length > 0 ? null : <p className='panel-block'>This team has no members</p>}
+            {noMembers && <p className='panel-block'>This team has no members</p>}
             {filteredMembers.map((member) => <TeamPanelBlock key={member} member={member} />)}            
         </nav>
     );
 };
 
-export default TeamMembersPanel;
+export default AdminTeamMembersPanel;
