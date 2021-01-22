@@ -16,6 +16,6 @@ export const auth = app.auth();
 
 export const uiConfig = {
     signInFlow: 'popup',
-    signInSuccessUrl: '/teams',
+    signInSuccessUrl: '/teams/',
     signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID, firebase.auth.GoogleAuthProvider.PROVIDER_ID],
 };
