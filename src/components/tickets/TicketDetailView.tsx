@@ -57,7 +57,7 @@ const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
     const { title, description, user, priority, is_open, created, modified, resolution, developer } = ticket;
 
     return (
-        <div className="panel is-info">
+        <div className="panel">
             <p className="panel-heading">{title}</p>
             {description && <p className="panel-block">{description}</p>}
             <p className="panel-block">{`Submitted by ${user}`}</p>
@@ -87,7 +87,7 @@ const TicketDetailPane: React.FunctionComponent<TicketDetailPaneProps> = ({
                             ) : (
                                 <div className="panel-block">
                                     <button
-                                        className="button is-warning"
+                                        className="button is-light"
                                         onClick={() => handleReopenTicket(ticket.slug)}
                                     >
                                         Reopen Ticket

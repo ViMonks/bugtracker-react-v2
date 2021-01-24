@@ -120,7 +120,7 @@ const ProjectFilter: React.FunctionComponent<ProjectFilterProps> = ({
                     <div className="column">
                         <div className="field mt-5">
                             <div className="control">
-                                <button className="button is-light is-danger" onClick={handleViewingArchivedChange}>
+                                <button className="button is-light" onClick={handleViewingArchivedChange}>
                                     {viewingArchived ? 'View active' : 'View archived'}
                                 </button>
                             </div>

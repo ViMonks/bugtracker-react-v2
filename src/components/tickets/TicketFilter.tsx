@@ -30,7 +30,7 @@ const TicketFilter: React.FunctionComponent<TicketFilterProps> = ({
             <button className="button is-small is-outlined is-light is-link" onClick={handleFilterReset}>
                 Reset
             </button>
-            <button className="button is-small is-light is-danger is-outlined" onClick={handleViewingClosedChange}>
+            <button className="button is-small is-light" onClick={handleViewingClosedChange}>
                 {viewingClosed ? 'View open' : 'View closed'}
             </button>
         </div>

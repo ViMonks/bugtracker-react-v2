@@ -17,6 +17,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import AcceptTeamInvite from './components/teams/AcceptTeamInvite';
 import NavBar from './components/NavBar';
 import UserInfo from './components/auth/UserInfo';
+import IndexPage from './components/onboarding/IndexPage';
 
 function PrimaryLayout(): React.ReactElement {
     return (
@@ -26,10 +27,12 @@ function PrimaryLayout(): React.ReactElement {
                 <Switch>
                     <Route path="/teams/:teamSlug/projects/:projectSlug" component={NavBar} />
                     <Route path="/teams/:teamSlug/" component={NavBar} />
+                    <Route path="/auth/" component={NavBar} />
                     <Route path="/" component={NavBar} />
                 </Switch>
                 <div className="App h-screen">
                     <main>
+                        <Route exact path="/" component={IndexPage} />
                         <PrivateRoute exact path="/dashboard" component={UserInfo} />
                         <PrivateRoute exact path="/teams" component={TeamListContainer} />
                         <PrivateRoute exact path="/invitation/" component={AcceptTeamInvite} />

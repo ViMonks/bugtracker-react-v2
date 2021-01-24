@@ -47,7 +47,7 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
     return (
         <Fragment>
             <div className="panel-block">
-                <button className="button is-warning" onClick={handleToggleIsActive}>
+                <button className="button is-light" onClick={handleToggleIsActive}>
                     {isOpen ? 'Close ticket' : 'Reopen ticket'}
                 </button>
             </div>

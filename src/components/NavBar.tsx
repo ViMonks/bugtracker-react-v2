@@ -25,7 +25,7 @@ export default function NavBar() {
 
                 <a
                     role="button"
-                    className={burgerIsActive ? "navbar-burger is-active" : "navbar-burger"}
+                    className={burgerIsActive ? 'navbar-burger is-active' : 'navbar-burger'}
                     aria-label="menu"
                     aria-expanded="false"
                     data-target="navbar-main"
@@ -38,16 +38,18 @@ export default function NavBar() {
             </div>
 
             {/* Desktop Navbar */}
-            <div id="navbar-main" className={burgerIsActive ? "is-active navbar-menu" : "navbar-menu"}>
+            <div id="navbar-main" className={burgerIsActive ? 'is-active navbar-menu' : 'navbar-menu'}>
                 <div className="navbar-start">
-                    <NavLink
-                        className="navbar-item"
-                        activeClassName="navbar-item has-text-weight-semibold"
-                        exact
-                        to="/teams/"
-                    >
-                        Teams
-                    </NavLink>
+                    {currentUser && (
+                        <NavLink
+                            className="navbar-item"
+                            activeClassName="navbar-item has-text-weight-semibold"
+                            exact
+                            to="/teams/"
+                        >
+                            Teams
+                        </NavLink>
+                    )}
 
                     {teamSlug && (
                         <NavLink
@@ -90,9 +92,7 @@ export default function NavBar() {
                     ) : (
                         <>
                             <div className="navbar-item has-dropdown is-hoverable">
-                                <a className="navbar-link">
-                                    More
-                                </a>
+                                <a className="navbar-link">More</a>
 
                                 <div className="navbar-dropdown is-right">
                                     <a className="navbar-item">How to use this site</a>

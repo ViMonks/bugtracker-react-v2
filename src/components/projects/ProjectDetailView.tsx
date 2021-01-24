@@ -132,14 +132,14 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
                             <div className="level-item">
                                 {is_archived ? (
                                     <button
-                                        className="button is-warning is-dark"
+                                        className="button is-light"
                                         onClick={() => handleUnarchiveProject()}
                                     >
                                         Reopen project
                                     </button>
                                 ) : (
                                     <button
-                                        className="button is-warning is-dark"
+                                        className="button is-light"
                                         onClick={() => handleArchiveProject()}
                                     >
                                         Archive project
