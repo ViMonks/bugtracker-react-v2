@@ -30,7 +30,7 @@ function PrimaryLayout(): React.ReactElement {
                     <Route path="/auth/" component={NavBar} />
                     <Route path="/" component={NavBar} />
                 </Switch>
-                <div className="App h-screen">
+                <div className="App">
                     <main>
                         <Route exact path="/" component={IndexPage} />
                         <PrivateRoute exact path="/dashboard" component={UserInfo} />
