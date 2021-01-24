@@ -7,7 +7,7 @@ const FirebaseUI = () => {
         <div className="container mt-4">
             <div className="columns">
                 <div className="column is-4 is-offset-4 has-text-centered">
-                    <h1 className="title">Get Started</h1>
+                    <h1 className="title">Sign in or register</h1>
                     <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
                 </div>
             </div>

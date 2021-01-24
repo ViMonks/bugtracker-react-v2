@@ -67,46 +67,50 @@ export default function NavBar() {
                             Tickets
                         </NavLink>
                     )}
-
-                    {/* Dropdown */}
-                    {/* <div className="navbar-item has-dropdown is-hoverable">
-                        <a className="navbar-link">More</a>
-
-                        <div className="navbar-dropdown">
-                            <a className="navbar-item">About</a>
-                            <a className="navbar-item">Jobs</a>
-                            <a className="navbar-item">Contact</a>
-                            <hr className="navbar-divider" />
-                            <a className="navbar-item">Report an issue</a>
-                        </div>
-                    </div> */}
                 </div>
 
                 <div className="navbar-end">
-                    <Link className="navbar-item" to="/">
-                        Documentation
-                    </Link>
+                    {!currentUser ? (
+                        <>
+                            <Link className="navbar-item" to="/">
+                                Getting Started
+                            </Link>
 
-                    <div className="navbar-item">
-                        <div className="buttons">
-                            <a className="button is-primary">
-                                <strong>Sign up</strong>
-                            </a>
-                            <a className="button is-light">Log in</a>
-                        </div>
-                    </div>
-                    <div className="navbar-item has-dropdown is-hoverable">
-                        <a className="navbar-link"><i className="fas fa-user-cog"></i></a>
+                            <div className="navbar-item">
+                                <div className="buttons">
+                                    <Link className="button is-primary" to="/auth/">
+                                        <strong>Log In</strong>
+                                    </Link>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="navbar-item has-dropdown is-hoverable">
+                                <a className="navbar-link">
+                                    <p className="navbar-item">
+                                        {!!currentUser.displayName && (
+                                            <p className="navbar-item">{currentUser.displayName}</p>
+                                        )}
+                                    </p>
+                                    <i className="fas fa-user-cog"></i>
+                                </a>
 
-                        <div className="navbar-dropdown is-right">
-                            <a className="navbar-item">Stuff</a>
-                            <a className="navbar-item">Jobs</a>
-                            <a className="navbar-item">Contact</a>
-                            <hr className="navbar-divider" />
-                            <a className="navbar-item">Report an issue</a>
-                            {currentUser && <a className="navbar-item" onClick={() => logout()}>Log out</a>}
-                        </div>
-                    </div>
+                                <div className="navbar-dropdown is-right">
+                                    <a className="navbar-item">How to use this site</a>
+                                    <Link className="navbar-item" to="/dashboard/">
+                                        User dashboard
+                                    </Link>
+                                    <hr className="navbar-divider" />
+                                    {currentUser && (
+                                        <a className="navbar-item" onClick={() => logout()}>
+                                            Log out
+                                        </a>
+                                    )}
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>

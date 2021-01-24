@@ -2,8 +2,9 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getUserDetails, updateUsername } from '../API/FirebaseAPI';
+import LoadingBar from '../LoadingBar';
 
-export default function UserInfo() {
+export default function UserInfo(): React.ReactElement {
     const [user, setUser] = React.useState('');
     const { isLoading, error, data } = useQuery<any, Error>(['user'], () => getUserDetails(), {
         staleTime: 60 * 1000 * 60, // one hour
@@ -28,6 +29,8 @@ export default function UserInfo() {
 
     return (
         <div className="container">
+            {isLoading && <LoadingBar />}
+            {error && <p>{error.message}</p>}
             {data && (
                 <>
                     <h2 className="subtitle">
