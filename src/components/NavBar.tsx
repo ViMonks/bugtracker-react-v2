@@ -14,6 +14,7 @@ interface ParamTypes {
 export default function NavBar() {
     const { teamSlug, projectSlug, ticketSlug } = useParams<ParamTypes>();
     const { currentUser, logout } = useAuth();
+    const [burgerIsActive, setBurgerIsActive] = React.useState(false);
 
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -24,10 +25,11 @@ export default function NavBar() {
 
                 <a
                     role="button"
-                    className="navbar-burger"
+                    className={burgerIsActive ? "navbar-burger is-active" : "navbar-burger"}
                     aria-label="menu"
                     aria-expanded="false"
-                    data-target="navbarBasicExample"
+                    data-target="navbar-main"
+                    onClick={() => setBurgerIsActive(!burgerIsActive)}
                 >
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -35,7 +37,8 @@ export default function NavBar() {
                 </a>
             </div>
 
-            <div id="navbar-main" className="navbar-menu">
+            {/* Desktop Navbar */}
+            <div id="navbar-main" className={burgerIsActive ? "is-active navbar-menu" : "navbar-menu"}>
                 <div className="navbar-start">
                     <NavLink
                         className="navbar-item"
@@ -88,12 +91,7 @@ export default function NavBar() {
                         <>
                             <div className="navbar-item has-dropdown is-hoverable">
                                 <a className="navbar-link">
-                                    <p className="navbar-item">
-                                        {!!currentUser.displayName && (
-                                            <p className="navbar-item">{currentUser.displayName}</p>
-                                        )}
-                                    </p>
-                                    <i className="fas fa-user-cog"></i>
+                                    More
                                 </a>
 
                                 <div className="navbar-dropdown is-right">
