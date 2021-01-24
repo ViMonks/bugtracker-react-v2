@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, NavLink, Link, useParams } from 'react-router-dom';
 
 import logo from '../assets/bugtracking_logo.png';
+import { useAuth } from './context/AuthContext';
 
 interface ParamTypes {
     teamSlug: string;
@@ -12,7 +13,7 @@ interface ParamTypes {
 
 export default function NavBar() {
     const { teamSlug, projectSlug, ticketSlug } = useParams<ParamTypes>();
-    console.log(teamSlug);
+    const { currentUser, logout } = useAuth();
 
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -85,12 +86,25 @@ export default function NavBar() {
                     <Link className="navbar-item" to="/">
                         Documentation
                     </Link>
+
                     <div className="navbar-item">
                         <div className="buttons">
                             <a className="button is-primary">
                                 <strong>Sign up</strong>
                             </a>
                             <a className="button is-light">Log in</a>
+                        </div>
+                    </div>
+                    <div className="navbar-item has-dropdown is-hoverable">
+                        <a className="navbar-link"><i className="fas fa-user-cog"></i></a>
+
+                        <div className="navbar-dropdown is-right">
+                            <a className="navbar-item">Stuff</a>
+                            <a className="navbar-item">Jobs</a>
+                            <a className="navbar-item">Contact</a>
+                            <hr className="navbar-divider" />
+                            <a className="navbar-item">Report an issue</a>
+                            {currentUser && <a className="navbar-item" onClick={() => logout()}>Log out</a>}
                         </div>
                     </div>
                 </div>

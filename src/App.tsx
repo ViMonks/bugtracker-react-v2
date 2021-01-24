@@ -16,6 +16,7 @@ import MyQueryClientProvider from './components/API/MyQueryClientProvider';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AcceptTeamInvite from './components/teams/AcceptTeamInvite';
 import NavBar from './components/NavBar';
+import UserInfo from './components/auth/UserInfo';
 
 function PrimaryLayout(): React.ReactElement {
     return (
@@ -29,7 +30,7 @@ function PrimaryLayout(): React.ReactElement {
                 </Switch>
                 <div className="App h-screen">
                     <main>
-                        <Route exact path="/dashboard" component={Dashboard} />
+                        <PrivateRoute exact path="/dashboard" component={UserInfo} />
                         <PrivateRoute exact path="/teams" component={TeamListContainer} />
                         <PrivateRoute exact path="/invitation/" component={AcceptTeamInvite} />
                         {/* <TeamProvider>*/}

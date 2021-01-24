@@ -2,6 +2,32 @@ import axios from 'axios';
 import { baseURL, getHeaders } from './ApiConfig';
 import { auth } from '../../auth/firebase';
 
+// USERS
+
+export const getUserDetails = async () => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios.get(baseURL + 'users/me/', { headers: getHeaders(accessToken) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });
+};
+
+export const updateUsername = async ({ currentUsername, payload }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios.put(`${baseURL}users/${currentUsername}/`, payload, { headers: getHeaders(accessToken) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });
+};
+
 // TEAMS
 
 export const getTeamsList = async () => {
