@@ -28,6 +28,18 @@ export const updateUsername = async ({ currentUsername, payload }) => {
     });
 };
 
+export const getMyInvitations = async () => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios.get(baseURL + 'invitations/my_invitations/', { headers: getHeaders(accessToken) }).catch((err) => {
+        if (err.response) {
+            throw new Error(err.response.data['errors'] || err.response.data['detail'] || err.response.data['error']);
+        } else {
+            throw new Error(err);
+        }
+    });
+};
+
 // TEAMS
 
 export const getTeamsList = async () => {
@@ -161,6 +173,24 @@ export const acceptTeamInvite = async ({ teamSlug, invitationId }) => {
 
     return axios
         .get(`${baseURL}teams/${teamSlug}/accept_invitation/?invitation=${invitationId}`, {
+            headers: getHeaders(accessToken),
+        })
+        .catch((err) => {
+            if (err.response) {
+                throw new Error(
+                    err.response.data['errors'] || err.response.data['detail'] || err.response.data['error'],
+                );
+            } else {
+                throw new Error(err);
+            }
+        });
+};
+
+export const declineTeamInvite = async ({ teamSlug, invitationId }) => {
+    const accessToken = auth.currentUser ? await auth.currentUser.getIdToken() : undefined;
+
+    return axios
+        .get(`${baseURL}teams/${teamSlug}/decline_invitation/?invitation=${invitationId}`, {
             headers: getHeaders(accessToken),
         })
         .catch((err) => {

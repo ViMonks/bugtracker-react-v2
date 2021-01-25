@@ -18,6 +18,19 @@ export interface TeamMembership {
     role_name: string,
 }
 
+export interface TeamInvitation {
+    id: string,
+    status_name: string,
+    team: string,
+    team_title: string,
+    invitee?: string,
+    invitee_email: string,
+    inviter?: string,
+    message_text: string,
+    created: string,
+    modified: string,
+}
+
 export interface NewTeamProps {
     title: string,
     description: string,

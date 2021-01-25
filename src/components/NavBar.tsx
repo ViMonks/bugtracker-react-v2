@@ -99,6 +99,9 @@ export default function NavBar() {
                                     <Link className="navbar-item" to="/dashboard/">
                                         User dashboard
                                     </Link>
+                                    <Link className="navbar-item" to="/dashboard/invitations">
+                                        My team invitations
+                                    </Link>
                                     <hr className="navbar-divider" />
                                     {currentUser && (
                                         <a className="navbar-item" onClick={() => logout()}>

@@ -18,6 +18,7 @@ import AcceptTeamInvite from './components/teams/AcceptTeamInvite';
 import NavBar from './components/NavBar';
 import UserInfo from './components/auth/UserInfo';
 import IndexPage from './components/onboarding/IndexPage';
+import Invitations from './components/auth/Invitations';
 
 function PrimaryLayout(): React.ReactElement {
     return (
@@ -33,6 +34,7 @@ function PrimaryLayout(): React.ReactElement {
                 <div className="App">
                     <main>
                         <Route exact path="/" component={IndexPage} />
+                        <PrivateRoute exact path="/dashboard/invitations" component={Invitations} />
                         <PrivateRoute exact path="/dashboard" component={UserInfo} />
                         <PrivateRoute exact path="/teams" component={TeamListContainer} />
                         <PrivateRoute exact path="/invitation/" component={AcceptTeamInvite} />

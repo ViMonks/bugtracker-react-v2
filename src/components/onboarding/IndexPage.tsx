@@ -6,7 +6,7 @@ import projects from '../../assets/projects.png';
 import collaborate from '../../assets/collaborate.png';
 import { Link } from 'react-router-dom';
 
-export default function IndexPage() {
+export default function IndexPage(): React.ReactElement {
     return (
         <div>
             <section className="hero is-medium is-bold is-primary">
