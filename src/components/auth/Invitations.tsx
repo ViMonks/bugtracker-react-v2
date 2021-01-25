@@ -5,10 +5,9 @@ import { TeamInvitation } from '../../types';
 import { getMyInvitations, acceptTeamInvite, declineTeamInvite } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 import { getLastUpdatedString } from '../utils';
+import DeclineInviteModal from './DeclineInviteModal';
 
 export default function Invitations(): React.ReactElement {
-    const [declineModalIsActive, setDeclineModalIsActive] = React.useState(false);
-
     const { isLoading, error, data } = useQuery<any, Error>(['invitations'], () => getMyInvitations(), {
         staleTime: 30000,
     });
@@ -66,43 +65,10 @@ export default function Invitations(): React.ReactElement {
                             </button>
                         </div>
                         <div className="level-item">
-                            <button className="button" data-tooltip="Decline" onClick={() => setDeclineModalIsActive(!declineModalIsActive)}>
-                                <span className="icon is-small">
-                                    <i className="fas fa-times"></i>
-                                </span>
-                            </button>
+                            <DeclineInviteModal invitation={invitation} handleDeclineInvite={handleDeclineInvite} />
                         </div>
                     </div>
                 </nav>
-
-                {/* Decline Invite Modal */}
-                <div className={declineModalIsActive ? 'modal is-active' : 'modal'}>
-                <div className="modal-background"></div>
-                <div className="modal-content">
-                    <div className="card">
-                        <div className="card-content">
-                            <div className="content">Are you sure you wish to decline the invitation to {invitation.team_title}?</div>
-                        </div>
-                        <div className="card-footer">
-                            <div className="card-footer-item">
-                                <button className="button is-danger is-light" onClick={() => handleDeclineInvite(invitation.team, invitation.id)}>
-                                    Decline Invitation
-                                </button>
-                            </div>
-                            <div className="card-footer-item">
-                                <button className="button" onClick={() => setDeclineModalIsActive(!declineModalIsActive)}>
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button
-                    className="modal-close is-large"
-                    aria-label="close"
-                    onClick={() => setDeclineModalIsActive(!declineModalIsActive)}
-                ></button>
-            </div>
             </>
         );
     };
