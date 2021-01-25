@@ -45,6 +45,9 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
             queryClient.invalidateQueries();
             queryClient.refetchQueries({ stale: true });            
             toast.success('New project created!');
+            setTitle('')
+            setDescription('')
+            setManager('')
             // history.push(data.data.slug)
         },
         onError: (error: any) => {

@@ -101,9 +101,7 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
     return (
         <div className="container">
             <div className="block">
-                <h1 className="title is-1 has-text-grey-dark">
-                    {viewingArchived ? 'Archived Projects' : 'Projects'}
-                </h1>
+                <h1 className="title is-1 has-text-grey-dark">{viewingArchived ? 'Archived Projects' : 'Projects'}</h1>
             </div>
 
             <div className="block">
@@ -123,7 +121,13 @@ const ProjectListView: React.FunctionComponent<ProjectListViewProps> = ({
                 />
             </div>
             <div className="block">
-                <ProjectTable projects={filteredProjects} />
+                {filteredProjects.length > 0 ? (
+                    <ProjectTable projects={filteredProjects} />
+                ) : (
+                    <div className="container mt-4 ml-4">
+                        <h1 className="title is-5">No projects match the given filters.</h1>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -9,12 +9,12 @@ import TicketFilter from './TicketFilter';
 
 interface TicketTableContainerProps {
     tickets: Ticket[];
-    openTickets: number
+    openTickets: number;
 }
 
 const TicketTableContainer: React.FunctionComponent<TicketTableContainerProps> = ({
     tickets,
-    openTickets
+    openTickets,
 }: TicketTableContainerProps): React.ReactElement => {
     const [title, setTitle] = React.useState('');
     const [viewingClosed, setViewingClosed] = React.useState(false);
@@ -56,7 +56,9 @@ const TicketTableContainer: React.FunctionComponent<TicketTableContainerProps> =
     return (
         <div className="container">
             <div className="block">
-                <h1 className="title is-2 has-text-grey-dark mt-3">{viewingClosed ? 'Closed Tickets' : `Open Tickets`}</h1>
+                <h1 className="title is-2 has-text-grey-dark mt-3">
+                    {viewingClosed ? 'Closed Tickets' : `Open Tickets`}
+                </h1>
             </div>
             <div className="block">
                 <TicketFilter
@@ -68,7 +70,14 @@ const TicketTableContainer: React.FunctionComponent<TicketTableContainerProps> =
                 />
             </div>
             <div className="block">
-                <TicketTable openTickets={openTickets} tickets={[...filteredTickets]} />
+                {filteredTickets.length > 0 ? (
+                    <TicketTable openTickets={openTickets} tickets={[...filteredTickets]} />
+                ) : (
+                    <div className="container mt-4">
+                        <h1 className="title is-5">No tickets match the given filters.</h1>
+                    </div>
+                )}
+                {/* <TicketTable openTickets={openTickets} tickets={[...filteredTickets]} /> */}
             </div>
         </div>
     );

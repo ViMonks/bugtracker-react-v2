@@ -39,13 +39,27 @@ const ProjectListContainer = (): React.ReactElement => {
                     </div>
                 ) : null}
                 {error ? error.message : null}
-                {data ? <ProjectListView projects={data.data} /> : null}
+                {/* {data ? <ProjectListView projects={data.data} /> : null} */}
+                {data && data.data.length > 0 ? (
+                    <ProjectListView projects={data.data} />
+                ) : (
+                    <>
+                        <div className="block">
+                            <h1 className="title is-1 has-text-grey-dark">
+                                Projects
+                            </h1>
+                        </div>
+                        <div className="container mt-4">
+                            <h1 className="title is-5">This team has no projects yet. Why not create one?</h1>
+                        </div>
+                    </>
+                )}
             </div>
             {!teamIsLoading && team.data.user_is_admin && (
                 <div className="block">
                     <CreateProjectModalForm />
                 </div>
-            )}            
+            )}
         </div>
     );
 };
