@@ -19,6 +19,7 @@ import NavBar from './components/NavBar';
 import UserInfo from './components/auth/UserInfo';
 import IndexPage from './components/onboarding/IndexPage';
 import Invitations from './components/auth/Invitations';
+import InstructionsPage from './components/onboarding/InstructionsPage';
 
 function PrimaryLayout(): React.ReactElement {
     return (
@@ -34,11 +35,11 @@ function PrimaryLayout(): React.ReactElement {
                 <div className="App">
                     <main>
                         <Route exact path="/" component={IndexPage} />
+                        <Route exact path="/docs" component={InstructionsPage} />
                         <PrivateRoute exact path="/dashboard/invitations" component={Invitations} />
                         <PrivateRoute exact path="/dashboard" component={UserInfo} />
                         <PrivateRoute exact path="/teams" component={TeamListContainer} />
                         <PrivateRoute exact path="/invitation/" component={AcceptTeamInvite} />
-                        {/* <TeamProvider>*/}
                         <div>
                             <PrivateRoute exact path="/testing" component={Testing} />
                             <PrivateRoute
@@ -54,7 +55,6 @@ function PrimaryLayout(): React.ReactElement {
                                 component={TicketDetailContainer}
                             />
                         </div>
-                        {/* </TeamProvider> */}
                         <Route exact path="/auth" component={FirebaseUI} />
                     </main>
                 </div>
@@ -73,4 +73,3 @@ function App(): React.ReactElement {
 }
 
 export default App;
-// TODO: remove TeamContextProvider

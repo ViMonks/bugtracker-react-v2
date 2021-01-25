@@ -95,7 +95,9 @@ export default function NavBar() {
                                 <a className="navbar-link">More</a>
 
                                 <div className="navbar-dropdown is-right">
-                                    <a className="navbar-item">How to use this site</a>
+                                    <Link className="navbar-item" to="/docs/">
+                                        How to use this site
+                                    </Link>
                                     <Link className="navbar-item" to="/dashboard/">
                                         User dashboard
                                     </Link>

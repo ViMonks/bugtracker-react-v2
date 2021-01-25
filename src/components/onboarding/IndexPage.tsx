@@ -93,7 +93,7 @@ export default function IndexPage(): React.ReactElement {
                 <section className="section">
                     <div className="container has-text-centered is-vcentered">
                         <h1 className="title is-4">
-                            <Link to="/auth/">Sign in</Link> to get started, or read more about how teams, projects, and tickets are organized.
+                            <Link to="/auth/">Sign in</Link> to get started, or <Link to="/docs/">read more</Link> about how teams, projects, and tickets are organized.
                         </h1>
                     </div>
                 </section>
