@@ -1,6 +1,7 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { Link } from 'react-router-dom';
 
 // interfaces
 import { NewTeamProps } from '../../types';
@@ -8,10 +9,8 @@ import { NewTeamProps } from '../../types';
 // internal imports
 import TeamListView from './TeamListView';
 import CreateTeamModalForm from './CreateTeamModalForm';
-import { useAuth } from '../context/AuthContext';
 import { getTeamsList, createTeam } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
-import { Link } from 'react-router-dom';
 
 const TeamListContainer = (): React.ReactElement => {
     const { isLoading, error, data } = useQuery<any, Error>(['team'], () => getTeamsList(), {

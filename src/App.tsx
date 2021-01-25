@@ -9,9 +9,7 @@ import TeamListContainer from './components/teams/TeamListContainer';
 import ManageTeamController from './components/teams/ManageTeam';
 import PrivateRoute from './components/auth/PrivateRoute';
 import { AuthProvider } from './components/context/AuthContext';
-import Dashboard from './components/auth/Dashboard';
 import FirebaseUI from './components/auth/FirebaseUI';
-import Testing from './components/API/Testing';
 import MyQueryClientProvider from './components/API/MyQueryClientProvider';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AcceptTeamInvite from './components/teams/AcceptTeamInvite';
@@ -43,7 +41,6 @@ function PrimaryLayout(): React.ReactElement {
                         <PrivateRoute exact path="/teams" component={TeamListContainer} />
                         <PrivateRoute exact path="/invitation/" component={AcceptTeamInvite} />
                         <div>
-                            <PrivateRoute exact path="/testing" component={Testing} />
                             <PrivateRoute
                                 exact
                                 path="/teams/:teamSlug/projects/:projectSlug"

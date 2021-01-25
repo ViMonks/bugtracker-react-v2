@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
 import toast from 'react-hot-toast';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { useAuth } from '../context/AuthContext';
 import { getTeamDetails, createProject } from '../API/FirebaseAPI';
 
 // interface imports
-import { NewOrUpdatedProjectProps, TeamMembership } from '../../types';
+import { TeamMembership } from '../../types';
 
 interface ParamTypes {
     teamSlug: string;
@@ -25,7 +24,6 @@ const CreateProjectModalForm: React.FunctionComponent = (): React.ReactElement =
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [manager, setManager] = React.useState('');
-    const history = useHistory()
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
