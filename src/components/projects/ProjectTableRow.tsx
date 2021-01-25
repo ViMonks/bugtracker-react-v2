@@ -23,26 +23,27 @@ export default function ProjectTableRow({ project }: ProjectTableRowProps): Reac
     const { teamSlug } = useParams<ParamTypes>();
     const projectSlug = project.slug;
 
-    const prefetchTicketList = async () => {
-        await queryClient.prefetchQuery(
-            ['ticketList', { teamSlug, projectSlug }],
-            () => getTicketList({ teamSlug, projectSlug }),
-            { staleTime: Infinity },
-        );
-    };
+    // disabling PREFETCH for now
+    // const prefetchTicketList = async () => {
+    //     await queryClient.prefetchQuery(
+    //         ['ticketList', { teamSlug, projectSlug }],
+    //         () => getTicketList({ teamSlug, projectSlug }),
+    //         { staleTime: Infinity },
+    //     );
+    // };
 
-    const prefetchProjectDetails = async () => {
-        await queryClient.prefetchQuery(
-            ['projectDetails', { teamSlug, projectSlug }],
-            () => getProjectDetails({ teamSlug, projectSlug }),
-            { staleTime: Infinity },
-        );
-    };
+    // const prefetchProjectDetails = async () => {
+    //     await queryClient.prefetchQuery(
+    //         ['projectDetails', { teamSlug, projectSlug }],
+    //         () => getProjectDetails({ teamSlug, projectSlug }),
+    //         { staleTime: Infinity },
+    //     );
+    // };
 
-    React.useEffect(() => {
-        prefetchProjectDetails()
-        prefetchTicketList()
-    })
+    // React.useEffect(() => {
+    //     prefetchProjectDetails()
+    //     prefetchTicketList()
+    // })
 
     return (
         <tr key={project.slug}>

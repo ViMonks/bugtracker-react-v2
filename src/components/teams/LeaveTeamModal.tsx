@@ -17,7 +17,7 @@ export default function LeaveTeamModal() {
 
     const mutation = useMutation(leaveTeam, {
         onSuccess: () => {
-            queryClient.invalidateQueries('teamDetails');
+            queryClient.invalidateQueries();
             queryClient.refetchQueries();
             toast.success('You have left the team.');
             setIsActive(false);

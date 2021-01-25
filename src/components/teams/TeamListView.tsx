@@ -28,17 +28,18 @@ const TeamListView: React.FunctionComponent<TeamListViewProps> = ({ teams }: Tea
 };
 
 const TeamCard: React.FunctionComponent<TeamCardProps> = ({ team }: TeamCardProps): React.ReactElement => {
-    const queryClient = useQueryClient()
-    const teamSlug = team.slug
-    const prefetchProjectList = async () => {
-        await queryClient.prefetchQuery(['projectList', { teamSlug }], () => getProjectList({ teamSlug }), {
-            staleTime: Infinity,
-        });
-    };
+    // disabling PREFETCH for now
+    // const queryClient = useQueryClient()
+    // const teamSlug = team.slug
+    // const prefetchProjectList = async () => {
+    //     await queryClient.prefetchQuery(['projectList', { teamSlug }], () => getProjectList({ teamSlug }), {
+    //         staleTime: Infinity,
+    //     });
+    // };
 
-    React.useEffect(() => {
-        prefetchProjectList()
-    })
+    // React.useEffect(() => {
+    //     prefetchProjectList()
+    // })
 
     return (
         <div className="column is-one-third">

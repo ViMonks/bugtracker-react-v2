@@ -30,17 +30,18 @@ export default function TicketTableRow({ ticket, }: TicketTableRowProps): React.
     const { teamSlug, projectSlug } = useParams<ParamTypes>();
     const ticketSlug = ticket.slug;
 
-    const prefetchTicketDetails = async () => {
-        await queryClient.prefetchQuery(
-            ['ticketDetails', { teamSlug }],
-            () => getTicketDetails({ teamSlug, projectSlug, ticketSlug }),
-            { staleTime: Infinity },
-        );
-    };
+    // disabling PREFETCH for now
+    // const prefetchTicketDetails = async () => {
+    //     await queryClient.prefetchQuery(
+    //         ['ticketDetails', { teamSlug }],
+    //         () => getTicketDetails({ teamSlug, projectSlug, ticketSlug }),
+    //         { staleTime: Infinity },
+    //     );
+    // };
 
-    React.useEffect(() => {
-        prefetchTicketDetails();
-    });
+    // React.useEffect(() => {
+    //     prefetchTicketDetails();
+    // });
 
     return (
         <tr key={ticket.slug}>
