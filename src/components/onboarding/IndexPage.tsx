@@ -5,6 +5,7 @@ import team from '../../assets/team.png';
 import projects from '../../assets/projects.png';
 import collaborate from '../../assets/collaborate.png';
 import { Link } from 'react-router-dom';
+import MainFooter from './MainFooter';
 
 export default function IndexPage(): React.ReactElement {
     return (
@@ -93,18 +94,13 @@ export default function IndexPage(): React.ReactElement {
                 <section className="section">
                     <div className="container has-text-centered is-vcentered">
                         <h1 className="title is-4">
-                            <Link to="/auth/">Sign in</Link> to get started, or <Link to="/docs/">read more</Link> about how teams, projects, and tickets are organized.
+                            <Link to="/auth/">Sign in</Link> to get started, or <Link to="/docs/">read more</Link> about
+                            how teams, projects, and tickets are organized.
                         </h1>
                     </div>
                 </section>
+                <MainFooter />
             </div>
-            <footer className="footer">
-                <div className="content has-text-centered">
-                    <p>
-                        <strong>Bugtracking.io</strong> by Justin Thurman
-                    </p>
-                </div>
-            </footer>
         </div>
     );
 }

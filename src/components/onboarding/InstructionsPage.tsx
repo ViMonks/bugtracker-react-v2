@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MainFooter from './MainFooter';
 
 export default function InstructionsPage(): React.ReactElement {
     return (
@@ -78,6 +79,7 @@ export default function InstructionsPage(): React.ReactElement {
                     </h1>
                 </div>
             </section>
+            <MainFooter />
         </>
     );
 }

@@ -20,18 +20,20 @@ import UserInfo from './components/auth/UserInfo';
 import IndexPage from './components/onboarding/IndexPage';
 import Invitations from './components/auth/Invitations';
 import InstructionsPage from './components/onboarding/InstructionsPage';
+import ScrollToTop from './components/ScrollToTop';
 
 function PrimaryLayout(): React.ReactElement {
     return (
         <MyQueryClientProvider>
             <AuthProvider>
+                <ScrollToTop />
                 {/* <ReactQueryDevtools /> */}
                 <Switch>
                     <Route path="/teams/:teamSlug/projects/:projectSlug" component={NavBar} />
                     <Route path="/teams/:teamSlug/" component={NavBar} />
                     <Route path="/auth/" component={NavBar} />
                     <Route path="/" component={NavBar} />
-                </Switch>
+                </Switch>                
                 <div className="App">
                     <main>
                         <Route exact path="/" component={IndexPage} />
