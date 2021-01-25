@@ -52,20 +52,14 @@ const TeamCard: React.FunctionComponent<TeamCardProps> = ({ team }: TeamCardProp
                 </div>
                 <div className="card-footer">
                     <div className="card-footer-item">
-                        <Link to={`/teams/${team.slug}/projects`}>View</Link>
+                        <Link to={`/teams/${team.slug}/projects`}>Projects</Link>
                     </div>
                     <div className="card-footer-item">
                         <Link to={`/teams/${team.slug}/manage`}>Manage</Link>
-                        {/* <p>Manage</p> */}
                     </div>
-                    {/* <div className="card-footer-item">
-                        <p>Leave Team</p>
-                    </div> */}
-                    {/* TODO: add ability to leave team */}
                 </div>
             </div>
         </div>
     );
 };
-// TODO: The manage link must only show up for team admins
 export default TeamListView;

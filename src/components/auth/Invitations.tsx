@@ -81,6 +81,13 @@ export default function Invitations(): React.ReactElement {
 
             {data &&
                 data.data.map((invitation: TeamInvitation): React.ReactElement => createInvitationElement(invitation))}
+            {data && data.data.length === 0 && (
+                    <div className="container mt-4 ml-4">
+                        <h1 className="title is-5">
+                            You have no pending invitations.
+                        </h1>
+                    </div>
+                )}
         </div>
     );
 }
