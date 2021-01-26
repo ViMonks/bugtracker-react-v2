@@ -17,16 +17,15 @@ export default function InstructionsPage(): React.ReactElement {
                 <div className="container">
                     <h1 className="title is-4">Tickets, projects, and teams</h1>
                     <p className="block">
-                        All resources on Bugtracking.io are organized in a top-down structure. In other words, all
-                        tickets belong to a project, and all projects belong to a team. Teams represent the highest
-                        organizational unit. A team might represent anything from a solo freelance developer to a large
-                        company.
+                        All resources on Bugtracking.io are organized top-down. In other words, teams have projects, and
+                        projects have tickets. A team might represent anything from a solo freelance developer to a
+                        large company.
                     </p>
                     <p className="block">
-                        A single team might have many projects. A project might be a website that your organization is
-                        building or a product you would like to launch. Tickets, then, represent single, actionable
-                        tasks or issues associated with a project. In the context of developing a website, a ticket
-                        might represent a feature request or a bug report.
+                        Projects are assigned to a team. A project might be a website that your organization is building
+                        or a product you would like to launch. Tickets are single, actionable tasks or issues associated
+                        with a project. In the context of developing a website, a ticket might represent a feature
+                        request or a bug report.
                     </p>
                 </div>
             </section>
@@ -35,8 +34,7 @@ export default function InstructionsPage(): React.ReactElement {
                 <div className="container">
                     <h1 className="title is-4">Managing members</h1>
                     <p className="block">
-                        Each level of organization has its own membership types and permissions. For example, a team
-                        might have many members, but only a few administrators. Those team administrators have the
+                        Each level of organization has its own membership types and permissions. For example, team administrators have the
                         ability to invite or remove members from the team, create new team projects, and assign members
                         as project managers.
                     </p>
@@ -65,8 +63,8 @@ export default function InstructionsPage(): React.ReactElement {
                     <p className="block">
                         A growing team, on the other hand, might implement them incrementally. A project might start out
                         small, with no assigned manager, but as it grows, a team administrator might decide a manager
-                        would be useful to keep things organized. Or they might even decide that more team
-                        administrators are needed. Teams, projects, and tickets can all be reorganized in this way as an
+                        would be useful to keep things organized. Or they might add team
+                        administrators as needed. Teams, projects, and tickets can all be reorganized in this way as an
                         organization&#39;s needs change.
                     </p>
                 </div>

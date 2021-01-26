@@ -77,10 +77,6 @@ export default function NavBar() {
                 <div className="navbar-end">
                     {!currentUser ? (
                         <>
-                            <Link className="navbar-item" to="/">
-                                Getting Started
-                            </Link>
-
                             <div className="navbar-item">
                                 <div className="buttons">
                                     <Link className="button is-primary" to="/auth/">

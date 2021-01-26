@@ -19,6 +19,7 @@ import IndexPage from './components/onboarding/IndexPage';
 import Invitations from './components/auth/Invitations';
 import InstructionsPage from './components/onboarding/InstructionsPage';
 import ScrollToTop from './components/ScrollToTop';
+import NothingHerePage from './components/onboarding/NothingHerePage';
 
 function PrimaryLayout(): React.ReactElement {
     return (
@@ -31,16 +32,16 @@ function PrimaryLayout(): React.ReactElement {
                     <Route path="/teams/:teamSlug/" component={NavBar} />
                     <Route path="/auth/" component={NavBar} />
                     <Route path="/" component={NavBar} />
-                </Switch>                
+                </Switch>
                 <div className="App">
                     <main>
-                        <Route exact path="/" component={IndexPage} />
-                        <Route exact path="/docs" component={InstructionsPage} />
-                        <PrivateRoute exact path="/dashboard/invitations" component={Invitations} />
-                        <PrivateRoute exact path="/dashboard" component={UserInfo} />
-                        <PrivateRoute exact path="/teams" component={TeamListContainer} />
-                        <PrivateRoute exact path="/invitation/" component={AcceptTeamInvite} />
-                        <div>
+                        <Switch>
+                            <Route exact path="/" component={IndexPage} />
+                            <Route exact path="/docs" component={InstructionsPage} />
+                            <PrivateRoute exact path="/dashboard/invitations" component={Invitations} />
+                            <PrivateRoute exact path="/dashboard" component={UserInfo} />
+                            <PrivateRoute exact path="/teams" component={TeamListContainer} />
+                            <PrivateRoute exact path="/invitation/" component={AcceptTeamInvite} />
                             <PrivateRoute
                                 exact
                                 path="/teams/:teamSlug/projects/:projectSlug"
@@ -53,8 +54,9 @@ function PrimaryLayout(): React.ReactElement {
                                 path="/teams/:teamSlug/projects/:projectSlug/tickets/:ticketSlug"
                                 component={TicketDetailContainer}
                             />
-                        </div>
-                        <Route exact path="/auth" component={FirebaseUI} />
+                            <Route exact path="/auth" component={FirebaseUI} />
+                            <Route component={NothingHerePage} />
+                        </Switch>
                     </main>
                 </div>
             </AuthProvider>

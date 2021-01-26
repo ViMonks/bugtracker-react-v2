@@ -36,6 +36,9 @@ const TeamListContainer = (): React.ReactElement => {
     return (
         <div className="container">
             <div className="block">
+                <h1 className="title is-1 has-text-grey-dark">Teams</h1>
+            </div>
+            <div className="block">
                 {isLoading ? <LoadingBar /> : null}
                 {error ? error.message : null}
                 {data ? <TeamListView teams={data.data} /> : null}

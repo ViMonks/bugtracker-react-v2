@@ -157,6 +157,7 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
                                     <div className="control">
                                         {createDevelopersOptionsList(project.data.memberships)}
                                     </div>
+                                    <p className="help">Can edit and close the ticket.</p>
                                 </div>
                             )}
 

@@ -106,7 +106,7 @@ export default function ManageProjectMembers({ team, project }: ManageProjectMem
 
     return (
         <>
-            <button className={'button is-white'} onClick={() => setIsActive(!isActive)}>
+            <button className='button is-white' data-tooltip="Team members must be added to a project's members before they can see that project." onClick={() => setIsActive(!isActive)}>
                 Manage project members
             </button>
 
@@ -122,7 +122,7 @@ export default function ManageProjectMembers({ team, project }: ManageProjectMem
                         <button className="button" onClick={() => setIsActive(false)}>
                             Cancel
                         </button>
-                        <p>If you wish to remove the project manager, demote them first.</p>
+                        <p>If you wish to remove the project manager, demote them first by updating the project with a new manager.</p>
                     </footer>
                 </div>
             </div>
