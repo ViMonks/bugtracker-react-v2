@@ -2,11 +2,10 @@ import React, { Fragment } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useAuth } from '../context/AuthContext';
 import { getTeamDetails, updateProject } from '../API/FirebaseAPI';
 
 // interface imports
-import { NewOrUpdatedProjectProps, Project, TeamMembership } from '../../types';
+import { Project, TeamMembership } from '../../types';
 
 interface UpdateProjectModalFormProps {
     project: Project;

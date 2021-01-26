@@ -8,7 +8,7 @@ interface ParamTypes {
     teamSlug: string;
 }
 
-export default function LeaveTeamModal() {
+export default function LeaveTeamModal(): React.ReactElement {
     const [isActive, setIsActive] = React.useState(false);
     const { teamSlug } = useParams<ParamTypes>();
     const history = useHistory();

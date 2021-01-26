@@ -1,10 +1,11 @@
+/* eslint-disable */
 import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { uiConfig, auth } from '../../auth/firebase';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom'
 
-const FirebaseUI = () => {
+const FirebaseUI = () => { 
     const { currentUser } = useAuth();
     const history = useHistory()
 

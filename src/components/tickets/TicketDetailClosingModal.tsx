@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 interface TicketModalProps {
     isOpen: boolean;
@@ -29,8 +29,7 @@ const TicketDetailClosingModal: React.FunctionComponent<TicketModalProps> = ({
     <closeTicket> is a function defined in the TicketDetailContainer component. This function handles the API call necessary to close or reopen a ticket.
     */
     const [isActive, setIsActive] = React.useState(false);
-    const { projectSlug, ticketSlug, teamSlug } = useParams<ParamTypes>();
-    const history = useHistory();
+    const { ticketSlug } = useParams<ParamTypes>();
 
     const handleToggleIsActive = () => {
         setIsActive(!isActive);

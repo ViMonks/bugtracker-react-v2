@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { getProjectList } from '../API/FirebaseAPI';
-import { useQueryClient } from 'react-query';
+// import { getProjectList } from '../API/FirebaseAPI';
+// import { useQueryClient } from 'react-query';
 
 // interface imports
 import { Team } from '../../types';

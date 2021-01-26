@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { acceptTeamInvite } from '../API/FirebaseAPI';
 import toast from 'react-hot-toast';
 
-export default function AcceptTeamInvite() {
+export default function AcceptTeamInvite(): React.ReactElement {
     const currentUrl = useLocation();
     const querystrings = queryString.parse(currentUrl.search)
     const history = useHistory();

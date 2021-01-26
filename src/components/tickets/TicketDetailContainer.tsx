@@ -1,16 +1,14 @@
 import React from 'react';
 import toast from 'react-hot-toast';
-import projectDetail from '../../fakeAPI/projectDetail';
 
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useAuth } from '../context/AuthContext';
 import { closeTicket, getTicketDetails, reopenTicket, updateTicket } from '../API/FirebaseAPI';
 
 import LoadingBar from '../LoadingBar';
 
 // interfaces
-import { NewOrUpdatedTicketProps, Project } from '../../types';
+import { NewOrUpdatedTicketProps } from '../../types';
 
 import TicketDetailView from './TicketDetailView';
 
@@ -20,7 +18,7 @@ interface ParamTypes {
     ticketSlug: string;
 }
 
-const TicketDetailContainer = (props: any): React.ReactElement => {
+const TicketDetailContainer = (): React.ReactElement => {
     const { ticketSlug, projectSlug, teamSlug } = useParams<ParamTypes>();
     const history = useHistory();
     const { isLoading, error, data } = useQuery<any, Error>(

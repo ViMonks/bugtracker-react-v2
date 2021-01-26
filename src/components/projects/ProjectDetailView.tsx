@@ -46,7 +46,10 @@ const ProjectDetailView: React.FunctionComponent<ProjectDetailViewProps> = ({
                     </div>
                     <div className="block">
                         {project.user_permissions.create_tickets && (
-                            <CreateTicketModalForm createTicket={createTicket} canAssignDeveloper={project.user_permissions.assign_developer} />
+                            <CreateTicketModalForm
+                                createTicket={createTicket}
+                                canAssignDeveloper={project.user_permissions.assign_developer}
+                            />
                         )}
                     </div>
                 </div>
@@ -131,17 +134,11 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
                         <div className="level-left">
                             <div className="level-item">
                                 {is_archived ? (
-                                    <button
-                                        className="button is-light"
-                                        onClick={() => handleUnarchiveProject()}
-                                    >
+                                    <button className="button is-light" onClick={() => handleUnarchiveProject()}>
                                         Reopen project
                                     </button>
                                 ) : (
-                                    <button
-                                        className="button is-light"
-                                        onClick={() => handleArchiveProject()}
-                                    >
+                                    <button className="button is-light" onClick={() => handleArchiveProject()}>
                                         Archive project
                                     </button>
                                 )}
@@ -152,6 +149,7 @@ const ProjectDetailPane: React.FunctionComponent<ProjectDetailPaneProps> = ({
                         </div>
                     </div>
                     <div className="block">
+                        {error && error.message}
                         {isLoading ? (
                             <button className="button is-white is-loading">Manage project members</button>
                         ) : (

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from 'axios';
 import { baseURL, getHeaders } from './ApiConfig';
 import { auth } from '../../auth/firebase';

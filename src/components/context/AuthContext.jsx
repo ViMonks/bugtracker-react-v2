@@ -1,8 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { setTokenSourceMapRange } from 'typescript';
 import { auth } from '../../auth/firebase';
-import { useQuery } from 'react-query'
 
 const AuthContext = React.createContext();
 

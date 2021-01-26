@@ -1,9 +1,9 @@
 import React from 'react';
 import toast from 'react-hot-toast';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { Project, Team, TeamMembership } from '../../types';
-import { addProjectMember, getTeamDetails, removeProjectMember } from '../API/FirebaseAPI';
+import { Project, Team } from '../../types';
+import { addProjectMember, removeProjectMember } from '../API/FirebaseAPI';
 
 interface ManageProjectMembersProps {
     team: Team;
@@ -15,7 +15,7 @@ interface ParamTypes {
     projectSlug: string;
 }
 
-export default function ManageProjectMembers({ team, project }: ManageProjectMembersProps) {
+export default function ManageProjectMembers({ team, project }: ManageProjectMembersProps): React.ReactElement {
     const [isActive, setIsActive] = React.useState(false);
     const { teamSlug, projectSlug } = useParams<ParamTypes>();
 

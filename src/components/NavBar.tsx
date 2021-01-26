@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Route, NavLink, Link, useParams } from 'react-router-dom';
+import { NavLink, Link, useParams } from 'react-router-dom';
 
 import logo from '../assets/bugtracking_logo.png';
 import { useAuth } from './context/AuthContext';
@@ -11,8 +11,8 @@ interface ParamTypes {
     ticketSlug: string;
 }
 
-export default function NavBar() {
-    const { teamSlug, projectSlug, ticketSlug } = useParams<ParamTypes>();
+export default function NavBar(): React.ReactElement {
+    const { teamSlug, projectSlug } = useParams<ParamTypes>();
     const { currentUser, logout } = useAuth();
     const [burgerIsActive, setBurgerIsActive] = React.useState(false);
 

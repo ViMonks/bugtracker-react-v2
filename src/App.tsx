@@ -11,7 +11,7 @@ import PrivateRoute from './components/auth/PrivateRoute';
 import { AuthProvider } from './components/context/AuthContext';
 import FirebaseUI from './components/auth/FirebaseUI';
 import MyQueryClientProvider from './components/API/MyQueryClientProvider';
-import { ReactQueryDevtools } from 'react-query/devtools';
+// import { ReactQueryDevtools } from 'react-query/devtools';
 import AcceptTeamInvite from './components/teams/AcceptTeamInvite';
 import NavBar from './components/NavBar';
 import UserInfo from './components/auth/UserInfo';

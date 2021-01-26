@@ -8,7 +8,7 @@ interface ParamTypes {
     teamSlug: string;
 }
 
-export default function StepDownAsAdmin() {
+export default function StepDownAsAdmin(): React.ReactElement {
     const [isActive, setIsActive] = React.useState(false);
     const { teamSlug } = useParams<ParamTypes>();
 

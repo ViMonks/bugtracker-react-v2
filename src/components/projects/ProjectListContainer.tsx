@@ -5,7 +5,6 @@ import { useQuery } from 'react-query';
 // internal imports
 import ProjectListView from './ProjectListView';
 import CreateProjectModalForm from './CreateProjectModalForm';
-import { useAuth } from '../context/AuthContext';
 import { getProjectList, getTeamDetails } from '../API/FirebaseAPI';
 import LoadingBar from '../LoadingBar';
 
@@ -52,6 +51,7 @@ const ProjectListContainer = (): React.ReactElement => {
                     data && <ProjectListView projects={data.data} />
                 )}
             </div>
+            {teamError && teamError.message}
             {!teamIsLoading && team.data.user_is_admin && (
                 <div className="block">
                     <CreateProjectModalForm />

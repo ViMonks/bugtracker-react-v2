@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useQuery } from 'react-query';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 // interface imports
 import { ProjectMembership, NewOrUpdatedTicketProps, Ticket } from '../../types';

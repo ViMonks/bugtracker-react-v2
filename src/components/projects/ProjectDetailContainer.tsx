@@ -2,11 +2,10 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { useAuth } from '../context/AuthContext';
 import { getProjectDetails, getTicketList, createTicket } from '../API/FirebaseAPI';
 
 // interfaces
-import { Project, Ticket, NewOrUpdatedTicketProps, Team } from '../../types';
+import { NewOrUpdatedTicketProps } from '../../types';
 
 import ProjectDetailView from './ProjectDetailView';
 import LoadingBar from '../LoadingBar';
@@ -16,7 +15,7 @@ interface ParamTypes {
     projectSlug: string;
 }
 
-const ProjectDetailContainer = (props: any): React.ReactElement => {
+const ProjectDetailContainer = (): React.ReactElement => {
     const { teamSlug, projectSlug } = useParams<ParamTypes>();
 
     const { isLoading: projectIsLoading, error: projectError, data: projectDetails } = useQuery<any, Error>(
