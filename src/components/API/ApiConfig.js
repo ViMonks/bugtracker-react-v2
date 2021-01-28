@@ -1,5 +1,5 @@
 /* eslint-disable */
-export const baseURL = 'http://localhost:5001/api/';
+export const baseURL = 'https://api.bugtracking.io/api/';
 
 export const getHeaders = (token) => {
     return {
