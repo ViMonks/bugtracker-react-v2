@@ -6,8 +6,11 @@ import projects from '../../assets/projects.png';
 import collaborate from '../../assets/collaborate.png';
 import { Link } from 'react-router-dom';
 import MainFooter from './MainFooter';
+import { useAuth } from '../context/AuthContext';
 
 export default function IndexPage(): React.ReactElement {
+    const { currentUser } = useAuth();
+
     return (
         <div>
             <section className="hero is-medium is-bold is-primary">
@@ -23,9 +26,15 @@ export default function IndexPage(): React.ReactElement {
 
             <section className="section">
                 <div className="container has-text-centered is-vcentered">
-                    <h1 className="title is-4">
-                        Ready to get started? <Link to="/auth/">Sign in!</Link>
-                    </h1>
+                    {currentUser ? (
+                        <h1 className="title is-4">
+                            Ready to get started? View your <Link to="/teams/">teams</Link>.
+                        </h1>
+                    ) : (
+                        <h1 className="title is-4">
+                            Ready to get started? <Link to="/auth/">Sign in!</Link>
+                        </h1>
+                    )}
                 </div>
             </section>
             <hr />
