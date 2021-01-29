@@ -1,10 +1,10 @@
 /* eslint-disable */
-export const baseURL = 'https://api.bugtracking.io/api/';
+export const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 export const getHeaders = (token) => {
     return {
-        'Authorization': `JWT ${token}`,
+        Authorization: `JWT ${token}`,
         'Content-Type': 'application/json',
-        'Accept': 'application/json, text/plain, */*',
+        Accept: 'application/json, text/plain, */*',
     };
 };
