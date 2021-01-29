@@ -1,10 +1,10 @@
 import React from 'react';
+import { useQueryClient } from 'react-query';
 import { Link } from 'react-router-dom';
-// import { getProjectList } from '../API/FirebaseAPI';
-// import { useQueryClient } from 'react-query';
 
 // interface imports
 import { Team } from '../../types';
+import { getProjectList } from '../API/FirebaseAPI';
 
 interface TeamListViewProps {
     teams: Team[];
@@ -27,18 +27,18 @@ const TeamListView: React.FunctionComponent<TeamListViewProps> = ({ teams }: Tea
 };
 
 const TeamCard: React.FunctionComponent<TeamCardProps> = ({ team }: TeamCardProps): React.ReactElement => {
-    // disabling PREFETCH for now
-    // const queryClient = useQueryClient()
-    // const teamSlug = team.slug
-    // const prefetchProjectList = async () => {
-    //     await queryClient.prefetchQuery(['projectList', { teamSlug }], () => getProjectList({ teamSlug }), {
-    //         staleTime: Infinity,
-    //     });
-    // };
+    // PREFETCH
+    const queryClient = useQueryClient()
+    const teamSlug = team.slug
+    const prefetchProjectList = async () => {
+        await queryClient.prefetchQuery(['projectList', { teamSlug }], () => getProjectList({ teamSlug }), {
+            staleTime: Infinity,
+        });
+    };
 
-    // React.useEffect(() => {
-    //     prefetchProjectList()
-    // })
+    React.useEffect(() => {
+        prefetchProjectList()
+    })
 
     return (
         <div className="column is-one-third">

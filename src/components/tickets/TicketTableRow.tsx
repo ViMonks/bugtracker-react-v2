@@ -1,6 +1,6 @@
 import React from 'react';
-// import { useQueryClient } from 'react-query';
-// import { useParams } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 
 // Interface imports
 import { Ticket } from '../../types';
@@ -13,34 +13,34 @@ import {
     createElapsedTimeCell,
     getPriorityText,
 } from '../utils';
-// import { getTicketDetails } from '../API/FirebaseAPI';
+import { getTicketDetails } from '../API/FirebaseAPI';
 
 interface TicketTableRowProps {
     ticket: Ticket;
 }
 
-// interface ParamTypes {
-//     teamSlug: string;
-//     projectSlug: string;
-// }
+interface ParamTypes {
+    teamSlug: string;
+    projectSlug: string;
+}
 
 export default function TicketTableRow({ ticket, }: TicketTableRowProps): React.ReactElement {
-    // const queryClient = useQueryClient();
-    // const { teamSlug, projectSlug } = useParams<ParamTypes>();
-    // const ticketSlug = ticket.slug;
+    const queryClient = useQueryClient();
+    const { teamSlug, projectSlug } = useParams<ParamTypes>();
+    const ticketSlug = ticket.slug;
 
-    // disabling PREFETCH for now
-    // const prefetchTicketDetails = async () => {
-    //     await queryClient.prefetchQuery(
-    //         ['ticketDetails', { teamSlug }],
-    //         () => getTicketDetails({ teamSlug, projectSlug, ticketSlug }),
-    //         { staleTime: Infinity },
-    //     );
-    // };
+    // PREFETCH
+    const prefetchTicketDetails = async () => {
+        await queryClient.prefetchQuery(
+            ['ticketDetails', { teamSlug }],
+            () => getTicketDetails({ teamSlug, projectSlug, ticketSlug }),
+            { staleTime: Infinity },
+        );
+    };
 
-    // React.useEffect(() => {
-    //     prefetchTicketDetails();
-    // });
+    React.useEffect(() => {
+        prefetchTicketDetails();
+    });
 
     return (
         <tr key={ticket.slug}>

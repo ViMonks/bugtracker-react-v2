@@ -7,9 +7,15 @@ import collaborate from '../../assets/collaborate.png';
 import { Link } from 'react-router-dom';
 import MainFooter from './MainFooter';
 import { useAuth } from '../context/AuthContext';
+import { useQuery } from 'react-query';
+import { getTeamsList } from '../API/FirebaseAPI';
 
 export default function IndexPage(): React.ReactElement {
     const { currentUser } = useAuth();
+    // grabbing teamList on the index page to both wake the backend up (reducing the impact of cold starts) and to have the data ready, as it's the most likely first entrypoint for users
+    const { isLoading, error, data } = useQuery<any, Error>(['team'], () => getTeamsList(), {
+        staleTime: 30000,
+    });
 
     return (
         <div>
