@@ -78,6 +78,10 @@ const CreateTicketModalForm: React.FunctionComponent<CreateTicketModalFormProps>
         };
         createTicket(newTicket);
         setIsActive(false);
+        setTitle('')
+        setDescription('')
+        setDeveloper('')
+        setPriority('')        
     };
 
     const createDevelopersOptionsList = (members: ProjectMembership[]): React.ReactElement => {

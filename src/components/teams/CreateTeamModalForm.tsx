@@ -32,6 +32,8 @@ const CreateTeamModalForm: React.FunctionComponent<CreateTeamModalFormProps> = (
         }
         createTeam(newTeam)
         setIsActive(false)
+        setTitle('')
+        setDescription('')
     }
 
     return (
