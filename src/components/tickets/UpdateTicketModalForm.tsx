@@ -47,7 +47,7 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
     };
 
     const handlePriorityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setPriority(convertPriorityToNumber(e.target.value));
+        setPriority(parseInt(e.target.value));
     };
 
     // state for whether the modal is active or not
@@ -55,16 +55,6 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
 
     const handleToggleIsActive = () => {
         setIsActive(!isActive);
-    };
-
-    const convertPriorityToNumber = (priority: string): number => {
-        if (priority === 'Low') {
-            return 1;
-        } else if (priority === 'High') {
-            return 2;
-        } else {
-            return 3;
-        }
     };
 
     // submitting form data
@@ -90,7 +80,7 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
         return (
             <Fragment>
                 <div className="select">
-                    <select value={developer} defaultValue={'NONE'} onChange={handleDeveloperChange}>
+                    <select value={developer || "NONE"} onChange={handleDeveloperChange}>
                         <option value="NONE" disabled>
                             Assign a developer (optional)
                         </option>
@@ -167,12 +157,12 @@ const UpdateTicketModalForm: React.FunctionComponent<UpdateTicketModalFormProps>
                                 <div className="control">
                                     <div className={!priority ? 'select is-danger' : 'select'}>
                                         <select value={priority} onChange={handlePriorityChange}>
-                                            <option selected disabled value="">
+                                            <option disabled value="">
                                                 Select priority
                                             </option>
-                                            <option>Low</option>
-                                            <option>High</option>
-                                            <option>Urgent</option>
+                                            <option value="1">Low</option>
+                                            <option value="2">High</option>
+                                            <option value="3">Urgent</option>
                                         </select>
                                     </div>
                                 </div>
